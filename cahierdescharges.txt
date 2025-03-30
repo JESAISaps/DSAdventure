@@ -1,0 +1,54 @@
+Rogue like
+
+
+
+Mort -> On pert tous les objets, on garde les points de moyenne et les talismans et l'or.
+
+On gagne l'or dans les combats, et on peut acheter des objets dans la boutique, avant de retourner dans le donjon on a un nombre de points de vie au début, qui descend pendant les combats, on meurt a 0, et on ne peut pas regagner de PV a moins de pouvoirs spéciaux.
+Les PV sont la note Bazri.
+On avance, et dans certaines salles, on peut trouver un mini jeux: si on gagne, on obtient un nouveau talisman, qu'on garde quand on meurt.
+Une fois qu'on a terminé un mini jeu, il est terminé, on a plus besoin de le refaire.
+On peut le refaire pour de l'exp. On ne fait un mini jeu qu'une fois par vie.
+
+Code-Name: Récompense: talisman de lecture des pensée: on voit a present les prochains coups de l'adversaire.
+
+Morpion: On obtient un talisman, qui une fois par combat, permet d'attaquer 2 fois d'a filé.
+
+Sphinx: Récompense: Connaissance ultime: gagne une potion de guérison, utilisable une fois par vie.
+
+Resolution Integrale: la reponse est ln2. Recompense: attaque qui permet de tuer un ennemi en 1 seul coup. Marche une fois par vie.
+
+L'exp permet de faire augmenter les points de moyenne.
+Les combats sont des DS contre les profs.
+Les mini-jeux sont des Week end, potentiellement de révision.
+
+Les objects: ramassable sur les corps des ennemis, ou achetable au shop, ou avec un coffre
+antisèche :rajoute 2 point de degats a la prochaine attaque
+lunettes: tu vois claire et peut reveler une salle secrette, se casse si porté a un combat.
+bouteille d'eau: augmente la precision.
+montre: meilleure gestion du temp: permet d'esquiver une attaque.
+amelioration trousse: on peut stocker 1 objet en plus.
+blanco: annule la prochaine attaque de l'adversaire
+chatGPT: augmente la prochaine attaque + 5, mais la meme pour le prof
+
+Les pieces d'equipement: objet qu'on peut equiper
+stylo: +2 point de degat, selon la qualité ++
+ordinateur: augmente l'attaque de 1 a chauschaque tour.
+chaussures trop stylé: augmente la priorité de combat
+t-shirt : defence +3
+fluo : gain XP + 50%
+ù
+Competences:
+nv 1: action ecriture soignée = 1 point de degat, 1 point d'action
+nv 2: action révision tables = plus 5 points d'armure, 1 point d'action 
+nv 3 : passif devoirs faits : 10 % de chance d'esquiver une attaque.
+nv 4 : réponse juste : 4 points de degat, 3 points d'action.
+Nv 5: appel a un ami: quelqu'un de la prépa arrive, et donne des bonus en fonction de la personne.
+
+Salles:
+Dernière salle: conseil de classe : si moins de niveau 10, meure.
+
+Combats:
+ tour par tour, le joueur a un certain nombre de points d'actions a chaque tour.
+Une attaque termine un tour.
+Si points d'actions négatif, on perd le nombre de PV qui correspondend au négatif.
