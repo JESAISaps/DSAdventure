@@ -24,7 +24,7 @@ class Menu(Room):
         self._name = name
 
     def RoomIntroduction(self):
-        return f"Bienvenue dans l'accueil nomé {self._name} !"
+        return f"Bienvenue dans l'accueil nommé {self._name} !"
 
 class FightRoom(Room):
     def __init__(self, ennemies:list):
@@ -41,11 +41,30 @@ class DefiRoom(Room):
     
     def RoomIntroduction(self):
         return f"Super, un peu de repos, tu arrives dans la salle {self._name}"
+    
+class CodeName:
+    def __init__(self):
+        super().__init__()
+        self.liste = [("police",("girophare","enfermer")),("barcelo",("cheveux","mathématiques"))]
+
+    def CommencerJeu(self):
+        print("On commence")
+
+    def PoserQuestion(self):
+        print("A l'aide de ces 2 mots, à quoi je pense?")
+    
+    def MotSecret(self):
+        if self.liste==[]:
+            print("Jeu fini")
+        self.motOrdinateur=self.liste.pop()
+        print(self.motOrdinateur[1])
+
 
 if __name__ == "__main__":
     morpion = DefiRoom()
     codeName = DefiRoom()
     sphinx = DefiRoom()
     integrale = DefiRoom()
+
 
 
