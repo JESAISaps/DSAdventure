@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+import Object
 
 class Character(ABC):
     def __init__(self, name, startingHp):
@@ -6,6 +7,7 @@ class Character(ABC):
         self._name = name
         self._hp = startingHp
 
+    @abstractmethod
     def Die(self):
         pass
     
@@ -15,10 +17,11 @@ class Character(ABC):
             self.Die()
 
 class Player(Character):
-    def __init__(self,name,xp=0):
+    def __init__(self,name,xp=0, bagSize=2):
         super().__init__(name, 5) #Tous les joueurs commencent avec 5 PV au niveau 0
 
         self.sac = []
+        self.bagSize = 4
 
         allTalismans = ["CodeName", "Morpion", "Sphinx", "Integrale"]
         self.talismans = {nom:False for nom in allTalismans}
@@ -29,9 +32,6 @@ class Player(Character):
         self.AjouterXp(xp)
 
         self._isDead = False
-
-
-        
 
     def AjouterXp(self,quantite):
         while (self._xp+quantite)>=self._xpCap[self._level]:
@@ -48,9 +48,27 @@ class Player(Character):
         self.sac = []
         self._isDead = True
 
+    def AddItem(self, item:Object) -> bool:
+        match item:
+            case Object.Talisman:
+                self.talismans[item] = True
+                return True
+            case _: # On a un objet lambda
+                if len(self.sac >= self.bagSize):
+                    return False # On ne peut pas inserer d'objet dans le sac
+                self.sac.append(item)
+                return False
+
+    def GetBag(self):
+        return self.sac
+                
+        
+        
+
 class Enemi(Character):
     def __init__(self, name, startingHp):
         super().__init__(name, startingHp)
+        self.dropPossibilities = []
 
 if __name__ == "__main__":
     player = Player("z", 10)    

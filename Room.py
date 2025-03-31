@@ -17,6 +17,24 @@ class Room(ABC):
         self._voisin["Est"] = est
         self._voisin["Ouest"] = ouest
 
+    def PaintRoom(self):
+        return """
+########################################################################
+#                          ______   __                                 #
+#                          /      \ /  |                               #
+#   1) Stylo - 10         /$$$$$$  |$$ |____    ______    ______       #
+#   2) Chaussettes - 5    $$ \__$$/ $$      \  /      \  /      \      #
+#   3) Gomme - 7          $$      \ $$$$$$$  |/$$$$$$  |/$$$$$$  |     #
+#   4) Blanco - 4          $$$$$$  |$$ |  $$ |$$ |  $$ |$$ |  $$ |     #
+#                         /  \__$$ |$$ |  $$ |$$ \__$$ |$$ |__$$ |     #
+#                         $$    $$/ $$ |  $$ |$$    $$/ $$    $$/      #
+#                          $$$$$$/  $$/   $$/  $$$$$$/  $$$$$$$/       #
+#                                                       $$ |           #
+#                                                       $$ |           #
+#                                                       $$/            #
+########################################################################
+"""
+
 
 class Menu(Room):
     def __init__(self, name):
@@ -25,6 +43,14 @@ class Menu(Room):
 
     def RoomIntroduction(self):
         return f"Bienvenue dans l'accueil nommé {self._name} !"
+    
+class Shop(Room):
+    def __init__(self, name):
+        super().__init__()
+        self._name = name
+
+    def RoomIntroduction(self):
+        return f"Bienvenue au {self._name} !"
 
 class FightRoom(Room):
     def __init__(self, ennemies:list):
@@ -62,10 +88,8 @@ class CodeName:
 
 
 if __name__ == "__main__":
-    morpion = DefiRoom()
-    codeName = DefiRoom()
-    sphinx = DefiRoom()
-    integrale = DefiRoom()
 
+    room = Shop("hehe")
+    print(room.PaintRoom())
 
 

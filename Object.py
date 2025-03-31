@@ -1,9 +1,13 @@
 from abc import ABC, abstractmethod
 
 class Object(ABC):
-    def __init__(self):
-        pass
+    def __init__(self, name):
+        self._name = name
 
+class Talisman(Object):
+    def __init__(self, name):
+        super().__init__()
+        self._name = name
 class UsableObject(Object):
     def __init__(self,):
         super().__init__()
