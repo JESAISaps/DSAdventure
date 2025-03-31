@@ -1,4 +1,8 @@
 from abc import ABC, abstractmethod
+import click 
+import questionary
+import random
+from Utils import * 
 
 class Room(ABC):
     def __init__(self):
@@ -42,30 +46,58 @@ class DefiRoom(Room):
     def RoomIntroduction(self):
         return f"Super, un peu de repos, tu arrives dans la salle {self._name}"
     
-class CodeName:
+class CodeName(DefiRoom):
     def __init__(self):
-        super().__init__()
+        super().__init__("Code Name")
         self.liste = [("police",("girophare","enfermer")),("barcelo",("cheveux","mathématiques"))]
+        self.tupleJeu=self.liste.pop()
 
-    def CommencerJeu(self):
-        print("On commence")
+    def RoomIntroduction(self):
+        print("""   
+   ___         _       _  _                
+  / __|___  __| |___  | \| |__ _ _ __  ___ 
+ | (__/ _ \/ _` / -_) | .` / _` | '  \/ -_)
+  \___\___/\__,_\___| |_|\_\__,_|_|_|_\___|                                                                       
+                                                                          """)
 
-    def PoserQuestion(self):
-        print("A l'aide de ces 2 mots, à quoi je pense?")
+    def AskQuestion(self):
+        print(f"Je te donne 2 mots : {self.tupleJeu[1][0]} et {self.tupleJeu[1][1]}")
     
-    def MotSecret(self):
+    def GetAnswer(self):
+        reponse=click.prompt("A quoi je pense?", type=str)
+        return reponse
+
+    def Verification(self, reponse):
         if self.liste==[]:
             print("Jeu fini")
-        self.motOrdinateur=self.liste.pop()
-        print(self.motOrdinateur[1])
+        return CompareWord(reponse,self.tupleJeu[0])
+    
+    def StartManche(self):
+        self.AskQuestion()
+        reponse = self.GetAnswer()
+        return self.Verification(reponse)
+        
+    def StartGame(self):
+        print(f"On commence le {self._name}")
+        if self.StartManche()==True:
+            print("Bravo, vous avez gagné un Talisman")
+            return True #TODo Ajouter Talisman
+        else:
+            print("Erreur, c'est votre dernière chance")
+            if self.StartManche():
+                print("Bravo, vous avez gagné un Talisman")
+                return True #AJOUTER UN TALISMAN TODO
+            else : 
+                print("Vous n'avez rien gagné")
+            
 
 
 
 if __name__ == "__main__":
-    morpion = DefiRoom()
-    codeName = DefiRoom()
-    sphinx = DefiRoom()
-    integrale = DefiRoom()
-
-
-
+    morpion = DefiRoom("morpion")
+    codeName = DefiRoom("codeName")
+    sphinx = DefiRoom("sphinx")
+    integrale = DefiRoom("intégrale")
+    
+    code=CodeName()
+    code.StartGame()
