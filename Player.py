@@ -31,6 +31,8 @@ class Player(Character):
         self._xpCap = [10, 50, 100, 200, 250, 300, 500, 750, 1000, 2000, 3250, 5000, 6000, 7000, 8000, 9000, 10000, 15000, 20000, 50000, 100000]
         self.AjouterXp(xp)
 
+        self._attacks = {"Ecriture Soignee": {"Degats":1}, "Boule de Fau":{"Degat":1, "Etourdissement":5}}
+
         self._isDead = False
 
     def AjouterXp(self,quantite):
@@ -61,14 +63,21 @@ class Player(Character):
 
     def GetBag(self):
         return self.sac
-                
-        
-        
+
+    def IsAlive(self):
+        return not self._isDead
+    
+    def GetAttacks(self):
+        return self._attacks
+
 
 class Enemi(Character):
     def __init__(self, name, startingHp):
         super().__init__(name, startingHp)
         self.dropPossibilities = []
+
+    def Die():
+        pass
 
 if __name__ == "__main__":
     player = Player("z", 10)    

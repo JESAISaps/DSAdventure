@@ -79,12 +79,12 @@ class CodeName(DefiRoom):
         self.tupleJeu=self.liste.pop()
 
     def RoomIntroduction(self):
-        print("""   
+        return """
    ___         _       _  _                
   / __|___  __| |___  | \| |__ _ _ __  ___ 
  | (__/ _ \/ _` / -_) | .` / _` | '  \/ -_)
   \___\___/\__,_\___| |_|\_\__,_|_|_|_\___|                                                                       
-                                                                          """)
+"""
 
     def AskQuestion(self):
         print(f"Je te donne 2 mots : {self.tupleJeu[1][0]} et {self.tupleJeu[1][1]}")
@@ -120,10 +120,11 @@ class CodeName(DefiRoom):
 
 
 if __name__ == "__main__":
-    morpion = DefiRoom("morpion")
-    codeName = DefiRoom("codeName")
-    sphinx = DefiRoom("sphinx")
-    integrale = DefiRoom("intégrale")
+    #morpion = DefiRoom("morpion")
+    #codeName = DefiRoom("codeName")
+    #sphinx = DefiRoom("sphinx")
+    #integrale = DefiRoom("intégrale")
     
     code=CodeName()
+    print(code.RoomIntroduction())
     code.StartGame()

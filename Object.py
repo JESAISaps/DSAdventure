@@ -122,19 +122,19 @@ class Arme(EquipableObject):
     def __init__(self, defense=0, degat=0, pv=0, boostXp=0):
         super().__init__(defense, degat, pv, boostXp)
 
-
-stylo = Arme(defense = 0, degat = 10, pv=0)
-ordinateurGabin = Arme(defense=10, degat=20, pv=10)
-tong = Armure(defense=5, degat=0, pv=10)
-tshirt = Armure(defense=10, degat=0, pv=10)
-fluo = Arme(defense=0, degat=15, pv=10)
-
-antiseche=Antiseche(10)
-
-print(antiseche.GetDescription())
-
-"""blanco=Blanco()
-lunettes=Lunettes()
-montre=Montre()
-chatGPT=ChatGPT()
-bouteille=Bouteille()"""
+if __name__ == "__main__":
+    stylo = Arme(defense = 0, degat = 10, pv=0)
+    ordinateurGabin = Arme(defense=10, degat=20, pv=10)
+    tong = Armure(defense=5, degat=0, pv=10)
+    tshirt = Armure(defense=10, degat=0, pv=10)
+    fluo = Arme(defense=0, degat=15, pv=10)
+    
+    antiseche=Antiseche(10)
+    
+    print(antiseche.GetDescription())
+    
+    """blanco=Blanco()
+    lunettes=Lunettes()
+    montre=Montre()
+    chatGPT=ChatGPT()
+    bouteille=Bouteille()"""
