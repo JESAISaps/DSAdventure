@@ -22,7 +22,7 @@ class Room(ABC):
         self._voisin["Ouest"] = ouest
 
     def PaintRoom(self):
-        return """
+        return r"""
 ########################################################################
 #                          ______   __                                 #
 #                          /      \ /  |                               #
@@ -50,13 +50,14 @@ class Menu(Room):
     
 class Shop(Room):
     def __init__(self, name):
-        super().__init__(name)
+        super().__init__()
+        self._name=name
 
     def RoomIntroduction(self):
         return f"Bienvenue au {self._name} !"
     
     def PaintRoom(self):
-        return """
+        return r"""
 ########################################################################
 #                          ______   __                                 #
 #                          /      \ /  |                               #
@@ -99,7 +100,7 @@ class CodeName(DefiRoom):
         self.tupleJeu=self.liste.pop()
 
     def RoomIntroduction(self):
-        return """
+        return r"""
    ___         _       _  _                
   / __|___  __| |___  | \| |__ _ _ __  ___ 
  | (__/ _ \/ _` / -_) | .` / _` | '  \/ -_)
@@ -127,24 +128,63 @@ class CodeName(DefiRoom):
         print(f"On commence le {self._name}")
         if self.StartManche()==True:
             print("Bravo, vous avez gagné un Talisman")
-            return True #TODo Ajouter Talisman
+            return True
         else:
             print("Erreur, c'est votre dernière chance")
             if self.StartManche():
                 print("Bravo, vous avez gagné un Talisman")
-                return True #AJOUTER UN TALISMAN TODO
+                return True
             else : 
                 print("Vous n'avez rien gagné")
             
+class Morpion(DefiRoom):
+    def __init__(self):
+        super().__init__("Morpion")
+        self.matrice=[[" "," "," ",],[" "," "," "],[" "," "," "]]
+
+
+    def ShowMatrice(self):
+        rep=""
+        rep+="    1   2   3"
+        for i in range(3):
+            rep+=f"\n {chr(65+i)}  {self.matrice[i][0]} | {self.matrice[i][1]} | {self.matrice[i][2]} \n   -----------"
+        print(rep[:-11])
+
+
+    def MancheJoueur(self):
+        pass
+
+    def AskChoice(self):
+        rep = click.prompt("Quelle case souhaitez vous jouer?",type=CustomChoice(["A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3"], case_sensitive=False), show_choices=False).upper()
+        print(rep)
+
+    def ModifierMatrice(self, choix):
+        match choix :
+            case "A1" : self.matrice[0][0]="x"
+            case "A2" : self.matrice[0][1]="x"
+            case "A3" : self.matrice[0][2]="x"
+            case "B1" : self.matrice[1][0]="x"
+            case "B2" : self.matrice[1][1]="x"
+            case "B3" : self.matrice[1][2]="x"
+            case "C1" : self.matrice[2][0]="x"
+            case "C2" : self.matrice[2][1]="x"
+            case "C3" : self.matrice[2][2]="x"
+            case _ : print("ERREUR")
 
 
 
 if __name__ == "__main__":
-    #morpion = DefiRoom("morpion")
+    morpion = Morpion()
     #codeName = DefiRoom("codeName")
     #sphinx = DefiRoom("sphinx")
     #integrale = DefiRoom("intégrale")
     
-    code=CodeName()
-    print(code.RoomIntroduction())
-    code.StartGame()
+    #code=CodeName()
+    #print(code.RoomIntroduction())
+    #code.StartGame()
+    morpion.ShowMatrice()
+    morpion.AskChoice()
+
+    #shop=Shop("Shop")
+    #print(shop.PaintRoom())
+
