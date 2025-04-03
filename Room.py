@@ -48,6 +48,13 @@ class Menu(Room):
     def RoomIntroduction(self):
         return f"Bienvenue dans l'accueil nommé {self._name} !"
     
+class Shop(Room):
+    def __init__(self, name):
+        super().__init__(name)
+
+    def RoomIntroduction(self):
+        return f"Bienvenue au {self._name} !"
+    
     def PaintRoom(self):
         return """
 ########################################################################
@@ -65,13 +72,6 @@ class Menu(Room):
 #                                                       $$/            #
 ########################################################################
 """
-    
-class Shop(Room):
-    def __init__(self, name):
-        super().__init__(name)
-
-    def RoomIntroduction(self):
-        return f"Bienvenue au {self._name} !"
 
 class FightRoom(Room):
     def __init__(self, ennemies:list):

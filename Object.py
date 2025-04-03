@@ -20,6 +20,7 @@ class Talisman(Object):
     @property
     def _description(self):
         return "Un talisman, il peut etre actif ou passif."
+    
 class UsableObject(Object):
     def __init__(self,):
         super().__init__()

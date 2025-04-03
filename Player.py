@@ -23,8 +23,8 @@ class Player(Character):
         self.sac = []
         self.bagSize = 4
 
-        allTalismans = ["CodeName", "Morpion", "Sphinx", "Integrale"]
-        self.talismans = {nom:False for nom in allTalismans}
+        dicoTalisman = {1:("CodeName","Lecture des pensées"),2:("Morpion","Rapidité"),3:("Sphinx","Connaissance ultime"),4:("Integrale","Puissance calculatoire")}
+        self.talismans = {id:False for id in dicoTalisman}
 
         self._xp=0
         self._level = 0
@@ -69,6 +69,10 @@ class Player(Character):
     
     def GetAttacks(self):
         return self._attacks
+    
+    def AddTalisman(self, id):
+        self.talismans[id]=True
+
 
 
 class Enemi(Character):
