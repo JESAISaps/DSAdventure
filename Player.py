@@ -31,7 +31,7 @@ class Player(Character):
         self._xpCap = [10, 50, 100, 200, 250, 300, 500, 750, 1000, 2000, 3250, 5000, 6000, 7000, 8000, 9000, 10000, 15000, 20000, 50000, 100000]
         self.AjouterXp(xp)
 
-        self._attacks = {"Ecriture Soignee": {"Degats":1}, "Boule de Fau":{"Degat":1, "Etourdissement":5}}
+        self._attacks = {"Ecriture Soignee": {"Degats":1}, "Boule de Fau":{"Degat":1, "Etourdissement":5, "caca":"toujours"}}
 
         self._isDead = False
 

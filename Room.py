@@ -48,10 +48,27 @@ class Menu(Room):
     def RoomIntroduction(self):
         return f"Bienvenue dans l'accueil nommé {self._name} !"
     
+    def PaintRoom(self):
+        return """
+########################################################################
+#                          ______   __                                 #
+#                          /      \ /  |                               #
+#   1) Stylo - 10         /$$$$$$  |$$ |____    ______    ______       #
+#   2) Chaussettes - 5    $$ \__$$/ $$      \  /      \  /      \      #
+#   3) Gomme - 7          $$      \ $$$$$$$  |/$$$$$$  |/$$$$$$  |     #
+#   4) Blanco - 4          $$$$$$  |$$ |  $$ |$$ |  $$ |$$ |  $$ |     #
+#                         /  \__$$ |$$ |  $$ |$$ \__$$ |$$ |__$$ |     #
+#                         $$    $$/ $$ |  $$ |$$    $$/ $$    $$/      #
+#                          $$$$$$/  $$/   $$/  $$$$$$/  $$$$$$$/       #
+#                                                       $$ |           #
+#                                                       $$ |           #
+#                                                       $$/            #
+########################################################################
+"""
+    
 class Shop(Room):
     def __init__(self, name):
-        super().__init__()
-        self._name = name
+        super().__init__(name)
 
     def RoomIntroduction(self):
         return f"Bienvenue au {self._name} !"
@@ -64,6 +81,9 @@ class FightRoom(Room):
 
     def RoomIntroduction(self):
         return f"Tu arrive en face de {self._nbEnemies} ennemis"
+    
+    def GetEnemiNb(self):
+        return self._nbEnemies()
 
 class DefiRoom(Room):
     def __init__(self, name):

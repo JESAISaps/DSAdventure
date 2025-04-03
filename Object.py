@@ -4,10 +4,22 @@ class Object(ABC):
     def __init__(self, name):
         self._name = name
 
+    @property
+    @abstractmethod
+    def _description(self):
+        pass
+
+    def GetDescription(self):
+        return self._description
+
 class Talisman(Object):
     def __init__(self, name):
         super().__init__()
         self._name = name
+
+    @property
+    def _description(self):
+        return "Un talisman, il peut etre actif ou passif."
 class UsableObject(Object):
     def __init__(self,):
         super().__init__()
@@ -17,12 +29,8 @@ class UsableObject(Object):
         pass
 
     @property
-    @abstractmethod
     def _description(self):
-        pass
-
-    def GetDescription(self):
-        return self._description
+        return "Un object utilisable."
 
 class Antiseche(UsableObject):
     def __init__(self, bonusDegat):
@@ -113,6 +121,10 @@ class EquipableObject(Object):
     
     def GetBoostXP(self) -> int:
         return self._boostXp
+    
+    @property
+    def _description(self):
+        return "Un object equipable."
 
 class Armure(EquipableObject):
     def __init__(self, defense=0, degat=0, pv=0, boostXp=0):
