@@ -141,6 +141,7 @@ class Morpion(DefiRoom):
     def __init__(self):
         super().__init__("Morpion")
         self.matrice=[[" "," "," ",],[" "," "," "],[" "," "," "]]
+        self.dico={"A1":[0][0],"A2":"[0][1]","A3":"[0][2]","B1":"[1][0]","B2":"[1][1]","B3":"[1][2]","C1":"[2][0]","C2":"[2][1]","C3":"[2][2]"}
 
 
     def ShowMatrice(self):
@@ -156,7 +157,12 @@ class Morpion(DefiRoom):
 
     def AskChoice(self):
         rep = click.prompt("Quelle case souhaitez vous jouer?",type=CustomChoice(["A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3"], case_sensitive=False), show_choices=False).upper()
-        print(rep)
+        verif=self.dico[rep]
+        print(verif)
+        if self.matrice[verif] !=[" "]:
+            print("Erreur la case est déjà utilisée")
+        else:
+            print(rep)
 
     def ModifierMatrice(self, choix):
         match choix :
@@ -170,6 +176,9 @@ class Morpion(DefiRoom):
             case "C2" : self.matrice[2][1]="x"
             case "C3" : self.matrice[2][2]="x"
             case _ : print("ERREUR")
+    
+    def ComputerTour(self):
+        return random(["A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3"])
 
 
 
