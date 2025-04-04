@@ -3,6 +3,8 @@ import click
 import questionary
 import random
 from Utils import * 
+from sympy import integrate, symbols, oo, exp, ln, pprint, init_printing, latex, Integral
+import matplotlib.pyplot as plt
 
 class Room(ABC):
     def __init__(self):
@@ -52,25 +54,29 @@ class Shop(Room):
     def __init__(self, name):
         super().__init__()
         self._name=name
+        self._objects=[("Gomme", 5),("Bouteille d'eau", 8)]
 
     def RoomIntroduction(self):
         return f"Bienvenue au {self._name} !"
     
+    def ShowObjects(self):
+        print(f"Voici les objets de la boutique : {self._objects}")
+    
     def PaintRoom(self):
         return r"""
 ########################################################################
-#                          ______   __                                 #
-#                          /      \ /  |                               #
-#   1) Stylo - 10         /$$$$$$  |$$ |____    ______    ______       #
-#   2) Chaussettes - 5    $$ \__$$/ $$      \  /      \  /      \      #
-#   3) Gomme - 7          $$      \ $$$$$$$  |/$$$$$$  |/$$$$$$  |     #
-#   4) Blanco - 4          $$$$$$  |$$ |  $$ |$$ |  $$ |$$ |  $$ |     #
-#                         /  \__$$ |$$ |  $$ |$$ \__$$ |$$ |__$$ |     #
-#                         $$    $$/ $$ |  $$ |$$    $$/ $$    $$/      #
-#                          $$$$$$/  $$/   $$/  $$$$$$/  $$$$$$$/       #
-#                                                       $$ |           #
-#                                                       $$ |           #
-#                                                       $$/            #
+#                  ______   __                                         #
+#                  /      \ /  |                                       #
+#                 /$$$$$$  |$$ |____    ______    ______               #
+#                 $$ \__$$/ $$      \  /      \  /      \              #
+#                 $$      \ $$$$$$$  |/$$$$$$  |/$$$$$$  |             #
+#                  $$$$$$  |$$ |  $$ |$$ |  $$ |$$ |  $$ |             #
+#                 /  \__$$ |$$ |  $$ |$$ \__$$ |$$ |__$$ |             #
+#                 $$    $$/ $$ |  $$ |$$    $$/ $$    $$/              #
+#                  $$$$$$/  $$/   $$/  $$$$$$/  $$$$$$$/               #
+#                                               $$ |                   #
+#                                               $$ |                   #
+#                                               $$/                    #
 ########################################################################
 """
 
@@ -275,6 +281,31 @@ class Sphinx(DefiRoom):
             return True
         else:
             print("Vous n'avez rien gagné")
+class Integrale(DefiRoom):
+    def __init__(self):
+        super().__init__("Intégrales")
+
+    def StartGame(self):
+        reponse=self.AskQuestion()
+        if CompareWord(reponse, "ln2") :
+            print("Bravo! Vous avez gagné le Talisman Puissance Calculatoire")
+            return True
+        else :
+            print("Très mauvais calcul, bon courage pour la suite.")
+            return False
+        
+    def AskQuestion(self)->str:
+        
+        print("Quelle est le résultat de l'integrale qui va s'afficher ?")
+        
+        # Create a figure and axis
+        fig, ax = plt.subplots(figsize=(5, 2))
+        ax.axis("off")  # Hide axes
+        # Render LaTeX formula
+        ax.text(0.5, 0.5, r"$\int \frac{1}{e^x + 1} \,dx$", fontsize=20, ha="center")
+        plt.show()
+        
+        return click.prompt("Resultat: ", type=str)
 
 
 if __name__ == "__main__":
@@ -291,6 +322,4 @@ if __name__ == "__main__":
     #shop=Shop("Shop")
     #print(shop.PaintRoom())
 
-    sp = Sphinx()
-    sp.StartGame()
-
+    Integrale().StartGame()

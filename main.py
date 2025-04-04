@@ -1,14 +1,15 @@
 from Player import Player
 import click
-from Room import DefiRoom, FightRoom, Menu
+from Room import DefiRoom, FightRoom, Menu, Shop
 import questionary
 import keyboard
 
 player = Player("Jean", 0)
 
-firstRoom = Menu("Hehe")
+menu = Menu("Home")
+shop = Shop("Shop")
 
-actualRoom = firstRoom
+actualRoom = menu
 
 print(actualRoom.RoomIntroduction())
 print("Que veux tu faire")

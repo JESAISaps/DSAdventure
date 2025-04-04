@@ -2,6 +2,8 @@ from Player import Player, Enemi
 from Room import FightRoom
 import questionary
 from random import randint
+from time import sleep
+from Utils import TIMETOWAITBETWEENATTACKS
 
 class Fight:
     def __init__(self, player:Player, enemiList:list[Enemi]):
@@ -31,6 +33,7 @@ class Fight:
         enemiToAttack = self.GetEnemiToAttack()
         choice, damage = self.GetAttackPlayerChoice(attackList)
         #print(attackList)
+        sleep(TIMETOWAITBETWEENATTACKS*2)
         print(f"Tu attaque {enemiToAttack.GetName()} pour {damage} degats avec {choice}")
 
     def EnemiTurn(self):
@@ -42,6 +45,7 @@ class Fight:
         for _ in range(enemiesToPLay+1):
             attackingEnemi = self._enemies[randint(0, len(self._enemies)-1)]
             attackName, damage = attackingEnemi.GetNextEnnemiAttack()
+            sleep(TIMETOWAITBETWEENATTACKS)
             print(f"{attackingEnemi.GetName()} t'attaque avec {attackName} pour {damage} degats !")
             self._player.TakeDamage(damage)
 
@@ -56,7 +60,9 @@ class Fight:
             attacksToShow = attacksToShow[:-3]
             attacksToShow += "\n"
         # Affiche la liste des attaques et leurs effects
+        sleep(TIMETOWAITBETWEENATTACKS)
         print(attacksToShow)
+        sleep(TIMETOWAITBETWEENATTACKS)
         choice = questionary.select("Quelle attaque voulez vous utiliser ?", choices=attackList, instruction=" ").ask()
         return choice, playerAttacks[choice]["Degats"]
 
