@@ -117,6 +117,7 @@ class CodeName(DefiRoom):
     def Verification(self, reponse):
         if self.liste==[]:
             print("Jeu fini")
+            return False
         return CompareWord(reponse,self.tupleJeu[0])
     
     def StartManche(self):
@@ -136,13 +137,11 @@ class CodeName(DefiRoom):
                 return True
             else : 
                 print("Vous n'avez rien gagné")
-            
 class Morpion(DefiRoom):
     def __init__(self):
         super().__init__("Morpion")
         self.matrice=[[" "," "," ",],[" "," "," "],[" "," "," "]]
-        self.dico={"A1":[0][0],"A2":"[0][1]","A3":"[0][2]","B1":"[1][0]","B2":"[1][1]","B3":"[1][2]","C1":"[2][0]","C2":"[2][1]","C3":"[2][2]"}
-
+        
 
     def ShowMatrice(self):
         rep=""
@@ -152,38 +151,134 @@ class Morpion(DefiRoom):
         print(rep[:-11])
 
 
-    def MancheJoueur(self):
-        pass
+    def StartGame(self):
+        computeurWin=False
+        playerWin=False
+        while playerWin == False and computeurWin==False and self.IsComplete()==False:
+            self.MancheComputeur()
+            computeurWin=self.Win("o")
+            if not computeurWin:
+                self.MancheJoueur()
+                playerWin=self.Win("x")
+        if playerWin : 
+            print("Fin de la partie, vous avez gagné un le Talisman Rapidité")
+            return True
+        else:
+            print("Vous avez perdu, bonne chance pour la suite")
+            return False
+
+    def IsComplete(self):
+        for i in range(3):
+            for j in range(3):
+                if self.matrice[i][j]==" ":
+                    return False
+        return True     
+
+    def MancheComputeur(self):
+        self.ModifierMatrice(self.ComputerTour(),"o")
+        self.ShowMatrice()
+    
+    def MancheJoueur(self,):
+        self.ModifierMatrice(self.AskChoice(),"x")
+        self.ShowMatrice()
+    
+    def Verif(self,rep):
+        match rep :
+            case "A1" : return self.matrice[0][0]==" "
+            case "A2" : return self.matrice[0][1]==" "
+            case "A3" : return self.matrice[0][2]==" "
+            case "B1" : return self.matrice[1][0]==" "
+            case "B2" : return self.matrice[1][1]==" "
+            case "B3" : return self.matrice[1][2]==" "
+            case "C1" : return self.matrice[2][0]==" "
+            case "C2" : return self.matrice[2][1]==" "
+            case "C3" : return self.matrice[2][2]==" "
+            case _ : return False
 
     def AskChoice(self):
         rep = click.prompt("Quelle case souhaitez vous jouer?",type=CustomChoice(["A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3"], case_sensitive=False), show_choices=False).upper()
-        verif=self.dico[rep]
-        print(verif)
-        if self.matrice[verif] !=[" "]:
+        while not self.Verif(rep):
             print("Erreur la case est déjà utilisée")
-        else:
-            print(rep)
+            rep = click.prompt("Quelle case souhaitez vous jouer?",type=CustomChoice(["A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3"], case_sensitive=False), show_choices=False).upper()
+        return rep
 
-    def ModifierMatrice(self, choix):
-        match choix :
-            case "A1" : self.matrice[0][0]="x"
-            case "A2" : self.matrice[0][1]="x"
-            case "A3" : self.matrice[0][2]="x"
-            case "B1" : self.matrice[1][0]="x"
-            case "B2" : self.matrice[1][1]="x"
-            case "B3" : self.matrice[1][2]="x"
-            case "C1" : self.matrice[2][0]="x"
-            case "C2" : self.matrice[2][1]="x"
-            case "C3" : self.matrice[2][2]="x"
+    def ModifierMatrice(self, choice,x):
+        match choice :
+            case "A1" : self.matrice[0][0]=x
+            case "A2" : self.matrice[0][1]=x
+            case "A3" : self.matrice[0][2]=x
+            case "B1" : self.matrice[1][0]=x
+            case "B2" : self.matrice[1][1]=x
+            case "B3" : self.matrice[1][2]=x
+            case "C1" : self.matrice[2][0]=x
+            case "C2" : self.matrice[2][1]=x
+            case "C3" : self.matrice[2][2]=x
             case _ : print("ERREUR")
     
     def ComputerTour(self):
-        return random(["A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3"])
+        rep="-1"
+        while self.Verif(rep)==False:
+            rep=random.choice(["A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3"])
+        return rep
+        
+    def Win(self,x):
+        if self.matrice[0][0]==x and self.matrice[0][1]==x and self.matrice[0][2]==x:
+            return True
+        if self.matrice[1][0]==x and self.matrice[1][1]==x and self.matrice[1][2]==x:
+            return True
+        if self.matrice[2][0]==x and self.matrice[2][1]==x and self.matrice[2][2]==x:
+            return True
+        if self.matrice[0][1]==x and self.matrice[1][1]==x and self.matrice[2][1]==x:
+            return True
+        if self.matrice[0][0]==x and self.matrice[1][0]==x and self.matrice[2][0]==x:
+            return True
+        if self.matrice[0][2]==x and self.matrice[1][2]==x and self.matrice[2][2]==x:
+            return True
+        if self.matrice[0][0]==x and self.matrice[1][1]==x and self.matrice[2][2]==x:
+            return True
+        if self.matrice[2][0]==x and self.matrice[1][1]==x and self.matrice[0][2]==x:
+            return True
+        return False
+class Sphinx(DefiRoom):
+    def __init__(self):
+        super().__init__("Sphinx")
+        self.liste = [("Quel est le langage informatique le plus utilisé chez les lycéens?","Python"),
+                      ("Quels sont les 3 mots préférés de Monsieur Torinesi ?", "Vue de l'esprit"), 
+                      ("Quelle est la marque d'ordinateur en 2 lettres?","hp")]
+        self.questionChoisie=random.choice(self.liste)
 
+    def RoomIntroduction(self):
+        return r""" SPHINX
+"""
+
+    def AskQuestion(self):
+        print(f"Pourras tu répondre à ma question :\n{self.questionChoisie[0]}")
+    
+    def GetAnswer(self):
+        reponse=click.prompt("Quelle est ta réponse ?", type=str)
+        return reponse
+
+    def Verification(self, reponse):
+        if self.liste==[]:
+            print("Jeu fini")
+        return CompareWord(reponse,self.questionChoisie[1])
+    
+    def StartManche(self):
+        self.AskQuestion()
+        reponse = self.GetAnswer()
+        return self.Verification(reponse)
+        
+    def StartGame(self):
+        print(f"On commence le {self._name}")
+        if self.StartManche()==True:
+            print("Bravo, vous avez gagné un Talisman")
+            return True
+        else:
+            print("Vous n'avez rien gagné")
 
 
 if __name__ == "__main__":
-    morpion = Morpion()
+    #morpion = Morpion()
     #codeName = DefiRoom("codeName")
     #sphinx = DefiRoom("sphinx")
     #integrale = DefiRoom("intégrale")
@@ -191,9 +286,11 @@ if __name__ == "__main__":
     #code=CodeName()
     #print(code.RoomIntroduction())
     #code.StartGame()
-    morpion.ShowMatrice()
-    morpion.AskChoice()
+    #morpion.StartGame()
 
     #shop=Shop("Shop")
     #print(shop.PaintRoom())
+
+    sp = Sphinx()
+    sp.StartGame()
 

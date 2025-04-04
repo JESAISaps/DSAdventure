@@ -1,11 +1,14 @@
 from Player import Player, Enemi
 from Room import FightRoom
 import questionary
+from random import randint
 
 class Fight:
     def __init__(self, player:Player, enemiList:list[Enemi]):
         self._player:Player = player
         self._enemies:list[Enemi] = enemiList
+
+        self._enemiNames = {enemi.GetName():enemi for enemi in enemiList}
 
     def StartFight(self):
 
@@ -20,13 +23,29 @@ class Fight:
             # TODO: Le joueur est mort, faut recommencer.
 
     def DoRound(self):
-        attackList = []
-        choice = self.GetPlayerChoice(attackList)
-        print(attackList)
-        print(choice)
-        
+        self.PlayerTurn()
+        self.EnemiTurn()
 
-    def GetPlayerChoice(self, attackList):
+    def PlayerTurn(self):
+        attackList = []
+        enemiToAttack = self.GetEnemiToAttack()
+        choice, damage = self.GetAttackPlayerChoice(attackList)
+        #print(attackList)
+        print(f"Tu attaque {enemiToAttack.GetName()} pour {damage} degats avec {choice}")
+
+    def EnemiTurn(self):
+        if len(self._enemies) == 0:
+            print("Plus d'ennemi")
+            return
+        enemiesToPLay:int = randint(0, len(self._enemies))
+
+        for _ in range(enemiesToPLay+1):
+            attackingEnemi = self._enemies[randint(0, len(self._enemies)-1)]
+            attackName, damage = attackingEnemi.GetNextEnnemiAttack()
+            print(f"{attackingEnemi.GetName()} t'attaque avec {attackName} pour {damage} degats !")
+            self._player.TakeDamage(damage)
+
+    def GetAttackPlayerChoice(self, attackList):
         playerAttacks = self._player.GetAttacks()
         attacksToShow = ""
         for attack in playerAttacks:
@@ -36,13 +55,26 @@ class Fight:
                 attacksToShow += f"{effect}: {playerAttacks[attack][effect]} || "
             attacksToShow = attacksToShow[:-3]
             attacksToShow += "\n"
+        # Affiche la liste des attaques et leurs effects
         print(attacksToShow)
-        return questionary.select("Quelle attaque voulez vous utiliser ?", choices=attackList, instruction=" ").ask()
+        choice = questionary.select("Quelle attaque voulez vous utiliser ?", choices=attackList, instruction=" ").ask()
+        return choice, playerAttacks[choice]["Degats"]
 
+    def GetEnemiToAttack(self):
+        enemies = ""
+        enemiNameList = []
+        for enemi in self._enemies:
+            enemiNameList.append(enemi.GetName())
+            enemies += f" {enemi.GetName()} - {enemi.GetHp()} hp\n"
+        
+        print(enemies)
+        choice = questionary.select("Quel ennemi voulez-vous attaquer ?", choices=enemiNameList).ask()
+        return self._enemiNames[choice]
 if __name__ == "__main__":
     player = Player("e")
     enemi = Enemi("r", 10)
+    e2 = Enemi("ytrez", 10, [("cacatoutmou", 10)])
 
-    fight = Fight(player, [enemi])
+    fight = Fight(player, [enemi, e2])
 
     fight.StartFight()
