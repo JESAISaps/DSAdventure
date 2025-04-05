@@ -9,12 +9,18 @@ class Character(ABC):
 
     @abstractmethod
     def Die(self):
-        pass
+        print("Le joueur est mort")
     
     def TakeDamage(self, quantity):
         self._hp -= quantity
-        if self <= 0:
+        if self._hp <= 0:
             self.Die()
+
+    def GetName(self):
+        return self._name
+    
+    def GetHp(self):
+        return self._hp
 
 class Player(Character):
     def __init__(self,name,xp=0, bagSize=2):
@@ -31,7 +37,7 @@ class Player(Character):
         self._xpCap = [10, 50, 100, 200, 250, 300, 500, 750, 1000, 2000, 3250, 5000, 6000, 7000, 8000, 9000, 10000, 15000, 20000, 50000, 100000]
         self.AjouterXp(xp)
 
-        self._attacks = {"Ecriture Soignee": {"Degats":1}, "Boule de Fau":{"Degat":1, "Etourdissement":5, "caca":"toujours"}}
+        self._attacks = {"Ecriture Soignee": {"Degats":1}, "Boule de Fau":{"Degats":1, "Etourdissement":5, "caca":"toujours"}}
 
         self._isDead = False
 
@@ -76,12 +82,19 @@ class Player(Character):
 
 
 class Enemi(Character):
-    def __init__(self, name, startingHp):
+    def __init__(self, name, startingHp=5, attacks=[("Coup de poing",2), ("Coup de regle",1), ("Coup de tete",10)]):
         super().__init__(name, startingHp)
         self.dropPossibilities = []
+        self._attacks = attacks
+        self._firstAttack = attacks[0]
 
     def Die():
         pass
+
+    def GetNextEnnemiAttack(self)->tuple[str, int]:
+        if len(self._attacks) == 0:
+            return self._firstAttack
+        return self._attacks.pop(0)
 
 if __name__ == "__main__":
     player = Player("z", 10)    
