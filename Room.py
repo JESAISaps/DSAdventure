@@ -17,11 +17,12 @@ class Room(ABC):
     def GetVoisins(self):
         return self._voisin
     
-    def SetVoisins(self, nord=None, sud=None, est=None, ouest=None):
+    def SetVoisins(self, nord=None, sud=None, est=None, ouest=None, passage=None):
         self._voisin["Nord"] = nord
         self._voisin["Sud"] = sud
         self._voisin["Est"] = est
         self._voisin["Ouest"] = ouest
+        self._voisin["passage"] = passage
 
     def PaintRoom(self):
         return r"""
@@ -49,6 +50,13 @@ class Menu(Room):
 
     def RoomIntroduction(self):
         return f"Bienvenue dans l'accueil nommé {self._name} !"
+    
+class Conseil(Room):
+    def __init__(self):
+        super().__init__()
+    
+    def RoomIntroduction(self):
+        return "Tu veux un bon conseil ? Bah non."
     
 class Shop(Room):
     def __init__(self, name):
