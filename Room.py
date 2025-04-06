@@ -5,6 +5,7 @@ import random
 from Utils import * 
 from sympy import integrate, symbols, oo, exp, ln, pprint, init_printing, latex, Integral
 import matplotlib.pyplot as plt
+from Player import Enemi, Player
 
 class Room(ABC):
     def __init__(self):
@@ -89,7 +90,7 @@ class Shop(Room):
 """
 
 class FightRoom(Room):
-    def __init__(self, ennemies:list):
+    def __init__(self, ennemies:list[Enemi]):
         self._enemies = ennemies
         self._nbEnemies = len(ennemies)
         super().__init__()
