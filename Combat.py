@@ -1,5 +1,5 @@
 from Player import Player, Enemi
-from Room import FightRoom
+#from Room import FightRoom
 import questionary
 from random import randint
 from time import sleep
