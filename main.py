@@ -17,6 +17,7 @@ def Start():
     print(menu.PaintRoom())
     print("Appuyez sur Espace  pour commencer le jeu")
     keyboard.wait("Space")
+    Game()
 
 
 def Game():
@@ -29,7 +30,6 @@ def Game():
             SalleActuelle.StartFight(player)
         else : 
             pass
-
 
 
 def AskWhereToGo(caseActuelle : Room):
@@ -46,7 +46,10 @@ def AskWhereToGo(caseActuelle : Room):
     rep=questionary.select("Ou voulez vous aller?",accessiblechoices).ask()
     return choices[rep]
 
+def ActionShop():
+    rep=questionary.select("Voulez vous acheter un objet?",choices=["Oui","Non, commencer le jeu"]).ask()
+    #TODO AFFICHER LARGENT
+    if rep=="Oui":
+            print(shop.ShowObjects())
 
-
-
-Start()
+ActionShop()
