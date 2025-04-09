@@ -6,6 +6,7 @@ from Utils import *
 from sympy import integrate, symbols, oo, exp, ln, pprint, init_printing, latex, Integral
 import matplotlib.pyplot as plt
 from Player import Enemi, Player
+from Combat import Fight
 
 class Room(ABC):
     def __init__(self):
@@ -52,6 +53,15 @@ class Menu(Room):
     def RoomIntroduction(self):
         return f"Bienvenue dans l'accueil nommé {self._name} !"
     
+    def PaintRoom(self):
+        return r"""
+  __  __              
+ |  \/  |___ _ _ _  _ 
+ | |\/| / -_) ' \ || |
+ |_|  |_\___|_||_\_,_|
+
+"""
+    
 class Conseil(Room):
     def __init__(self):
         super().__init__()
@@ -95,6 +105,10 @@ class FightRoom(Room):
         self._nbEnemies = len(ennemies)
         super().__init__()
 
+    def StartFight(self, player):
+        fight = Fight(player, self._enemies)
+        fight.StartFight()        
+
     def RoomIntroduction(self):
         return f"Tu arrive en face de {self._nbEnemies} ennemis"
     
@@ -104,6 +118,7 @@ class FightRoom(Room):
 class DefiRoom(Room):
     def __init__(self, name):
         self._name = name
+        super().__init__()
     
     def RoomIntroduction(self):
         return f"Super, un peu de repos, tu arrives dans la salle {self._name}"
