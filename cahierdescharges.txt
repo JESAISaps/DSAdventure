@@ -34,7 +34,7 @@ chatGPT: augmente la prochaine attaque + 5, mais la meme pour le prof
 Les pieces d'equipement: objet qu'on peut equiper
 stylo: +2 point de degat, selon la qualité ++
 ordinateur: augmente l'attaque de 1 a chauschaque tour.
-chaussures trop stylé: augmente la priorité de combat
+chaussures trop stylé: augmente la vitesse
 t-shirt : defence +3
 fluo : gain XP + 50%
 ù

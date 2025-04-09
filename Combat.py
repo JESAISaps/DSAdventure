@@ -31,7 +31,18 @@ class Fight:
         self.PlayerTurn()
         self.EnemiTurn()
 
+        self.EndRound()
+
+    def EndRound(self):
+        self._player.ActualizeEffectsAfterRound()
+        for enemi in self._enemies:
+            enemi.ActualizeEffectsAfterRound()
+
     def PlayerTurn(self):
+        if self._player.GetAttackDelay() > 0:
+            print("Tu ne peux pas attaquer.")
+            return
+
         itemToUse:UsableObject = self.AskForObjectUse()
         if itemToUse != False:
             match itemToUse.GetEffectType(): # Utile si dans le futur on a + d'effets particuliers
@@ -39,8 +50,12 @@ class Fight:
                     effet = itemToUse.Utiliser()
                     random.choice(self._enemies).AddEffect(effet[0], effet[1][1])
                     self._player.AddEffect(effet[0], effet[1][0])
+                case Effect.AnnulationAttaque:
+                    enemiToApplyEffect = self.GetEnemiToAttack("Sur quel ennemi voulez vous appliquer l'effet ?")
+                    enemiToApplyEffect.AddEffect(*itemToUse.Utiliser())
                 case _:
                     self._player.AddEffect(*itemToUse.Utiliser())
+            # TODO : SUpprimer l'item apres utilisation (del marche pas)
 
         attackList = []
         enemiToAttack = self.GetEnemiToAttack()
@@ -106,7 +121,7 @@ class Fight:
         choice = questionary.select("Quelle attaque voulez vous utiliser ?", choices=attackList, instruction=" ").ask()
         return choice, playerAttacks[choice]["Degats"]
 
-    def GetEnemiToAttack(self):
+    def GetEnemiToAttack(self, text:str="Quel ennemi voulez-vous attaquer ?"):
         enemies = ""
         enemiNameList = []
         for enemi in self._enemies:
@@ -114,13 +129,13 @@ class Fight:
             enemies += f" {enemi.GetName()} - {enemi.GetHp()} hp\n"
         
         print(enemies)
-        choice = questionary.select("Quel ennemi voulez-vous attaquer ?", choices=enemiNameList).ask()
+        choice = questionary.select(text, choices=enemiNameList).ask()
         return self._enemiNames[choice]
     
 if __name__ == "__main__":
     player = Player("e")
     enemi = Enemi("r", 10)
-    e2 = Enemi("ytrez", 10, [("cacatoutmou", 10)])
+    e2 = Enemi("ytrez", 10, [("cacatoutmou", 0)])
 
     item = Antiseche("caca", 20)
     player.GetBag().AddItem(item)

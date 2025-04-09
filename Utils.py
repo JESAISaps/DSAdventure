@@ -24,11 +24,10 @@ class ObjectType(Enum):
     Usable = auto()
 
 class Effect(Enum):
-    ResistancePoint = auto()
+    AugmentationResistancePoint = auto()
     AugmentationDegatPoint = auto()
-    RestancePourcentage = auto()
+    AugmentationResistancePourcentage = auto()
     AugmentationDegatPourcentage = auto()
-    AugmentationPrioriteCombat = auto()
     AugmentationPrecision = auto()
     AnnulationAttaque = auto()
     AugmentationEsquive = auto()
