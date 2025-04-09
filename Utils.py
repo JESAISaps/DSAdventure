@@ -1,5 +1,5 @@
 import click
-from enum import Enum
+from enum import Enum, auto
 
 TIMETOWAITBETWEENATTACKS = .5
 
@@ -15,8 +15,21 @@ class CustomChoice(click.Choice):
         )
 
 class ObjectType(Enum):
-    Objet = 0
-    Chapeau = 1
-    TShirt = 2
-    Chaussures = 3
-    Talisman = 4
+    Objet = auto()
+    Chapeau = auto()
+    TShirt = auto()
+    Chaussures = auto()
+    Arme = auto()
+    Talisman = auto()
+    Usable = auto()
+
+class Effect(Enum):
+    ResistancePoint = auto()
+    AugmentationDegatPoint = auto()
+    RestancePourcentage = auto()
+    AugmentationDegatPourcentage = auto()
+    AugmentationPrioriteCombat = auto()
+    AugmentationPrecision = auto()
+    AnnulationAttaque = auto()
+    AugmentationEsquive = auto()
+    AugmentationDegatReciproque = auto()

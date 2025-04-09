@@ -22,33 +22,40 @@ class Character(ABC):
     
     def GetHp(self):
         return self._hp
+    
+    def AddEffect(self, effect:Effect, power):
+        pass
+        #TODO: Ajouter l'effet
 
 class Player(Character):
 
     class Sac:
         def __init__(self, startingSize:int):
             self.bagSize = startingSize
-            self.content = []
+            self.content:list[Object.Object] = []
 
-        def AddItem(self, item:Object) -> bool:
-            match item:
-                case Object.Talisman:
+        def AddItem(self, item:Object.Object) -> bool:
+            match item.objectType:
+                case ObjectType.Talisman:
                     self.talismans[item] = True
                     return True
                 case _: # On a un objet lambda
-                    if len(self.sac >= self.bagSize):
+                    if len(self.content) >= self.bagSize:
                         return False # On ne peut pas inserer d'objet dans le sac
-                    self.sac.append(item)
+                    self.content.append(item)
                     return False
                 
-        def GetBagContent(self) -> list:
+        def GetContent(self) -> list[Object.Object]:
             return self.content
         
         def RmItem(self, item):
-            """
-            /!\ Supprime l'existance de l'item specifié
+            r"""
+            /!\ Supprime l'existance de l'item specifié /!\ 
             """
             del item
+
+        def Empty(self):
+            return self.content == []
 
     class Equipement:
         def __init__(self):
@@ -112,7 +119,15 @@ class Player(Character):
     def AddTalisman(self, id):
         self.talismans[id]=True
 
+    def GetUsableObjects(self) -> list[Object.UsableObject]:
+        rep = []
+        for item in self.GetBag().GetContent():
+            if item.objectType == ObjectType.Usable:
+                rep.append(item)
 
+        return rep
+    
+    
 
 class Enemi(Character):
     def __init__(self, name, startingHp=5, attacks=[("Coup de poing",2), ("Coup de regle",1), ("Coup de tete",10)]):

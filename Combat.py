@@ -1,9 +1,10 @@
 from Player import Player, Enemi
+from Object import UsableObject, Object, Antiseche
 #from Room import FightRoom
 import questionary
-from random import randint
+import random
 from time import sleep
-from Utils import TIMETOWAITBETWEENATTACKS
+from Utils import TIMETOWAITBETWEENATTACKS, Effect
 
 class Fight:
     def __init__(self, player:Player, enemiList:list[Enemi]):
@@ -19,9 +20,11 @@ class Fight:
 
         if self._player.IsAlive():
             pass
+            print("Bravo tu as gagne")
             # TODO: Donner les recompenses, et terminer le combat.
         else:
             pass
+            print("nul tu as perdu")
             # TODO: Le joueur est mort, faut recommencer.
 
     def DoRound(self):
@@ -29,6 +32,16 @@ class Fight:
         self.EnemiTurn()
 
     def PlayerTurn(self):
+        itemToUse:UsableObject = self.AskForObjectUse()
+        if itemToUse != False:
+            match itemToUse.GetEffectType(): # Utile si dans le futur on a + d'effets particuliers
+                case Effect.AugmentationDegatReciproque: # Dans ce cas la on augmente l'ennemi et le joueur
+                    effet = itemToUse.Utiliser()
+                    random.choice(self._enemies).AddEffect(effet[0], effet[1][1])
+                    self._player.AddEffect(effet[0], effet[1][0])
+                case _:
+                    self._player.AddEffect(*itemToUse.Utiliser())
+
         attackList = []
         enemiToAttack = self.GetEnemiToAttack()
         choice, damage = self.GetAttackPlayerChoice(attackList)
@@ -36,14 +49,41 @@ class Fight:
         sleep(TIMETOWAITBETWEENATTACKS*2)
         print(f"Tu attaque {enemiToAttack.GetName()} pour {damage} degats avec {choice}")
 
+    def AskForObjectUse(self):
+        if player.GetBag().Empty():
+            return False
+
+        if questionary.select("Voulez vous utiliser un objet ?", choices=["Oui", "Non"]).ask() == "None":
+            return False
+        usableObjectList = self._player.GetUsableObjects()
+        objectWithStatsToShow = self.ConvertUsableObjectsToNiceString(usableObjectList)
+        objectNames, nameAssociations = self.GetNamesFromItems(usableObjectList)
+        #print(objectNames, nameAssociations)
+        print(objectWithStatsToShow)
+        return nameAssociations[questionary.select("Quel objet veux-tu utiliser ?", choices=objectNames).ask()]
+
+    def ConvertUsableObjectsToNiceString(self, usableObjectList:list[UsableObject]):
+        rep = ""
+        for item in usableObjectList:
+            rep += f"{item.GetName()} --> {item.GetEffectAsString()}\n"
+        return rep
+    
+    def GetNamesFromItems(self, objects:list[Object]):
+        repList = []
+        repDico = {}
+        for item in objects:
+            repList.append(item.GetName())
+            repDico[item.GetName()] = item
+        return repList, repDico
+
     def EnemiTurn(self):
         if len(self._enemies) == 0:
             print("Plus d'ennemi")
             return
-        enemiesToPLay:int = randint(0, len(self._enemies))
+        enemiesToPLay:int = random.randint(0, len(self._enemies))
 
         for _ in range(enemiesToPLay+1):
-            attackingEnemi = self._enemies[randint(0, len(self._enemies)-1)]
+            attackingEnemi = self._enemies[random.randint(0, len(self._enemies)-1)]
             attackName, damage = attackingEnemi.GetNextEnnemiAttack()
             sleep(TIMETOWAITBETWEENATTACKS)
             print(f"{attackingEnemi.GetName()} t'attaque avec {attackName} pour {damage} degats !")
@@ -81,6 +121,10 @@ if __name__ == "__main__":
     player = Player("e")
     enemi = Enemi("r", 10)
     e2 = Enemi("ytrez", 10, [("cacatoutmou", 10)])
+
+    item = Antiseche("caca", 20)
+    player.GetBag().AddItem(item)
+
 
     fight = Fight(player, [enemi, e2])
 
