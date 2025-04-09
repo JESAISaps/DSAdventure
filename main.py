@@ -12,6 +12,8 @@ petit=Map.petitStart
 shop=Map.shop
 
 
+
+
 def Start():
     print(menu.RoomIntroduction())
     print(menu.PaintRoom())
@@ -23,16 +25,21 @@ def Start():
 def Game():
     print(shop.PaintRoom())
     print(shop.RoomIntroduction())
+    acheter=ActionShop()
+    while acheter != False:
+        acheter=ActionShop()
     SalleActuelle=shop
-    while player.IsAlive():
-        SalleActuelle=AskWhereToGo(SalleActuelle)
-        if type(SalleActuelle)==FightRoom:
-            SalleActuelle.StartFight(player)
-        else : 
-            pass
+    while True:
+        while player.IsAlive():
+            SalleActuelle=AskWhereToGo(SalleActuelle)
+            if type(SalleActuelle)==FightRoom:
+                SalleActuelle.StartFight(player)
+            else : 
 
+                SalleActuelle.StartGame()
+    
 
-def AskWhereToGo(caseActuelle : Room):
+def AskWhereToGo(caseActuelle : Room)-> Room:
     choices=caseActuelle.GetVoisins()
     accessiblechoices=[]
     for i in choices.keys():
@@ -42,14 +49,18 @@ def AskWhereToGo(caseActuelle : Room):
                 #TODO Verif si Lunettes
             else :
                 accessiblechoices.append(i)
-
     rep=questionary.select("Ou voulez vous aller?",accessiblechoices).ask()
     return choices[rep]
 
 def ActionShop():
-    rep=questionary.select("Voulez vous acheter un objet?",choices=["Oui","Non, commencer le jeu"]).ask()
+    rep=questionary.select("Voulez vous acheter un objet?",choices=["Oui","Non, jouer"]).ask()
     #TODO AFFICHER LARGENT
     if rep=="Oui":
-            print(shop.ShowObjects())
+            AchatObjet()
+    else :
+        return False
 
-ActionShop()
+def AchatObjet():
+    pass
+
+Game()

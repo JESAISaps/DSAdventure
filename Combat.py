@@ -65,7 +65,7 @@ class Fight:
         print(f"Tu attaque {enemiToAttack.GetName()} pour {damage} degats avec {choice}")
 
     def AskForObjectUse(self):
-        if player.GetBag().Empty():
+        if self._player.GetBag().Empty():
             return False
 
         if questionary.select("Voulez vous utiliser un objet ?", choices=["Oui", "Non"]).ask() == "None":
@@ -133,14 +133,14 @@ class Fight:
         return self._enemiNames[choice]
     
 if __name__ == "__main__":
-    player = Player("e")
+    crotter = Player("e")
     enemi = Enemi("r", 10)
     e2 = Enemi("ytrez", 10, [("cacatoutmou", 0)])
 
     item = Antiseche("caca", 20)
-    player.GetBag().AddItem(item)
+    crotter.GetBag().AddItem(item)
 
 
-    fight = Fight(player, [enemi, e2])
+    fight = Fight(crotter, [enemi, e2])
 
     fight.StartFight()
