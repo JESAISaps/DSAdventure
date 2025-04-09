@@ -1,4 +1,5 @@
 import click
+from enum import Enum
 
 TIMETOWAITBETWEENATTACKS = .5
 
@@ -12,3 +13,10 @@ class CustomChoice(click.Choice):
         raise click.BadParameter(
             f"Veuillez choisir parmi : {', '.join(self.choices)}"
         )
+
+class ObjectType(Enum):
+    Objet = 0
+    Chapeau = 1
+    TShirt = 2
+    Chaussures = 3
+    Talisman = 4

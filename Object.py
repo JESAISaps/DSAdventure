@@ -1,8 +1,10 @@
 from abc import ABC, abstractmethod
+from Utils import ObjectType
 
 class Object(ABC):
     def __init__(self, name):
         self._name = name
+        self.type = ObjectType.Objet
 
     @property
     @abstractmethod
@@ -16,6 +18,7 @@ class Talisman(Object):
     def __init__(self, name):
         super().__init__()
         self._name = name
+        self.type = ObjectType.Talisman
 
     @property
     def _description(self):
@@ -24,6 +27,7 @@ class Talisman(Object):
 class UsableObject(Object):
     def __init__(self,):
         super().__init__()
+
     
     @abstractmethod
     def Utiliser():
@@ -104,12 +108,13 @@ class Bouteille(UsableObject):
 
 
 class EquipableObject(Object):
-    def __init__(self, defense=0, degat=0, pv=0, boostXp=0):
+    def __init__(self,objectType:ObjectType, defense=0, degat=0, pv=0, boostXp=0):
         super().__init__()
         self._defense=defense
         self._degat=degat
         self._pv=pv
         self._boostXp = boostXp
+        self.objectType = objectType
 
     def GetDefense(self) -> int:
         return self._defense
@@ -128,12 +133,12 @@ class EquipableObject(Object):
         return "Un object equipable."
 
 class Armure(EquipableObject):
-    def __init__(self, defense=0, degat=0, pv=0, boostXp=0):
-        super().__init__(defense, degat, pv, boostXp)
+    def __init__(self, objectType:ObjectType=ObjectType.Objet, defense=0, degat=0, pv=0, boostXp=0):
+        super().__init__(objectType, defense, degat, pv, boostXp)
 
 class Arme(EquipableObject):
-    def __init__(self, defense=0, degat=0, pv=0, boostXp=0):
-        super().__init__(defense, degat, pv, boostXp)
+    def __init__(self, objectType:ObjectType=ObjectType.Objet, defense=0, degat=0, pv=0, boostXp=0):
+        super().__init__(objectType, defense, degat, pv, boostXp)
 
 if __name__ == "__main__":
     stylo = Arme(defense = 0, degat = 10, pv=0)

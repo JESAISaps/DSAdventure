@@ -108,6 +108,10 @@ class DefiRoom(Room):
     def RoomIntroduction(self):
         return f"Super, un peu de repos, tu arrives dans la salle {self._name}"
     
+    @abstractmethod
+    def StartGame(self):
+        pass
+    
 class CodeName(DefiRoom):
     def __init__(self):
         super().__init__("Code Name")

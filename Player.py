@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 import Object
+from Utils import *
 
 class Character(ABC):
     def __init__(self, name, startingHp):
@@ -23,11 +24,54 @@ class Character(ABC):
         return self._hp
 
 class Player(Character):
+
+    class Sac:
+        def __init__(self, startingSize:int):
+            self.bagSize = startingSize
+            self.content = []
+
+        def AddItem(self, item:Object) -> bool:
+            match item:
+                case Object.Talisman:
+                    self.talismans[item] = True
+                    return True
+                case _: # On a un objet lambda
+                    if len(self.sac >= self.bagSize):
+                        return False # On ne peut pas inserer d'objet dans le sac
+                    self.sac.append(item)
+                    return False
+                
+        def GetBagContent(self) -> list:
+            return self.content
+        
+        def RmItem(self, item):
+            """
+            /!\ Supprime l'existance de l'item specifié
+            """
+            del item
+
+    class Equipement:
+        def __init__(self):
+            self.equiped:dict[int:Object.EquipableObject] = {1:None, 2:None,3:None, 4:None}
+        
+        def EquipItem(self, item:Object.EquipableObject) -> Object.EquipableObject | None:            
+            old = self.equiped[item.objectType.value]
+            self.equiped[item.objectType.value] = item
+            return old
+        
+        def GetBonusStats(self):
+            bonusDef = 0
+            bonusHp = 0
+            bonusDamage = 0
+            bonusXp = 0
+            # TODO: donner les stats
+
+
     def __init__(self,name,xp=0, bagSize=2):
         super().__init__(name, 5) #Tous les joueurs commencent avec 5 PV au niveau 0
 
-        self.sac = []
-        self.bagSize = 4
+        self.sac = self.Sac(bagSize)
+
 
         dicoTalisman = {1:("CodeName","Lecture des pensées"),2:("Morpion","Rapidité"),3:("Sphinx","Connaissance ultime"),4:("Integrale","Puissance calculatoire")}
         self.talismans = {id:False for id in dicoTalisman}
@@ -56,18 +100,7 @@ class Player(Character):
         self.sac = []
         self._isDead = True
 
-    def AddItem(self, item:Object) -> bool:
-        match item:
-            case Object.Talisman:
-                self.talismans[item] = True
-                return True
-            case _: # On a un objet lambda
-                if len(self.sac >= self.bagSize):
-                    return False # On ne peut pas inserer d'objet dans le sac
-                self.sac.append(item)
-                return False
-
-    def GetBag(self):
+    def GetBag(self) -> Sac:
         return self.sac
 
     def IsAlive(self):
