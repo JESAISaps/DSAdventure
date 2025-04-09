@@ -7,13 +7,22 @@ class Character(ABC):
         super().__init__()
         self._name = name
         self._hp = startingHp
+        self._precision = 80
+        self.evasion = 10
+        self._resistance = 1
+
+        self._bonusPrecision = 0
+        self._attackDelayEffect = 0
+        self._bonusDamage = 0
+        self._bonusResistance = 0
+        self._bonusEvasion = 0
 
     @abstractmethod
     def Die(self):
         print("Le joueur est mort")
     
     def TakeDamage(self, quantity):
-        self._hp -= quantity
+        self._hp -= quantity*1/(self._bonusResistance+self._resistance)
         if self._hp <= 0:
             self.Die()
 
@@ -22,33 +31,64 @@ class Character(ABC):
     
     def GetHp(self):
         return self._hp
+    
+    def AddEffect(self, effet:Effect, power):
+        match effet:
+            case Effect.AnnulationAttaque:
+                self._attackDelayEffect += power
+            case Effect.AugmentationDegatPoint:
+                self.bonusDamage += power
+            case Effect.AugmentationDegatPourcentage:
+                self._bonusDamage += 1+power/100
+            case Effect.AugmentationResistancePoint:
+                self._bonusResistance += power
+            case Effect.AugmentationResistancePourcentage:
+                self._bonusResistance *= 1+power/100
+            case Effect.AugmentationPrecision:
+                self._bonusPrecision += power
+            case Effect.AugmentationEsquive:
+                self._bonusEvasion += power
+
+    def ActualizeEffectsAfterRound(self):
+        if self._attackDelayEffect > 0:
+            self._attackDelayEffect -= 1
+        self._bonusDamage = 0
+        self._bonusPrecision = 0
+        self._bonusEvasion = 0
+        self._bonusResistance = 0
+
+    def GetAttackDelay(self):
+        return self._attackDelayEffect
 
 class Player(Character):
 
     class Sac:
         def __init__(self, startingSize:int):
             self.bagSize = startingSize
-            self.content = []
+            self.content:list[Object.Object] = []
 
-        def AddItem(self, item:Object) -> bool:
-            match item:
-                case Object.Talisman:
+        def AddItem(self, item:Object.Object) -> bool:
+            match item.objectType:
+                case ObjectType.Talisman:
                     self.talismans[item] = True
                     return True
                 case _: # On a un objet lambda
-                    if len(self.sac >= self.bagSize):
+                    if len(self.content) >= self.bagSize:
                         return False # On ne peut pas inserer d'objet dans le sac
-                    self.sac.append(item)
+                    self.content.append(item)
                     return False
                 
-        def GetBagContent(self) -> list:
+        def GetContent(self) -> list[Object.Object]:
             return self.content
         
         def RmItem(self, item):
-            """
-            /!\ Supprime l'existance de l'item specifié
+            r"""
+            /!\ Supprime l'existance de l'item specifié /!\ 
             """
             del item
+
+        def Empty(self):
+            return self.content == []
 
     class Equipement:
         def __init__(self):
@@ -106,13 +146,21 @@ class Player(Character):
     def IsAlive(self):
         return not self._isDead
     
-    def GetAttacks(self):
+    def GetAttacks(self) -> dict[str:dict[str:int]]:
         return self._attacks
     
     def AddTalisman(self, id):
         self.talismans[id]=True
 
+    def GetUsableObjects(self) -> list[Object.UsableObject]:
+        rep = []
+        for item in self.GetBag().GetContent():
+            if item.objectType == ObjectType.Usable:
+                rep.append(item)
 
+        return rep
+    
+    
 
 class Enemi(Character):
     def __init__(self, name, startingHp=5, attacks=[("Coup de poing",2), ("Coup de regle",1), ("Coup de tete",10)]):

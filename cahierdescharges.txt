@@ -24,7 +24,7 @@ Les mini-jeux sont des Week end, potentiellement de révision.
 
 Les objects: ramassable sur les corps des ennemis, ou achetable au shop, ou avec un coffre
 antisèche :rajoute 2 point de degats a la prochaine attaque
-lunettes: tu vois claire et peut reveler une salle secrette, se casse si porté a un combat.
+lunettes: tu vois claire et peut reveler une salle secrete, se casse si porté a un combat.
 bouteille d'eau: augmente la precision.
 montre: meilleure gestion du temp: permet d'esquiver une attaque.
 amelioration trousse: on peut stocker 1 objet en plus.
@@ -34,7 +34,7 @@ chatGPT: augmente la prochaine attaque + 5, mais la meme pour le prof
 Les pieces d'equipement: objet qu'on peut equiper
 stylo: +2 point de degat, selon la qualité ++
 ordinateur: augmente l'attaque de 1 a chauschaque tour.
-chaussures trop stylé: augmente la priorité de combat
+chaussures trop stylé: augmente la vitesse
 t-shirt : defence +3
 fluo : gain XP + 50%
 ù
