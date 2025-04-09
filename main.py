@@ -5,8 +5,3 @@ import questionary
 import keyboard
 
 player = Player("Jean", 0)
-
-
-isQPressed = False
-presse = keyboard.read_hotkey()
-print(presse)

@@ -76,6 +76,7 @@ class Fight:
         print(enemies)
         choice = questionary.select("Quel ennemi voulez-vous attaquer ?", choices=enemiNameList).ask()
         return self._enemiNames[choice]
+    
 if __name__ == "__main__":
     player = Player("e")
     enemi = Enemi("r", 10)

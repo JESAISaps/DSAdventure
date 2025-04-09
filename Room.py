@@ -311,7 +311,7 @@ class Integrale(DefiRoom):
         fig, ax = plt.subplots(figsize=(5, 2))
         ax.axis("off")  # Hide axes
         # Render LaTeX formula
-        ax.text(0.5, 0.5, r"$\int \frac{1}{e^x + 1} \,dx$", fontsize=20, ha="center")
+        ax.text(0.5, 0.5, r"$\int_{0}^{\infty} \frac{1}{e^x + 1} \,dx$", fontsize=20, ha="center")
         plt.show()
         
         return click.prompt("Resultat: ", type=str)
