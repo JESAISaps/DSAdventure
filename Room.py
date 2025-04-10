@@ -107,13 +107,13 @@ class FightRoom(Room):
 
     def StartFight(self, player):
         fight = Fight(player, self._enemies)
-        fight.StartFight()        
+        return fight.StartFight()        
 
     def RoomIntroduction(self):
         return f"Tu arrive en face de {self._nbEnemies} ennemis"
     
-    def GetEnemiNb(self):
-        return self._nbEnemies()
+    def GetEnemiNb(self) :
+        return self._nbEnemies
 
 class DefiRoom(Room):
     def __init__(self, name):

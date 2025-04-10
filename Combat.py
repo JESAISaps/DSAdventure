@@ -19,12 +19,12 @@ class Fight:
             self.DoRound()
 
         if self._player.IsAlive():
-            pass
             print("Bravo tu as gagne")
+            return True
             # TODO: Donner les recompenses, et terminer le combat.
         else:
-            pass
             print("nul tu as perdu")
+            return False
             # TODO: Le joueur est mort, faut recommencer.
 
     def DoRound(self):

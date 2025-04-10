@@ -7,6 +7,7 @@ class Character(ABC):
         super().__init__()
         self._name = name
         self._hp = startingHp
+        self._maxHp = startingHp
         self._precision = 80
         self.evasion = 10
         self._resistance = 1
@@ -81,6 +82,9 @@ class Player(Character):
         def GetContent(self) -> list[Object.Object]:
             return self.content
         
+        def GetBagSize(self):
+            return self.bagSize
+        
         def RmItem(self, item):
             r"""
             /!\ Supprime l'existance de l'item specifié /!\ 
@@ -137,8 +141,12 @@ class Player(Character):
         self._xp = 0
 
     def Die(self):
-        self.sac = []
+        self.sac = self.Sac(self.sac.GetBagSize())
         self._isDead = True
+
+    def Revive(self):
+        self._isDead = False
+        self._hp = self._maxHp
 
     def GetBag(self) -> Sac:
         return self.sac
