@@ -32,3 +32,6 @@ class Effect(Enum):
     AnnulationAttaque = auto()
     AugmentationEsquive = auto()
     AugmentationDegatReciproque = auto()
+
+class AttackStats(Enum):
+    Degats = "Degats"

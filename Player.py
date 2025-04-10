@@ -10,6 +10,7 @@ class Character(ABC):
         self._precision = 80
         self.evasion = 10
         self._resistance = 1
+        self._isDead = False
 
         self._bonusPrecision = 0
         self._attackDelayEffect = 0
@@ -19,7 +20,7 @@ class Character(ABC):
 
     @abstractmethod
     def Die(self):
-        print("Le joueur est mort")
+        pass
     
     def TakeDamage(self, quantity):
         self._hp -= quantity*1/(self._bonusResistance+self._resistance)
@@ -33,11 +34,12 @@ class Character(ABC):
         return self._hp
     
     def AddEffect(self, effet:Effect, power):
+        #print(f"{effet} et la puissance {power}")
         match effet:
             case Effect.AnnulationAttaque:
                 self._attackDelayEffect += power
             case Effect.AugmentationDegatPoint:
-                self.bonusDamage += power
+                self._bonusDamage += power
             case Effect.AugmentationDegatPourcentage:
                 self._bonusDamage += 1+power/100
             case Effect.AugmentationResistancePoint:
@@ -59,6 +61,10 @@ class Character(ABC):
 
     def GetAttackDelay(self):
         return self._attackDelayEffect
+    
+    def IsAlive(self):
+        return not self._isDead
+    
 
 class Player(Character):
 
@@ -121,9 +127,7 @@ class Player(Character):
         self._xpCap = [10, 50, 100, 200, 250, 300, 500, 750, 1000, 2000, 3250, 5000, 6000, 7000, 8000, 9000, 10000, 15000, 20000, 50000, 100000]
         self.AjouterXp(xp)
 
-        self._attacks = {"Ecriture Soignee": {"Degats":1}, "Boule de Fau":{"Degats":1, "Etourdissement":5, "caca":"toujours"}}
-
-        self._isDead = False
+        self._attacks = {"Ecriture Soignee": {AttackStats.Degats:1}, "Boule de Fau":{AttackStats.Degats:1, "Etourdissement":5, "caca":"toujours"}}
 
     def AjouterXp(self,quantite):
         while (self._xp+quantite)>=self._xpCap[self._level]:
@@ -143,12 +147,19 @@ class Player(Character):
     def GetBag(self) -> Sac:
         return self.sac
 
-    def IsAlive(self):
-        return not self._isDead
-    
     def GetAttacks(self) -> dict[str:dict[str:int]]:
-        return self._attacks
+        return self.GetDicoAttacksWithModifiedDamage()
     
+    def GetDicoAttacksWithModifiedDamage(self):
+        rep = {}
+        for attaque in self._attacks:
+            rep[attaque] = {}
+            for stat in self._attacks[attaque]:
+                if stat == AttackStats.Degats: # Si la stat est les degats, alors on augmente les degats selon le bonus
+                    rep[attaque][stat] = self._attacks[attaque][stat] + self._bonusDamage
+                else:
+                    rep[attaque][stat] = self._attacks[attaque][stat]
+        return rep
     def AddTalisman(self, id):
         self.talismans[id]=True
 
@@ -169,8 +180,9 @@ class Enemi(Character):
         self._attacks = attacks
         self._firstAttack = attacks[0]
 
-    def Die():
-        pass
+    def Die(self):
+        self._isDead = True
+        del self
 
     def GetNextEnnemiAttack(self)->tuple[str, int]:
         if len(self._attacks) == 0:

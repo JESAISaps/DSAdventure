@@ -4,7 +4,8 @@ from Object import UsableObject, Object, Antiseche
 import questionary
 import random
 from time import sleep
-from Utils import TIMETOWAITBETWEENATTACKS, Effect
+from Utils import TIMETOWAITBETWEENATTACKS, Effect, AttackStats
+from copy import copy
 
 class Fight:
     def __init__(self, player:Player, enemiList:list[Enemi]):
@@ -29,9 +30,18 @@ class Fight:
 
     def DoRound(self):
         self.PlayerTurn()
+
+        self.CheckForKilledEnemy()
+
         self.EnemiTurn()
 
         self.EndRound()
+
+    def CheckForKilledEnemy(self):
+        enemiList = copy(self._enemies)
+        for enemi in enemiList:
+            if not enemi.IsAlive():
+                self.KillEnemy(enemi)
 
     def EndRound(self):
         self._player.ActualizeEffectsAfterRound()
@@ -45,30 +55,33 @@ class Fight:
 
         itemToUse:UsableObject = self.AskForObjectUse()
         if itemToUse != False:
-            match itemToUse.GetEffectType(): # Utile si dans le futur on a + d'effets particuliers
-                case Effect.AugmentationDegatReciproque: # Dans ce cas la on augmente l'ennemi et le joueur
-                    effet = itemToUse.Utiliser()
-                    random.choice(self._enemies).AddEffect(effet[0], effet[1][1])
-                    self._player.AddEffect(effet[0], effet[1][0])
-                case Effect.AnnulationAttaque:
-                    enemiToApplyEffect = self.GetEnemiToAttack("Sur quel ennemi voulez vous appliquer l'effet ?")
-                    enemiToApplyEffect.AddEffect(*itemToUse.Utiliser())
-                case _:
-                    self._player.AddEffect(*itemToUse.Utiliser())
-            # TODO : SUpprimer l'item apres utilisation (del marche pas)
+            self.UseObject(itemToUse)
 
         attackList = []
         enemiToAttack = self.GetEnemiToAttack()
         choice, damage = self.GetAttackPlayerChoice(attackList)
-        #print(attackList)
         sleep(TIMETOWAITBETWEENATTACKS*2)
         print(f"Tu attaque {enemiToAttack.GetName()} pour {damage} degats avec {choice}")
+        enemiToAttack.TakeDamage(damage)
+
+    def UseObject(self, itemToUse:UsableObject):
+        match itemToUse.GetEffectType(): # Utile si dans le futur on a + d'effets particuliers
+            case Effect.AugmentationDegatReciproque: # Dans ce cas la on augmente l'ennemi et le joueur
+                effet = itemToUse.Utiliser()
+                random.choice(self._enemies).AddEffect(effet[0], effet[1][1])
+                self._player.AddEffect(effet[0], effet[1][0])
+            case Effect.AnnulationAttaque:
+                enemiToApplyEffect = self.GetEnemiToAttack("Sur quel ennemi voulez vous appliquer l'effet ?")
+                enemiToApplyEffect.AddEffect(*itemToUse.Utiliser())
+            case _:
+                self._player.AddEffect(*itemToUse.Utiliser())
+            # TODO : SUpprimer l'item apres utilisation (del marche pas)
 
     def AskForObjectUse(self):
         if self._player.GetBag().Empty():
             return False
 
-        if questionary.select("Voulez vous utiliser un objet ?", choices=["Oui", "Non"]).ask() == "None":
+        if questionary.select("Voulez vous utiliser un objet ?", choices=["Oui", "Non"]).ask() == "Non":
             return False
         usableObjectList = self._player.GetUsableObjects()
         objectWithStatsToShow = self.ConvertUsableObjectsToNiceString(usableObjectList)
@@ -119,7 +132,7 @@ class Fight:
         print(attacksToShow)
         sleep(TIMETOWAITBETWEENATTACKS)
         choice = questionary.select("Quelle attaque voulez vous utiliser ?", choices=attackList, instruction=" ").ask()
-        return choice, playerAttacks[choice]["Degats"]
+        return choice, playerAttacks[choice][AttackStats.Degats]
 
     def GetEnemiToAttack(self, text:str="Quel ennemi voulez-vous attaquer ?"):
         enemies = ""
@@ -131,6 +144,9 @@ class Fight:
         print(enemies)
         choice = questionary.select(text, choices=enemiNameList).ask()
         return self._enemiNames[choice]
+    
+    def KillEnemy(self, enemi):
+        self._enemies.remove(enemi)
     
 if __name__ == "__main__":
     crotter = Player("e")
