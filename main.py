@@ -5,8 +5,11 @@ from Room import DefiRoom, Sphinx, CodeName,Integrale, Morpion, FightRoom, Menu,
 import questionary
 import keyboard
 import Map
+from Object import *
 
 player = Player("Jean", 0)
+fefe = Antiseche("crotte", 50)
+player.GetBag().AddItem(fefe)
 menu=Map.menu
 petit=Map.petitStart
 shop=Map.shop
@@ -56,7 +59,6 @@ def Partie() -> bool :
             
         salleActuelle=AskWhereToGo(salleActuelle)
     
-
 def AskWhereToGo(caseActuelle : Room)-> Room:
     choices=caseActuelle.GetVoisins()
     accessiblechoices=[]
@@ -67,7 +69,7 @@ def AskWhereToGo(caseActuelle : Room)-> Room:
                 #TODO Verif si Lunettes
             else :
                 accessiblechoices.append(i)
-    rep=questionary.select("Ou voulez vous aller?",accessiblechoices).ask()
+    rep=questionary.select("Ou voulez vous aller?",choices=accessiblechoices).ask()
     return choices[rep]
 
 def ActionShop():

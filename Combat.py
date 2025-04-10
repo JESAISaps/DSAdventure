@@ -75,7 +75,7 @@ class Fight:
                 enemiToApplyEffect.AddEffect(*itemToUse.Utiliser())
             case _:
                 self._player.AddEffect(*itemToUse.Utiliser())
-            # TODO : SUpprimer l'item apres utilisation (del marche pas)
+            # TODO : Supprimer l'item apres utilisation (del marche pas)
 
     def AskForObjectUse(self):
         if self._player.GetBag().Empty():
@@ -86,7 +86,6 @@ class Fight:
         usableObjectList = self._player.GetUsableObjects()
         objectWithStatsToShow = self.ConvertUsableObjectsToNiceString(usableObjectList)
         objectNames, nameAssociations = self.GetNamesFromItems(usableObjectList)
-        #print(objectNames, nameAssociations)
         print(objectWithStatsToShow)
         return nameAssociations[questionary.select("Quel objet veux-tu utiliser ?", choices=objectNames).ask()]
 
@@ -118,7 +117,7 @@ class Fight:
             self._player.TakeDamage(damage)
 
     def GetAttackPlayerChoice(self, attackList):
-        playerAttacks = self._player.GetAttacks()
+        playerAttacks:dict[str:dict[AttackStats.Degats:int]] = self._player.GetAttacks()
         attacksToShow = ""
         for attack in playerAttacks:
             attacksToShow += attack + " :\n    "

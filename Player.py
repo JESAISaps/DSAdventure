@@ -155,7 +155,7 @@ class Player(Character):
     def GetBag(self) -> Sac:
         return self.sac
 
-    def GetAttacks(self) -> dict[str:dict[str:int]]:
+    def GetAttacks(self) -> dict[str:dict[AttackStats.Degats:int]]:
         return self.GetDicoAttacksWithModifiedDamage()
     
     def GetDicoAttacksWithModifiedDamage(self):
