@@ -126,7 +126,8 @@ class Shop(Room):
             if rep == "Sortir du Shop" : 
                 return False
             prix = self.dicoAffichage[rep][1]
-            print("Vous n'avez pas assez d'argent, essayez peut-être un autre objet ?\n")
+            if prix > player.GetMoney():
+                print("Vous n'avez pas assez d'argent, essayez peut-être un autre objet ?\n")
             sleep(1)
         player.ChangeMoney(-prix)
         print("Objet ajouté à l'inventaire, vous pourrez désormais l'utiliser en combat\n")

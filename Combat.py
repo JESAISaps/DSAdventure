@@ -56,7 +56,7 @@ class Fight:
     def AddKillRewardsToPLayer(self, rewards:list[Object]):
         if len(rewards) <= self._player.GetBag().GetEmptySpacesNb():
             for item in rewards:
-                self._player.GetBag().AddItem(item)
+                self._player.AddItem(item)
                 print(f"Tu as obtenu {item.GetName()}.")
         else:
             print("Tu n'as pas assez de place pour tous les objets.")
@@ -64,7 +64,7 @@ class Fight:
             while(self._player.GetBag().GetEmptySpacesNb() > 0):
                 rewardDico = {item.GetName():item for item in rewards}
                 item = questionary.select("Quel objet veux- tu prendre ?", choices=rewardDico.keys()).ask()
-                self._player.GetBag().AddItem(rewardDico[item])
+                self._player.AddItem(rewardDico[item])
                 rewards.remove(rewardDico[item])
                 
         
@@ -105,7 +105,7 @@ class Fight:
             # TODO : Supprimer l'item apres utilisation (del marche pas)
 
     def AskForObjectUse(self):
-        if self._player.GetBag().Empty():
+        if self._player.GetUsableObjects() == []:
             return False
 
         if questionary.select("Voulez vous utiliser un objet ?", choices=["Oui", "Non"]).ask() == "Non":
@@ -181,7 +181,7 @@ if __name__ == "__main__":
     e2 = Enemi("ytrez", 10, [("cacatoutmou", 0)])
 
     item = Antiseche("caca", 20)
-    crotter.GetBag().AddItem(item)
+    crotter.AddItem(item)
 
 
     fight = Fight(crotter, [enemi, e2])

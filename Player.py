@@ -74,20 +74,12 @@ class Player(Character):
         def __init__(self, startingSize:int):
             self.bagSize = startingSize
             self.content:list[Object.Object] = []
-            self._money = 0
 
         def AddItem(self, item:Object.Object) -> bool:
-            match item.objectType:
-                case ObjectType.Talisman:
-                    self.talismans[item] = True
-                    return True
-                case ObjectType.Money:
-                    self._money += item.amount
-                case _: # On a un objet lambda
-                    if len(self.content) >= self.bagSize:
-                        return False # On ne peut pas inserer d'objet dans le sac
-                    self.content.append(item)
-                    return False
+                if len(self.content) >= self.bagSize:
+                    return False # On ne peut pas inserer d'objet dans le sac
+                self.content.append(item)
+                return False
                 
         def GetContent(self) -> list[Object.Object]:
             return self.content
@@ -100,16 +92,18 @@ class Player(Character):
         
         def RmItem(self, item):
             r"""
-            /!\ Supprime l'existance de l'item specifié /!\ 
+            supprime l'item de l'inventaire d'un joueur.
             """
-            del item
+            self.content.remove(item)
 
-        def Empty(self):
+        def isEmpty(self):
             return self.content == []
 
+        def RemoveAllItems(self):
+            self.content = []
     class Equipement:
         def __init__(self):
-            self.equiped:dict[int:Object.EquipableObject] = {1:None, 2:None,3:None, 4:None}
+            self.equiped:dict[int:Object.EquipableObject] = {ObjectType.Arme:None, ObjectType.Chapeau:None,ObjectType.TShirt:None, ObjectType.Chaussures:None}
         
         def EquipItem(self, item:Object.EquipableObject) -> Object.EquipableObject | None:            
             old = self.equiped[item.objectType.value]
@@ -123,16 +117,20 @@ class Player(Character):
             bonusXp = 0
             # TODO: donner les stats
 
+        def GetEquiped(self):
+            return self.equiped
+
 
     def __init__(self,name,xp=0, bagSize=2):
         super().__init__(name, 10) #Tous les joueurs commencent avec 10 PV au niveau 0
 
         self.sac = self.Sac(bagSize)
-
+        self.equipement = self.Equipement()
 
         dicoTalisman = {1:("CodeName","Lecture des pensées"),2:("Morpion","Rapidité"),3:("Sphinx","Connaissance ultime"),4:("Integrale","Puissance calculatoire")}
         self.talismans = {id:False for id in dicoTalisman}
 
+        self._money = 0
         self._xp=0
         self._level = 0
         self._xpCap = [10, 50, 100, 200, 250, 300, 500, 750, 1000, 2000, 3250, 5000, 6000, 7000, 8000, 9000, 10000, 15000, 20000, 50000, 100000]
@@ -143,10 +141,13 @@ class Player(Character):
         self._attacks = {"Ecriture Soignee": {AttackStats.Degats:1}, "Boule de Fau":{AttackStats.Degats:1, AttackStats.DelaiAttaque:5}}
 
     def GetMoney(self):
-        return self.sac._money
+        return self._money
     
     def ChangeMoney(self,qte):
-        self.sac._money += qte
+        self._money += qte
+
+    def SetMoney(self,qte):
+        self._money = qte
 
     def AjouterXp(self,quantite):
         while (self._xp+quantite)>=self._xpCap[self._level]:
@@ -160,7 +161,7 @@ class Player(Character):
         self._xp = 0
 
     def Die(self):
-        self.sac = self.Sac(self.sac.GetBagSize())
+        self.sac.RemoveAllItems()
         self._isDead = True
 
     def Revive(self):
@@ -195,6 +196,7 @@ class Player(Character):
         return rep
     
     def AddItem(self, item:Object.Object | Money):
+        print(item.objectType)
         match item.objectType:
                 case ObjectType.Talisman:
                     self.talismans[item] = True
@@ -203,20 +205,32 @@ class Player(Character):
                     self._money += item.amount
                     return True
                 case _: # On a un objet lambda
-                    if self.sac.GetEmptySpacesNb() <= 0:
-                        return False # On ne peut pas inserer d'objet dans le sac
-                    self.sac.AddItem(item)
-                    return True
-            
+                    return self.sac.AddItem(item)
     def GetLevel(self):
         return self._level
+    
+    def RemoveItem(self, item):
+        self.sac.RmItem(item)
 
+    def EquipItem(self, item):
+        oldItem = self.equipement.EquipItem(item)
+        self.RemoveItem(item)
+        self.AddItem(oldItem)
+
+    def GetEquipableItems(self):
+        return [item for item in self.sac.content if item.objectType in [ObjectType.Arme, ObjectType.Chapeau, ObjectType.Chaussures, ObjectType.TShirt]]
+    
+    def PrintEquipment(self):
+        equipedItems = self.equipement.GetEquiped()
+        return f"Tete: {equipedItems[ObjectType.Chapeau]}\n\nCorp: {equipedItems[ObjectType.TShirt]}\
+       Arme: {equipedItems[ObjectType.Arme]}\n\n Bas: {equipedItems[ObjectType.Chaussures]}"
+        
     
     
 class Enemi(Character):
     def __init__(self, name, startingHp=5, attacks=[("Coup de poing",2), ("Coup de regle",1), ("Coup de tete",10)]):
         super().__init__(name, startingHp)
-        self.dropPossibilities = {Money(amount=randint(2, startingHp+2)):80,
+        self.dropPossibilities = {Money(amount=randint(2, (startingHp+2)*3)):130,
                                     
                                     Object.Armure("Casquette Stylée", objectType=ObjectType.Chapeau, defense=2, degat=0, pv=5): 4,
                                     Object.Armure("T-Shirt Déchiré", objectType=ObjectType.TShirt, defense=1, degat=0, pv=3): 5,
@@ -231,6 +245,7 @@ class Enemi(Character):
                                     Object.Blanco("Blanco Magique", 9): 6,
                                     Object.Montre("Montre Casse-Tête", 11): 5,
                                     Object.ChatGPT("ChatGPT", 15, 7): 5,
+                                    Object.AmeliorationSac("Trousse ++", 2):25
                                     }
         self._attacks = attacks
         self._firstAttack = attacks[0]
