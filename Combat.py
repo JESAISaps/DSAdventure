@@ -15,7 +15,6 @@ class Fight:
         self._enemiNames = {enemi.GetName():enemi for enemi in enemiList}
 
     def StartFight(self):
-
         while self._enemies != [] and self._player.IsAlive(): #On continue tant qu'il y a des ennemis, et que le joueur est vivant.
             self.DoRound()
 

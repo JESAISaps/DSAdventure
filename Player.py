@@ -207,6 +207,9 @@ class Player(Character):
                         return False # On ne peut pas inserer d'objet dans le sac
                     self.sac.AddItem(item)
                     return True
+            
+    def GetLevel(self):
+        return self._level
 
     
     
