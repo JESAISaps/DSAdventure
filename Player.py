@@ -74,6 +74,7 @@ class Player(Character):
         def __init__(self, startingSize:int):
             self.bagSize = startingSize
             self.content:list[Object.Object] = []
+            self._money = 0
 
         def AddItem(self, item:Object.Object) -> bool:
             match item.objectType:
@@ -131,7 +132,6 @@ class Player(Character):
 
         dicoTalisman = {1:("CodeName","Lecture des pensées"),2:("Morpion","Rapidité"),3:("Sphinx","Connaissance ultime"),4:("Integrale","Puissance calculatoire")}
         self.talismans = {id:False for id in dicoTalisman}
-        self._money = 0
 
         self._xp=0
         self._level = 0
@@ -143,10 +143,10 @@ class Player(Character):
         self._attacks = {"Ecriture Soignee": {AttackStats.Degats:1}, "Boule de Fau":{AttackStats.Degats:1, AttackStats.DelaiAttaque:5}}
 
     def GetMoney(self):
-        return self._money
+        return self.sac._money
     
     def ChangeMoney(self,qte):
-        self._money += qte
+        self.sac._money += qte
 
     def AjouterXp(self,quantite):
         while (self._xp+quantite)>=self._xpCap[self._level]:
@@ -198,7 +198,7 @@ class Player(Character):
 class Enemi(Character):
     def __init__(self, name, startingHp=5, attacks=[("Coup de poing",2), ("Coup de regle",1), ("Coup de tete",10)]):
         super().__init__(name, startingHp)
-        self.dropPossibilities = {Money(amount=randint(2, startingHp)):80,
+        self.dropPossibilities = {Money(amount=randint(2, startingHp+2)):80,
                                     
                                     Object.Armure("Casquette Stylée", objectType=ObjectType.Chapeau, defense=2, degat=0, pv=5): 4,
                                     Object.Armure("T-Shirt Déchiré", objectType=ObjectType.TShirt, defense=1, degat=0, pv=3): 5,
