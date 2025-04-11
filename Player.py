@@ -125,7 +125,7 @@ class Player(Character):
 
 
     def __init__(self,name,xp=0, bagSize=2):
-        super().__init__(name, 5) #Tous les joueurs commencent avec 5 PV au niveau 0
+        super().__init__(name, 10) #Tous les joueurs commencent avec 10 PV au niveau 0
 
         self.sac = self.Sac(bagSize)
 
