@@ -14,7 +14,7 @@ totoStart = Enemi("Toto Boss", 1, [("ODG", 100)])
 trioInfernalRoom=FightRoom([petitStart,babaStart, totoStart])
 trioInfernalRoomVide=FightRoom([])
 
-barcelo = Enemi("Baba", 10, [("Norme",3), ("Regard Percant",1), ("Espace métrique",10)])
+barcelo = Enemi("Baba", 5, [("Norme",2), ("Regard Percant",1), ("Espace métrique",5)])
 barceloRoom=FightRoom([barcelo])
 
 oliv = Enemi("Oliv", 10, [("ODG", 10), ("Outils Maths", 5), ("Vue de l'esprit", 50)])
