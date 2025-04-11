@@ -6,6 +6,7 @@ import questionary
 import keyboard
 import Map
 from Object import *
+from time import sleep
 
 player = Player("Jean", 0)
 fefe = Antiseche("crotte", 50)
@@ -31,25 +32,28 @@ def Starting() -> bool :
     Retourne True dès que les achats sont terminés
     """
     AffichageMenu()
-    print("Appuyez sur Espace pour commencer le jeu")
+    print("Appuyez sur Espace pour commencer le jeu \n")
     keyboard.wait("Space")
     AffichageShop()   
 
 def AttaqueTrioInfernal(): 
     print(trioInfernal.RoomIntroduction())
+    sleep(0.5)
     trioInfernal.StartFight(player)
-    print("Tu es mort")
+    print("Tu es mort\n")
 
 def Partie() -> bool :
-    print("Appuyez sur Espace pour continuer le jeu")
+    print("Appuyez sur Espace pour continuer le jeu \n")
     keyboard.wait("Space")
     AffichageShop()
     salleActuelle=trioInfernalVide
+    sleep(0.5)
     while player.IsAlive():
         if isinstance(salleActuelle, FightRoom):
             AffichageRoomIntroduction(salleActuelle)
+            sleep(0.5)
             if salleActuelle.StartFight(player)==False:
-                print("Tu es mort")
+                print("Tu es mort \n")
                 return False
             else :
                 pass
@@ -76,19 +80,26 @@ def ActionShop():
     rep=questionary.select("Voulez vous acheter un objet?",choices=["Oui","Non, jouer"]).ask()
     #TODO AFFICHER LARGENT
     if rep=="Oui":
-            AchatObjet()
-            return True
+        objet=shop.AchatObjet(player)
+        if objet != False :
+            AjouterObjetInventaire(objet)
+        else :
+            print("C'est parti ! \n")
+            sleep(1)
+            return False
+        return True
     else :
-        print("C'est parti!")
+        print("C'est parti!\n")
+        sleep(0.5)
         return False
     
+def AjouterObjetInventaire(objet):
+    player.GetBag().AddItem(objet)
 
-def AchatObjet():
-    pass
 
 def AffichageRoomIntroduction(salleActuelle):
     if salleActuelle.GetEnemiNb()==0:
-        print("Les ennemis sont partis, tu peux avancer dans le labyrinthe, ou récupérer des objets s'il y en a")
+        print("Les ennemis sont partis, tu peux avancer dans le labyrinthe \n")
     else :
         print(salleActuelle.RoomIntroduction())
 

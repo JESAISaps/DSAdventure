@@ -125,6 +125,7 @@ class Player(Character):
 
         dicoTalisman = {1:("CodeName","Lecture des pensées"),2:("Morpion","Rapidité"),3:("Sphinx","Connaissance ultime"),4:("Integrale","Puissance calculatoire")}
         self.talismans = {id:False for id in dicoTalisman}
+        self._money = 0
 
         self._xp=0
         self._level = 0
@@ -132,6 +133,12 @@ class Player(Character):
         self.AjouterXp(xp)
 
         self._attacks = {"Ecriture Soignee": {AttackStats.Degats:1}, "Boule de Fau":{AttackStats.Degats:1, "Etourdissement":5, "caca":"toujours"}}
+
+    def GetMoney(self):
+        return self._money
+    
+    def ChangeMoney(self,qte):
+        self._money += qte
 
     def AjouterXp(self,quantite):
         while (self._xp+quantite)>=self._xpCap[self._level]:

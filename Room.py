@@ -5,8 +5,10 @@ import random
 from Utils import * 
 from sympy import integrate, symbols, oo, exp, ln, pprint, init_printing, latex, Integral
 import matplotlib.pyplot as plt
-from Player import Enemi, Player
+from Player import *
 from Combat import Fight
+from Object import *
+from time import sleep
 
 class Room(ABC):
     def __init__(self):
@@ -74,9 +76,26 @@ class Shop(Room):
         super().__init__()
         self._name=name
         self._objects=[("Gomme", 5),("Bouteille d'eau", 8)]
+        self.antiseche = Antiseche("Antisèche",5)
+        self.bouteille = Bouteille("Bouteille",10)
+        self.montre = Montre("Montre",1)
+        self.ameliorationTrousse = AmeliorationSac("Amélioration de la trousse",1)
+        self.blanco = Blanco("Blanco",1)
+        self.chatGPT = ChatGPT("ChatGPT",10,5)
+
+
+        self.dicoAffichage={f'{self.antiseche.GetName()} : {5}€':(self.antiseche,5),
+                            f'{self.bouteille.GetName()} : {10}€':(self.bouteille,10),
+                            f'{self.montre.GetName()} : {100}€':(self.montre,100),
+                            f'{self.blanco.GetName()} : {5}€': (self.blanco,5),
+                            f'{self.chatGPT.GetName()} : {30}€': (self.chatGPT,30),
+                            f'{self.ameliorationTrousse.GetName()} : {50}€':(self.ameliorationTrousse, 50),
+                            f'Sortir du Shop': 0}
+       
+        #self.listeAffichageNomObjetsPrix=self.dicoAffichage.key()
 
     def RoomIntroduction(self):
-        return f"Bienvenue au {self._name} !"
+        return f"Bienvenue au {self._name} ! \n"
     
     def ShowObjects(self):
         print(f"Voici les objets de la boutique : {self._objects}")
@@ -98,6 +117,22 @@ class Shop(Room):
 #                                               $$/                    #
 ########################################################################
 """
+    def AchatObjet(self, player:Player):
+        prix=float("inf")
+        print(f'Vous avez de {player.GetMoney()}€ dans votre portefeuille \n')
+        sleep(1)
+        while prix > player.GetMoney():
+            rep = questionary.select("Quel objet voulez vous acheter?",choices=self.dicoAffichage.keys()).ask()
+            if rep == "Sortir du Shop" : 
+                return False
+            prix = self.dicoAffichage[rep][1]
+            print("Vous n'avez pas assez d'argent, essayez peut-être un autre objet ?\n")
+            sleep(1)
+        player.ChangeMoney(-prix)
+        print("Objet ajouté à l'inventaire, vous pourrez désormais l'utiliser en combat\n")
+        sleep(0.5)
+        return self.dicoAffichage[rep][0]
+    
 
 class FightRoom(Room):
     def __init__(self, ennemies:list[Enemi]):
@@ -171,6 +206,7 @@ class CodeName(DefiRoom):
                 return True
             else : 
                 print("Vous n'avez rien gagné")
+                return False
 class Morpion(DefiRoom):
     def __init__(self):
         super().__init__("Morpion")
@@ -308,6 +344,7 @@ class Sphinx(DefiRoom):
             print("Bravo, vous avez gagné un Talisman")
             return True
         else:
+            return False
             print("Vous n'avez rien gagné")
 class Integrale(DefiRoom):
     def __init__(self):
