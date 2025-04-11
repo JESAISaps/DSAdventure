@@ -8,9 +8,8 @@ import Map
 from Object import *
 from time import sleep
 
-player = Player("Jean", 0)
-fefe = Antiseche("crotte", 50)
-player.GetBag().AddItem(fefe)
+player = Player("Marine", 0)
+fefe = Antiseche("Antisèche", 50)
 menu=Map.menu
 petit=Map.petitStart
 shop=Map.shop
