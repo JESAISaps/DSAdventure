@@ -194,6 +194,21 @@ class Player(Character):
 
         return rep
     
+    def AddItem(self, item:Object.Object | Money):
+        match item.objectType:
+                case ObjectType.Talisman:
+                    self.talismans[item] = True
+                    return True
+                case ObjectType.Money:
+                    self._money += item.amount
+                    return True
+                case _: # On a un objet lambda
+                    if self.sac.GetEmptySpacesNb() <= 0:
+                        return False # On ne peut pas inserer d'objet dans le sac
+                    self.sac.AddItem(item)
+                    return True
+
+    
     
 class Enemi(Character):
     def __init__(self, name, startingHp=5, attacks=[("Coup de poing",2), ("Coup de regle",1), ("Coup de tete",10)]):
