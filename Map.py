@@ -1,6 +1,5 @@
 from Room import FightRoom, CodeName, Menu, Sphinx, Morpion, Conseil, Integrale, Room,Shop
 from Player import Enemi
-import graphviz 
 
 menu=Menu("1ère année")
 shop=Shop("Shop")

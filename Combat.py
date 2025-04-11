@@ -5,7 +5,7 @@ import questionary
 import random
 from time import sleep
 from Utils import TIMETOWAITBETWEENATTACKS, Effect, AttackStats
-from copy import copy
+from copy import copy, deepcopy
 
 class Fight:
     def __init__(self, player:Player, enemiList:list[Enemi]):
@@ -20,7 +20,7 @@ class Fight:
             self.DoRound()
 
         if self._player.IsAlive():
-            print("Bravo tu as gagne")
+            print("Tu peux a present changer de salle.")
             return True
             # TODO: Donner les recompenses, et terminer le combat.
         else:
@@ -41,7 +41,34 @@ class Fight:
         enemiList = copy(self._enemies)
         for enemi in enemiList:
             if not enemi.IsAlive():
+                rewards = self.GetRewardsOnKill(enemi)
+                self.AddKillRewardsToPLayer(rewards)
                 self.KillEnemy(enemi)
+
+    def GetRewardsOnKill(self, enemi:Enemi):
+        dropTable = enemi.GetDropTable()
+        toDrop = []
+        for item in dropTable:
+            if random.randint(0, 150) <= dropTable[item]:
+                toDrop.append(item)
+        
+        return deepcopy(toDrop)
+    
+    def AddKillRewardsToPLayer(self, rewards:list[Object]):
+        if len(rewards) <= self._player.GetBag().GetEmptySpacesNb():
+            for item in rewards:
+                self._player.GetBag().AddItem(item)
+                print(f"Tu as obtenu {item.GetName()}.")
+        else:
+            print("Tu n'as pas assez de place pour tous les objets.")
+            sleep(TIMETOWAITBETWEENATTACKS/2)
+            while(self._player.GetBag().GetEmptySpacesNb() > 0):
+                rewardDico = {item.GetName():item for item in rewards}
+                item = questionary.select("Quel objet veux- tu prendre ?", choices=rewardDico.keys()).ask()
+                self._player.GetBag().AddItem(rewardDico[item])
+                rewards.remove(rewardDico[item])
+                
+        
 
     def EndRound(self):
         self._player.ActualizeEffectsAfterRound()
@@ -59,7 +86,8 @@ class Fight:
 
         attackList = []
         enemiToAttack = self.GetEnemiToAttack()
-        choice, damage = self.GetAttackPlayerChoice(attackList)
+        choice, attack= self.GetAttackPlayerChoice(attackList)
+        damage = attack[AttackStats.Degats]
         sleep(TIMETOWAITBETWEENATTACKS*2)
         print(f"Tu attaque {enemiToAttack.GetName()} pour {damage} degats avec {choice}")
         enemiToAttack.TakeDamage(damage)
@@ -131,7 +159,7 @@ class Fight:
         print(attacksToShow)
         sleep(TIMETOWAITBETWEENATTACKS)
         choice = questionary.select("Quelle attaque voulez vous utiliser ?", choices=attackList, instruction=" ").ask()
-        return choice, playerAttacks[choice][AttackStats.Degats]
+        return choice, playerAttacks[choice]
 
     def GetEnemiToAttack(self, text:str="Quel ennemi voulez-vous attaquer ?"):
         enemies = ""
@@ -149,6 +177,7 @@ class Fight:
     
 if __name__ == "__main__":
     crotter = Player("e")
+    crotter.GetBag().bagSize = 2
     enemi = Enemi("r", 10)
     e2 = Enemi("ytrez", 10, [("cacatoutmou", 0)])
 

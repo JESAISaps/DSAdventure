@@ -1,5 +1,6 @@
 import click
 from enum import Enum, auto
+from dataclasses import dataclass
 
 TIMETOWAITBETWEENATTACKS = .5
 
@@ -22,6 +23,7 @@ class ObjectType(Enum):
     Arme = auto()
     Talisman = auto()
     Usable = auto()
+    Money = auto()
 
 class Effect(Enum):
     AugmentationResistancePoint = auto()
@@ -33,5 +35,22 @@ class Effect(Enum):
     AugmentationEsquive = auto()
     AugmentationDegatReciproque = auto()
 
+@dataclass(unsafe_hash=True)
+class Money:
+    amount:int
+    objectType = ObjectType.Money
+
+    def GetName(self):
+        return f"Pieces - {self.amount}€"
+
 class AttackStats(Enum):
     Degats = "Degats"
+    DelaiAttaque = "Recul Attaque"
+
+class LevelUpRewardType(Enum):
+    BonusPv = auto()
+    BonusAttaque = auto()
+    BonusDefence = auto()
+    BonusXp = auto()
+    BonusVitesse = auto()
+    BonusPrecision = auto()

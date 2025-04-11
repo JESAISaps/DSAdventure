@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 import Object
 from Utils import *
+from random import randint
 
 class Character(ABC):
     def __init__(self, name, startingHp):
@@ -79,6 +80,8 @@ class Player(Character):
                 case ObjectType.Talisman:
                     self.talismans[item] = True
                     return True
+                case ObjectType.Money:
+                    self._money += item.amount
                 case _: # On a un objet lambda
                     if len(self.content) >= self.bagSize:
                         return False # On ne peut pas inserer d'objet dans le sac
@@ -90,6 +93,9 @@ class Player(Character):
         
         def GetBagSize(self):
             return self.bagSize
+        
+        def GetEmptySpacesNb(self):
+            return self.bagSize - len(self.content)
         
         def RmItem(self, item):
             r"""
@@ -125,13 +131,16 @@ class Player(Character):
 
         dicoTalisman = {1:("CodeName","Lecture des pensées"),2:("Morpion","Rapidité"),3:("Sphinx","Connaissance ultime"),4:("Integrale","Puissance calculatoire")}
         self.talismans = {id:False for id in dicoTalisman}
+        self._money = 0
 
         self._xp=0
         self._level = 0
         self._xpCap = [10, 50, 100, 200, 250, 300, 500, 750, 1000, 2000, 3250, 5000, 6000, 7000, 8000, 9000, 10000, 15000, 20000, 50000, 100000]
         self.AjouterXp(xp)
 
-        self._attacks = {"Ecriture Soignee": {AttackStats.Degats:1}, "Boule de Fau":{AttackStats.Degats:1, "Etourdissement":5, "caca":"toujours"}}
+        self._recompensesLevelUp = {1:{}}
+
+        self._attacks = {"Ecriture Soignee": {AttackStats.Degats:1}, "Boule de Fau":{AttackStats.Degats:1, AttackStats.DelaiAttaque:5}}
 
     def AjouterXp(self,quantite):
         while (self._xp+quantite)>=self._xpCap[self._level]:
@@ -180,11 +189,25 @@ class Player(Character):
         return rep
     
     
-
 class Enemi(Character):
     def __init__(self, name, startingHp=5, attacks=[("Coup de poing",2), ("Coup de regle",1), ("Coup de tete",10)]):
         super().__init__(name, startingHp)
-        self.dropPossibilities = []
+        self.dropPossibilities = {Money(amount=randint(2, startingHp)):80,
+                                    
+                                    Object.Armure("Casquette Stylée", objectType=ObjectType.Chapeau, defense=2, degat=0, pv=5): 4,
+                                    Object.Armure("T-Shirt Déchiré", objectType=ObjectType.TShirt, defense=1, degat=0, pv=3): 5,
+                                    Object.Armure("Bottes Cloutées", objectType=ObjectType.Chaussures, defense=4, degat=1, pv=6): 5,
+                                    Object.Armure("Stylo de Bureau", objectType=ObjectType.Arme, defense=0, degat=8, pv=0): 4,
+                                    Object.Armure("Pull de Mamie", objectType=ObjectType.TShirt, defense=3, degat=0, pv=8): 3,
+                                    Object.Armure("Lunettes de Nerd", objectType=ObjectType.Chapeau, defense=1, degat=1, pv=2): 2,
+
+                                    Object.Antiseche("Mouille", 10): 7,
+                                    Object.Antiseche("Carton Plié", 7): 15,
+                                    Object.Bouteille("Bouteille de Courage", 12): 10,
+                                    Object.Blanco("Blanco Magique", 9): 6,
+                                    Object.Montre("Montre Casse-Tête", 11): 5,
+                                    Object.ChatGPT("ChatGPT", 15, 7): 5,
+                                    }
         self._attacks = attacks
         self._firstAttack = attacks[0]
 
@@ -196,6 +219,14 @@ class Enemi(Character):
         if len(self._attacks) == 0:
             return self._firstAttack
         return self._attacks.pop(0)
+    
+    def SetDropPossibilities(self, dropTable:dict[Object:int]):
+        self.dropPossibilities = dropTable
+    def AddDropPossibilitie(self, drop:Object.Object | Money, proba:int):
+        self.dropPossibilities[drop] = proba
+
+    def GetDropTable(self):
+        return self.dropPossibilities
 
 if __name__ == "__main__":
     player = Player("z", 10)    
