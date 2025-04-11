@@ -142,6 +142,12 @@ class Player(Character):
 
         self._attacks = {"Ecriture Soignee": {AttackStats.Degats:1}, "Boule de Fau":{AttackStats.Degats:1, AttackStats.DelaiAttaque:5}}
 
+    def GetMoney(self):
+        return self._money
+    
+    def ChangeMoney(self,qte):
+        self._money += qte
+
     def AjouterXp(self,quantite):
         while (self._xp+quantite)>=self._xpCap[self._level]:
             quantite -= self._xpCap[self._level] - self._xp

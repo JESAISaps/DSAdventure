@@ -34,6 +34,7 @@ class Effect(Enum):
     AnnulationAttaque = auto()
     AugmentationEsquive = auto()
     AugmentationDegatReciproque = auto()
+    AmeliorationSac = auto()
 
 @dataclass(unsafe_hash=True)
 class Money:

@@ -77,6 +77,20 @@ class Blanco(UsableObject):
     def GetEffectAsString(self):
         return f"Annule {self.puissance} attaques de l'adversaire."
     
+class AmeliorationSac(UsableObject):
+    def __init__(self, name, puissance):
+        super().__init__(name)
+        self._effect = Effect.AmeliorationSac
+        self.puissance = puissance
+
+    @property
+
+    def _description(self):
+        return "Rajoute une place pour un objet dans la trousse"
+    
+    def GetEffectAsString(self):
+        return f"+ {self.puissance} place d'inventaire"
+    
 """ TODO : Transformer en talisman
 class Lunettes(UsableObject):
     def __init__(self):
@@ -93,7 +107,6 @@ class Lunettes(UsableObject):
 class Montre(UsableObject):
     def __init__(self, name, efficacite:int):
         """
-        0<efficacite<100
         """
         super().__init__(name)
         self._effect = Effect.AugmentationEsquive
@@ -101,7 +114,7 @@ class Montre(UsableObject):
 
     @property
     def _description(self):
-        return "Permet de donner une chance d'esquiver la prochaine attaque."
+        return "Permet d'esquiver la prochaine attaque."
     
     def GetEffectAsString(self):
         return f"+ {self.puissance} % d'esquiver les attaques"
@@ -175,7 +188,7 @@ class Arme(EquipableObject):
         super().__init__(name, objectType, defense, degat, pv, boostXp)
 
 if __name__ == "__main__":
-    stylo = Arme("Stylo style", defense = 0, degat = 10, pv=0)
+    """stylo = Arme("Stylo style", defense = 0, degat = 10, pv=0)
     ordinateurGabin = Arme("Ordi-Nateur", defense=10, degat=20, pv=10)
     tong = Armure("tong-tong-tong-tong", defense=5, degat=0, pv=10)
     tshirt = Armure("tshirt tache", defense=10, degat=0, pv=10)
@@ -183,4 +196,4 @@ if __name__ == "__main__":
     
     antiseche=Antiseche("Mouille", 10)
     
-    print(antiseche.GetDescription())
+    print(antiseche.GetDescription())"""
