@@ -5,27 +5,27 @@ import questionary
 import random
 from time import sleep
 from Utils import TIMETOWAITBETWEENATTACKS, CHOICEYESORNO, Effect, AttackStats
-from copy import copy
+from copy import copy, deepcopy
 from colorama import Fore
+import math
 
 class Fight:
     def __init__(self, player:Player, enemiList:list[Enemi]):
         self._player:Player = player
         self._enemies:list[Enemi] = enemiList
 
-        self._enemiNames = {enemi.GetName():enemi for enemi in enemiList}
+        #self._enemiNames = {f"{enemi.GetName()} - {enemi.GetHp()} hp":enemi for enemi in enemiList}
 
     def StartFight(self):
         while self._enemies != [] and self._player.IsAlive(): #On continue tant qu'il y a des ennemis, et que le joueur est vivant.
             self.DoRound()
 
         if self._player.IsAlive():
-            print("Tu peux à present changer de salle.")
+            #print("Tu peux a present changer de salle.")
             return True
-            # TODO: Donner les recompenses, et terminer le combat.
         else:
+            #print("nul tu as perdu")
             return False
-            # TODO: Le joueur est mort, faut recommencer.
 
     def DoRound(self):
         self.PlayerTurn()
@@ -42,14 +42,23 @@ class Fight:
             if not enemi.IsAlive():
                 rewards = self.GetRewardsOnKill(enemi)
                 self.AddKillRewardsToPLayer(rewards)
+                self.GivePlayerXp(enemi.GetLevel())
                 self.KillEnemy(enemi)
+
+    def GivePlayerXp(self, level):
+        xpToAdd = math.ceil(self._player.GetXpCaps(level) * random.uniform(.2, .4)) # La quantite d'exp depend du niveau de l'enemi
+        self._player.AjouterXp(xpToAdd)
+        print(f"Tu as obtenu {Fore.GREEN}{xpToAdd}{Fore.WHITE} points d'exp !")
 
     def GetRewardsOnKill(self, enemi:Enemi):
         dropTable = enemi.GetDropTable()
         toDrop = []
         for item in dropTable:
             if random.randint(0, 150) <= dropTable[item]:
-                toDrop.append(item)
+                if item.objectType == ObjectType.Money: # On ajoute deja l'argent, puis le reste.
+                    self._player.AddItem(item)
+                else:
+                    toDrop.append(item)
         
         return deepcopy(toDrop)
     
@@ -59,15 +68,14 @@ class Fight:
                 self._player.AddItem(item)
                 print(f"Tu as obtenu {Fore.BLUE + item.GetName() + Fore.RESET}.")
         else:
+
             print("Tu n'as pas assez de place pour tous les objets.")
             sleep(TIMETOWAITBETWEENATTACKS/2)
             while(self._player.GetBag().GetEmptySpacesNb() > 0):
                 rewardDico = {item.GetName():item for item in rewards}
                 item = questionary.select("Quel objet veux-tu prendre ?", choices=rewardDico.keys()).ask()
                 self._player.AddItem(rewardDico[item])
-                rewards.remove(rewardDico[item])
-                
-        
+                rewards.remove(rewardDico[item])        
 
     def EndRound(self):
         self._player.ActualizeEffectsAfterRound()
@@ -86,7 +94,12 @@ class Fight:
         attackList = []
         enemiToAttack = self.GetEnemiToAttack()
         choice, attack= self.GetAttackPlayerChoice(attackList)
-        damage = attack[AttackStats.Degats]
+        damage = 0
+        for attaque in attack:
+            if attaque == AttackStats.Degats:
+                damage = attack[attaque]
+            else:
+                enemiToAttack.AddEffect(attaque, attack[attaque])
         sleep(TIMETOWAITBETWEENATTACKS*2)
         print(f"Tu attaque {enemiToAttack.GetName()} pour {Fore.GREEN + damage + Fore.RESET} degats avec {choice}")
         enemiToAttack.TakeDamage(damage)
@@ -162,14 +175,13 @@ class Fight:
 
     def GetEnemiToAttack(self, text:str="Quel ennemi voulez-vous attaquer ?"):
         enemies = ""
-        enemiNameList = []
+        enemiNames = {f"{enemi.GetName()} - {enemi.GetHp()} hp":enemi for enemi in self._enemies}
         for enemi in self._enemies:
-            enemiNameList.append(enemi.GetName())
             enemies += f" {enemi.GetName()} - {enemi.GetHp()} hp\n"
         
-        print(enemies)
-        choice = questionary.select(text, choices=enemiNameList).ask()
-        return self._enemiNames[choice]
+        #print(enemies)
+        choice = questionary.select(text, choices=enemiNames.keys()).ask()
+        return enemiNames[choice]
     
     def KillEnemy(self, enemi):
         self._enemies.remove(enemi)
