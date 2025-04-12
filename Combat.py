@@ -4,8 +4,9 @@ from Object import UsableObject, Object, Antiseche
 import questionary
 import random
 from time import sleep
-from Utils import TIMETOWAITBETWEENATTACKS, Effect, AttackStats, ObjectType
-from copy import copy, deepcopy
+from Utils import TIMETOWAITBETWEENATTACKS, CHOICEYESORNO, Effect, AttackStats, ObjectType
+from copy import copy
+from colorama import Fore
 from colorama import Fore
 import math
 
@@ -66,14 +67,14 @@ class Fight:
         if len(rewards) <= self._player.GetBag().GetEmptySpacesNb():
             for item in rewards:
                 self._player.AddItem(item)
-                print(f"Tu as obtenu {item.GetName()}.")
+                print(f"Tu as obtenu {+ Fore.BLUE + item.GetName() + Fore.RESET}.")
         else:
 
             print("Tu n'as pas assez de place pour tous les objets.")
             sleep(TIMETOWAITBETWEENATTACKS/2)
             while(self._player.GetBag().GetEmptySpacesNb() > 0):
                 rewardDico = {item.GetName():item for item in rewards}
-                item = questionary.select("Quel objet veux- tu prendre ?", choices=rewardDico.keys()).ask()
+                item = questionary.select("Quel objet veux-tu prendre ?", choices=rewardDico.keys()).ask()
                 self._player.AddItem(rewardDico[item])
                 rewards.remove(rewardDico[item])        
 
@@ -101,7 +102,7 @@ class Fight:
             else:
                 enemiToAttack.AddEffect(attaque, attack[attaque])
         sleep(TIMETOWAITBETWEENATTACKS*2)
-        print(f"Tu attaque {Fore.RED}{enemiToAttack.GetName()}{Fore.WHITE} pour {damage} degats avec {Fore.BLUE}{choice}{Fore.WHITE}")
+        print(f"Tu attaque {enemiToAttack.GetName()} pour { damage} degats avec {choice}")
         enemiToAttack.TakeDamage(damage)
 
     def UseObject(self, itemToUse:UsableObject):
@@ -121,7 +122,7 @@ class Fight:
         if self._player.GetUsableObjects() == []:
             return False
 
-        if questionary.select("Voulez vous utiliser un objet ?", choices=["Oui", "Non"]).ask() == "Non":
+        if questionary.select("Voulez vous utiliser un objet ?", choices=[CHOICEYESORNO]).ask() == "Non":
             return False
         usableObjectList = self._player.GetUsableObjects()
         objectWithStatsToShow = self.ConvertUsableObjectsToNiceString(usableObjectList)
@@ -153,7 +154,7 @@ class Fight:
             attackingEnemi = self._enemies[random.randint(0, len(self._enemies)-1)]
             attackName, damage = attackingEnemi.GetNextEnnemiAttack()
             sleep(TIMETOWAITBETWEENATTACKS)
-            print(f"{attackingEnemi.GetName()} t'attaque avec {attackName} pour {damage} degats !")
+            print(f"{attackingEnemi.GetName()} t'attaque avec {attackName} pour {Fore.RED + damage + Fore.RESET} degats !")
             self._player.TakeDamage(damage)
 
     def GetAttackPlayerChoice(self, attackList):

@@ -9,6 +9,8 @@ from Player import *
 from Combat import Fight
 from Object import *
 from time import sleep
+from colorama import Fore
+
 
 class Room(ABC):
     def __init__(self):
@@ -56,13 +58,15 @@ class Menu(Room):
         return f"Bienvenue dans l'accueil nommé {self._name} !"
     
     def PaintRoom(self):
-        return r"""
-  __  __              
- |  \/  |___ _ _ _  _ 
- | |\/| / -_) ' \ || |
- |_|  |_\___|_||_\_,_|
-
-"""
+        return Fore.BLUE + r"""
+  __  __ ______ _   _ _    _ 
+ |  \/  |  ____| \ | | |  | |
+ | \  / | |__  |  \| | |  | |
+ | |\/| |  __| | . ` | |  | |
+ | |  | | |____| |\  | |__| |
+ |_|  |_|______|_| \_|\____/ 
+                                                         
+""" + Fore.RESET
     
 class Conseil(Room):
     def __init__(self):
@@ -101,22 +105,23 @@ class Shop(Room):
         print(f"Voici les objets de la boutique : {self._objects}")
     
     def PaintRoom(self):
-        return r"""
+        return Fore.BLUE + r"""
 ########################################################################
-#                  ______   __                                         #
-#                  /      \ /  |                                       #
-#                 /$$$$$$  |$$ |____    ______    ______               #
-#                 $$ \__$$/ $$      \  /      \  /      \              #
-#                 $$      \ $$$$$$$  |/$$$$$$  |/$$$$$$  |             #
-#                  $$$$$$  |$$ |  $$ |$$ |  $$ |$$ |  $$ |             #
-#                 /  \__$$ |$$ |  $$ |$$ \__$$ |$$ |__$$ |             #
-#                 $$    $$/ $$ |  $$ |$$    $$/ $$    $$/              #
-#                  $$$$$$/  $$/   $$/  $$$$$$/  $$$$$$$/               #
-#                                               $$ |                   #
-#                                               $$ |                   #
-#                                               $$/                    #
+#                ______   __                                           #
+#                /      \ /  |                                         #
+#               /$$$$$$  |$$ |____    ______    ______                 #
+#               $$ \__$$/ $$      \  /      \  /      \                #
+#               $$      \ $$$$$$$  |/$$$$$$  |/$$$$$$  |               #
+#                $$$$$$  |$$ |  $$ |$$ |  $$ |$$ |  $$ |               #
+#               /  \__$$ |$$ |  $$ |$$ \__$$ |$$ |__$$ |               #
+#               $$    $$/ $$ |  $$ |$$    $$/ $$    $$/                #
+#                $$$$$$/  $$/   $$/  $$$$$$/  $$$$$$$/                 #
+#                                             $$ |                     #
+#                                             $$ |                     #
+#                                             $$/                      #
 ########################################################################
-"""
+""" + Fore.RESET
+
     def AchatObjet(self, player:Player):
         prix=float("inf")
         print(f'Vous avez de {player.GetMoney()}€ dans votre portefeuille \n')
@@ -170,12 +175,12 @@ class CodeName(DefiRoom):
         self.tupleJeu=self.liste.pop()
 
     def RoomIntroduction(self):
-        return r"""
-   ___         _       _  _                
-  / __|___  __| |___  | \| |__ _ _ __  ___ 
- | (__/ _ \/ _` / -_) | .` / _` | '  \/ -_)
-  \___\___/\__,_\___| |_|\_\__,_|_|_|_\___|                                                                       
-"""
+        return Fore.MAGENTA + r"""
+ __   __   __   ___                     ___ 
+/  ` /  \ |  \ |__     |\ |  /\   |\/| |__  
+\__, \__/ |__/ |___    | \| /~~\  |  | |___ 
+                                                                                                             
+""" + Fore.RESET
 
     def AskQuestion(self):
         print(f"Je te donne 2 mots : {self.tupleJeu[1][0]} et {self.tupleJeu[1][1]}")
@@ -212,6 +217,14 @@ class Morpion(DefiRoom):
     def __init__(self):
         super().__init__("Morpion")
         self.matrice=[[" "," "," ",],[" "," "," "],[" "," "," "]]
+
+    def RoomIntroduction(self):
+        return Fore.MAGENTA + r"""
+       __   __   __     __       
+ |\/| /  \ |__) |__) | /  \ |\ | 
+ |  | \__/ |  \ |    | \__/ | \| 
+                                 
+""" + Fore.RESET
         
 
     def ShowMatrice(self):
@@ -310,6 +323,7 @@ class Morpion(DefiRoom):
         if self.matrice[2][0]==x and self.matrice[1][1]==x and self.matrice[0][2]==x:
             return True
         return False
+    
 class Sphinx(DefiRoom):
     def __init__(self):
         super().__init__("Sphinx")
@@ -319,8 +333,12 @@ class Sphinx(DefiRoom):
         self.questionChoisie=random.choice(self.liste)
 
     def RoomIntroduction(self):
-        return r""" SPHINX
-"""
+        return Fore.MAGENTA+ """ SPHINX
+ __   __                  
+/__` |__) |__| | |\ | \_/ 
+.__/ |    |  | | | \| / \ 
+                          
+""" + Fore.RESET
 
     def AskQuestion(self):
         print(f"Pourras tu répondre à ma question :\n{self.questionChoisie[0]}")
@@ -350,6 +368,14 @@ class Sphinx(DefiRoom):
 class Integrale(DefiRoom):
     def __init__(self):
         super().__init__("Intégrales")
+
+    def RoomIntroduction(self):
+        return Fore.MAGENTA + r"""
+       ___  ___  __   __             ___ 
+| |\ |  |  |__  / _` |__)  /\  |    |__  
+| | \|  |  |___ \__> |  \ /~~\ |___ |___ 
+                                         
+""" + Fore.RESET
 
     def StartGame(self):
         reponse=self.AskQuestion()
@@ -388,4 +414,6 @@ if __name__ == "__main__":
     #shop=Shop("Shop")
     #print(shop.PaintRoom())
 
-    Integrale().StartGame()
+    #Integrale().StartGame()
+    shop=Shop("shop")
+    print(Shop.PaintRoom(shop))
