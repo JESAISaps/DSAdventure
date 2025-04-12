@@ -1,0 +1,9 @@
+Affichage:
+    - Couleurs: on peut colorer pour mettre en valeur certain element de texte, genre les degats, enemis (ex: degat sur enemi en vert et degat sur joueur en rouge)
+    - Gerer un peu mieux les time.sleep
+    - Mettre une phrase d'intro a chaque salle.
+
+Combat:
+    - Ajouter un gain d'exp a chaque enemi tué
+    - Ajouter une stat de niveau sur les enemis, pour avoir un impact sur la quantite de loot
+    - Ajouter les bonus de level up
