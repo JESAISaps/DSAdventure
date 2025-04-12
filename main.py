@@ -22,6 +22,7 @@ def LancerJeu():
     AttaqueTrioInfernal()
 
     while True:
+        Map.initMap()
         player.Revive()
         Partie()
 
