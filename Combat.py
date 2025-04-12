@@ -68,7 +68,7 @@ class Fight:
         if len(rewards) <= self._player.GetBag().GetEmptySpacesNb():
             for item in rewards:
                 self._player.AddItem(item)
-                print(f"Tu as obtenu {+ Fore.BLUE + item.GetName() + Fore.RESET}.")
+                print(f"Tu as obtenu {Fore.BLUE + item.GetName() + Fore.RESET}.")
         else:
 
             print("Tu n'as pas assez de place pour tous les objets.")
@@ -104,7 +104,7 @@ class Fight:
             else:
                 enemiToAttack.AddEffect(attaque, attack[attaque])
         sleep(TIMETOWAITBETWEENATTACKS*2)
-        print(f"Tu attaque {enemiToAttack.GetName()} pour {damage} degats avec {choice}")
+        print(f"Tu attaque {enemiToAttack.GetName()} pour {Fore.GREEN} {damage} {Fore.RESET} degats avec {choice}")
         enemiToAttack.TakeDamage(damage)
 
     def UseObject(self, itemToUse:UsableObject):
