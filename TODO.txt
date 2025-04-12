@@ -8,3 +8,4 @@ Combat:
     - Ajouter un gain d'exp a chaque enemi tué
     - Ajouter une stat de niveau sur les enemis, pour avoir un impact sur la quantite de loot
     - Ajouter les bonus de level up
+    - Ajouter la gestion des effets des attaques

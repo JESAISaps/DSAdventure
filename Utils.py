@@ -26,15 +26,18 @@ class ObjectType(Enum):
     Money = auto()
 
 class Effect(Enum):
-    AugmentationResistancePoint = auto()
-    AugmentationDegatPoint = auto()
-    AugmentationResistancePourcentage = auto()
-    AugmentationDegatPourcentage = auto()
-    AugmentationPrecision = auto()
-    AnnulationAttaque = auto()
-    AugmentationEsquive = auto()
+    AugmentationResistancePoint = "Augmentation de resitance"
+    AugmentationDegatPoint = "Augmentation de degat"
+    AugmentationResistancePourcentage = "Multiplication de resistance"
+    AugmentationDegatPourcentage = "Multiplication de degat"
+    AugmentationPrecision = "Augmentation de la precision"
+    AnnulationAttaque = "Annulation de l'attaque"
+    AugmentationEsquive = "Augmentation de l'esquive"
     AugmentationDegatReciproque = auto()
     AmeliorationSac = auto()
+
+    def __str__(self):
+        return str(self.value)
 
 @dataclass(unsafe_hash=True)
 class Money:
@@ -43,8 +46,14 @@ class Money:
 
     def GetName(self):
         return f"Pieces - {self.amount}€"
+    
+    def __str__(self):
+        return self.GetName()
 
 class AttackStats(Enum):
+
+    def __str__(self):
+        return str(self.value)
     Degats = "Degats"
     DelaiAttaque = "Recul Attaque"
 

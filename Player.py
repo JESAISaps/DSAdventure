@@ -2,9 +2,10 @@ from abc import ABC, abstractmethod
 import Object
 from Utils import *
 from random import randint
+from colorama import Fore
 
 class Character(ABC):
-    def __init__(self, name, startingHp):
+    def __init__(self, name, startingHp, level=0, color=Fore.WHITE):
         super().__init__()
         self._name = name
         self._hp = startingHp
@@ -13,12 +14,15 @@ class Character(ABC):
         self.evasion = 10
         self._resistance = 1
         self._isDead = False
+        self._level = level
 
         self._bonusPrecision = 0
         self._attackDelayEffect = 0
         self._bonusDamage = 0
         self._bonusResistance = 0
         self._bonusEvasion = 0
+
+        self.nameColor = color
 
     @abstractmethod
     def Die(self):
@@ -30,13 +34,17 @@ class Character(ABC):
             self.Die()
 
     def GetName(self):
-        return self._name
+        return f"{self.nameColor}{self._name}{Fore.WHITE}"
     
     def GetHp(self):
         return self._hp
     
+    def GetLevel(self):
+        return self._level
+    
     def AddEffect(self, effet:Effect, power):
         #print(f"{effet} et la puissance {power}")
+        print(f"{self.GetName()} recois l'effet {effet}")
         match effet:
             case Effect.AnnulationAttaque:
                 self._attackDelayEffect += power
@@ -52,6 +60,8 @@ class Character(ABC):
                 self._bonusPrecision += power
             case Effect.AugmentationEsquive:
                 self._bonusEvasion += power
+            case Effect.AmeliorationSac:
+                self.AmeliorerSac(power)
 
     def ActualizeEffectsAfterRound(self):
         if self._attackDelayEffect > 0:
@@ -122,7 +132,7 @@ class Player(Character):
 
 
     def __init__(self,name,xp=0, bagSize=2):
-        super().__init__(name, 10) #Tous les joueurs commencent avec 10 PV au niveau 0
+        super().__init__(name, 10, color=Fore.CYAN) #Tous les joueurs commencent avec 10 PV au niveau 0
 
         self.sac = self.Sac(bagSize)
         self.equipement = self.Equipement()
@@ -160,9 +170,16 @@ class Player(Character):
         self._level+=1
         self._xp = 0
 
+    def AmeliorerSac(self, power):
+        self.sac.bagSize += power
+        print(f"Tu as ajouté {power} places dans ta trousse !")
+
     def Die(self):
         self.sac.RemoveAllItems()
         self._isDead = True
+
+    def GetXpCaps(self, level):
+        return self._xpCap[level]
 
     def Revive(self):
         self._isDead = False
@@ -196,7 +213,7 @@ class Player(Character):
         return rep
     
     def AddItem(self, item:Object.Object | Money):
-        print(item.objectType)
+        #print(item.objectType)
         match item.objectType:
                 case ObjectType.Talisman:
                     self.talismans[item] = True
@@ -206,8 +223,6 @@ class Player(Character):
                     return True
                 case _: # On a un objet lambda
                     return self.sac.AddItem(item)
-    def GetLevel(self):
-        return self._level
     
     def RemoveItem(self, item):
         self.sac.RmItem(item)
@@ -230,7 +245,8 @@ class Player(Character):
 class Enemi(Character):
     def __init__(self, name, startingHp=5, attacks=[("Coup de poing",2), ("Coup de regle",1), ("Coup de tete",10)]):
         super().__init__(name, startingHp)
-        self.dropPossibilities = {Money(amount=randint(2, (startingHp+2)*3)):130,
+        # Les proba sont nb/150
+        self.dropPossibilities = {Money(amount=randint(2, (self.GetLevel()+2)*3)):130,
                                     
                                     Object.Armure("Casquette Stylée", objectType=ObjectType.Chapeau, defense=2, degat=0, pv=5): 4,
                                     Object.Armure("T-Shirt Déchiré", objectType=ObjectType.TShirt, defense=1, degat=0, pv=3): 5,
