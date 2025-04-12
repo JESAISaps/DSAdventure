@@ -1,8 +1,10 @@
 import click
 from enum import Enum, auto
 from dataclasses import dataclass
+from colorama import Fore
 
 TIMETOWAITBETWEENATTACKS = .5
+CHOICEYESORNO = Fore.GREEN + "Oui", Fore.RED + "Non" + Fore.RESET
 
 def CompareWord(mot1 : str,mot2 : str) -> bool :
     mot1modifie=mot1.lower().replace("s","").replace("é","e").replace("è","e").replace("'","").replace("ê","e").replace(" ","").replace("(","").replace(")","")

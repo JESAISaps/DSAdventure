@@ -7,6 +7,8 @@ import keyboard
 import Map
 from Object import *
 from time import sleep
+from colorama import Fore
+
 
 player = Player("Marine", 0)
 fefe = Antiseche("Antisèche", 50)
@@ -32,7 +34,7 @@ def Starting() -> bool :
     Retourne True dès que les achats sont terminés
     """
     AffichageMenu()
-    print("Appuyez sur Espace pour commencer le jeu \n")
+    print("Appuyez sur Espace pour" + Fore.CYAN + " commencer" + Fore.RESET +" le jeu \n")
     keyboard.wait("Space")
     AffichageShop()   
 
