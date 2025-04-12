@@ -34,7 +34,7 @@ class Character(ABC):
             self.Die()
 
     def GetName(self):
-        return f"{self.nameColor}{self._name}{Fore.WHITE}"
+        return f"{self._name}"
     
     def GetHp(self):
         return self._hp
