@@ -4,56 +4,48 @@ from Utils import *
 from Room import DefiRoom, Sphinx, CodeName,Integrale, Morpion, FightRoom, Menu, Shop, Room
 import questionary
 import keyboard
-import Map
+from Map import Map
 from Object import *
 from time import sleep
 from colorama import Fore
 
-
 player = Player("Marine", 0)
 fefe = Antiseche("Antisèche", 50)
-global menu
-global shop
-global trioInfernal
-global trioInfernalVide
-
 
 def LancerJeu():
-    Map.initMap()
-    global menu, shop, trioInfernal, trioInfernalVide
-    menu=Map.menu
-    shop=Map.shop
-    trioInfernal=Map.trioInfernalRoom
-    trioInfernalVide=Map.trioInfernalRoomVide
-    Starting()
-    AttaqueTrioInfernal()
+    carte = Map()
+    menu=carte.menu
+    shop=carte.shop
+    trioInfernal=carte.trioInfernalRoom
+    Starting(menu, shop)
+    AttaqueTrioInfernal(trioInfernal)
 
     while True:
-        Map.initMap()
+        carte = Map()
         player.Revive() 
-        Partie()
+        Partie(carte)
 
 
-def Starting() -> bool :
+def Starting(menu, shop) -> bool :
     """
     Retourne True dès que les achats sont terminés
     """
-    AffichageMenu()
+    AffichageMenu(menu)
     print("Appuyez sur Espace pour" + Fore.CYAN + " commencer" + Fore.RESET +" le jeu \n")
     keyboard.wait("Space")
-    AffichageShop()   
+    AffichageShop(shop)   
 
-def AttaqueTrioInfernal(): 
-    print(trioInfernal.RoomIntroduction())
+def AttaqueTrioInfernal(trioInfernalRoom:FightRoom): 
+    print(trioInfernalRoom.RoomIntroduction())
     sleep(0.5)
-    trioInfernal.StartFight(player)
+    trioInfernalRoom.StartFight(player)
     print("Tu es mort\n")
 
-def Partie() -> bool :
+def Partie(carte:Map) -> bool :
     print("Appuyez sur Espace pour continuer le jeu \n")
     keyboard.wait("Space")
-    AffichageShop()
-    salleActuelle=trioInfernalVide
+    AffichageShop(carte.shop)
+    salleActuelle=carte.trioInfernalRoomVide
     sleep(0.5)
     while player.IsAlive():
         if isinstance(salleActuelle, FightRoom):
@@ -84,7 +76,7 @@ def AskWhereToGo(caseActuelle : Room)-> Room:
 def VerifLunettes():
     return player.talismans[1]==True
 
-def ActionShop():
+def ActionShop(shop):
     rep=questionary.select("Voulez vous acheter un objet?",choices=["Oui","Non, jouer"]).ask()
     if rep=="Oui":
         objet=shop.AchatObjet(player)
@@ -111,19 +103,19 @@ def AffichageRoomIntroduction(salleActuelle):
     else :
         print(salleActuelle.RoomIntroduction())
 
-def AffichageMenu():
+def AffichageMenu(menu):
     print(menu.RoomIntroduction())
     print(menu.PaintRoom())
 
-def AffichageShop():
+def AffichageShop(shop):
     """ 
     La fonction retourne True dès que le joueur veut commencer le jeu, sinon il est en train de faires des achats
     """    
     print(shop.PaintRoom())
     print(shop.RoomIntroduction())
-    acheter=ActionShop()
+    acheter=ActionShop(shop)
     while acheter != False:
-        acheter=ActionShop()
+        acheter=ActionShop(shop)
     return True
 
 
