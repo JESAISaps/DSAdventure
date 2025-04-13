@@ -3,6 +3,7 @@ import Object
 from Utils import *
 from random import randint
 from colorama import Fore
+from copy import copy
 
 class Character(ABC):
     def __init__(self, name, startingHp, level=0, color=Fore.WHITE):
@@ -11,7 +12,7 @@ class Character(ABC):
         self._hp = startingHp
         self._maxHp = startingHp
         self._precision = 80
-        self.evasion = 10
+        self._evasion = 10
         self._resistance = 1
         self._isDead = False
         self._level = level
@@ -22,7 +23,7 @@ class Character(ABC):
         self._bonusResistance = 0
         self._bonusEvasion = 0
 
-        self.nameColor = color
+        self._nameColor = color
 
     @abstractmethod
     def Die(self):
@@ -41,6 +42,12 @@ class Character(ABC):
     
     def GetLevel(self):
         return self._level
+    
+    def GetPrecision(self):
+        return self._precision
+    
+    def GetEvasion(self):
+        return self._evasion
     
     def AddEffect(self, effet:Effect, power):
         #print(f"{effet} et la puissance {power}")
@@ -131,11 +138,12 @@ class Player(Character):
             return self.equiped
 
 
-    def __init__(self,name,xp=0, bagSize=2):
-        super().__init__(name, 10, color=Fore.CYAN) #Tous les joueurs commencent avec 10 PV au niveau 0
+    def __init__(self,name,xp=0, bagSize=2, startingHp=5):
+        super().__init__(name, startingHp, color=Fore.CYAN) #Tous les joueurs commencent avec 10 PV au niveau 0
 
         self.sac = self.Sac(bagSize)
         self.equipement = self.Equipement()
+        self._baseDamage = 0
 
         dicoTalisman = {1:("CodeName","Lecture des pensées"),2:("Morpion","Rapidité"),3:("Sphinx","Connaissance ultime"),4:("Integrale","Puissance calculatoire")}
         self.talismans = {id:False for id in dicoTalisman}
@@ -145,8 +153,31 @@ class Player(Character):
         self._level = 0
         self._xpCap = [10, 50, 100, 200, 250, 300, 500, 750, 1000, 2000, 3250, 5000, 6000, 7000, 8000, 9000, 10000, 15000, 20000, 50000, 100000]
         self.AjouterXp(xp)
-
-        self._recompensesLevelUp = {1:{}}
+        # Recompense de level up des stats de la forme {niveau:[bonusVie, bonusArmure, bonusDegat, bonusVitesse, bonusPrecision]}
+        self._recompensesLevelUpStats = {1:[5, 1, 3, 1, 1],
+                                         2:[2, 1, 1, 1, 1],
+                                         3:[2, 1, 1, 1, 1],
+                                         4:[1, 1, 5, 1, 1],
+                                         5:[5, 1, 1, 1, 1],
+                                         6:[7, 1, 3, 1, 1],
+                                         7:[7, 1, 3, 1, 1],
+                                         8:[7, 1, 3, 1, 1],
+                                         9:[7, 1, 3, 1, 1],
+                                         10:[5, 1, 3, 1, 1],
+                                         11:[5, 1, 3, 1, 1],
+                                         12:[5, 1, 3, 1, 1],
+                                         13:[5, 1, 3, 1, 1],
+                                         14:[5, 1, 3, 1, 1],
+                                         15:[5, 1, 3, 1, 1],
+                                         16:[5, 1, 3, 1, 1],
+                                         17:[5, 1, 3, 1, 1],
+                                         18:[5, 1, 3, 1, 1],
+                                         19:[5, 1, 3, 1, 1],
+                                         20:[5, 1, 3, 1, 1]}
+        
+        #TODO: mettre les recompenses de capacite
+        #temp = []
+        #self._recompenceCapaciteLevelUp = {i:temp[i] for i in range(1,21)}
 
         self._attacks = {"Ecriture Soignee": {AttackStats.Degats:1}, "Boule de Fau":{AttackStats.Degats:1, AttackStats.DelaiAttaque:5}}
 
@@ -169,6 +200,20 @@ class Player(Character):
     def LevelUp(self):
         self._level+=1
         self._xp = 0
+        self.AjouterLevelUpBonuses()
+        print(f"Bravo tu as gagné un point de moyenne, tu es a present à {Fore.BLUE}{self.GetLevel()}/20{Fore.RESET} !")
+    
+    def AjouterLevelUpBonuses(self):
+        level = self.GetLevel()
+        self.LevelUpStats(self._recompensesLevelUpStats[level])
+
+    def LevelUpStats(self, bonus:list):
+        # bonus de la forme [bonusVie, bonusArmure, bonusDegat, bonusVitesse, bonusPrecision]
+        self._maxHp += bonus[0]
+        self._resistance += bonus[1]
+        self._baseDamage += bonus[2]
+        self._evasion += bonus[3]
+        self._precision += bonus[4]
 
     def AmeliorerSac(self, power):
         self.sac.bagSize += power
@@ -197,7 +242,7 @@ class Player(Character):
             rep[attaque] = {}
             for stat in self._attacks[attaque]:
                 if stat == AttackStats.Degats: # Si la stat est les degats, alors on augmente les degats selon le bonus
-                    rep[attaque][stat] = self._attacks[attaque][stat] + self._bonusDamage
+                    rep[attaque][stat] = (self._attacks[attaque][stat] + self._baseDamage) + self._bonusDamage
                 else:
                     rep[attaque][stat] = self._attacks[attaque][stat]
         return rep
@@ -243,8 +288,8 @@ class Player(Character):
     
     
 class Enemi(Character):
-    def __init__(self, name, startingHp=5, attacks=[("Coup de poing",2), ("Coup de regle",1), ("Coup de tete",10)]):
-        super().__init__(name, startingHp)
+    def __init__(self, name, startingHp=5, attacks=[("Coup de poing",2), ("Coup de regle",1), ("Coup de tete",10)], level = 0):
+        super().__init__(name, startingHp, level=level)
         # Les proba sont nb/150
         self.dropPossibilities = {Money(amount=randint(2, (self.GetLevel()+2)*3)):130,
                                     
@@ -263,7 +308,7 @@ class Enemi(Character):
                                     Object.ChatGPT("ChatGPT", 15, 7): 5,
                                     Object.AmeliorationSac("Trousse ++", 2):25
                                     }
-        self._attacks = attacks
+        self._attacks = copy(attacks)
         self._firstAttack = attacks[0]
 
     def Die(self):

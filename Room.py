@@ -333,7 +333,7 @@ class Sphinx(DefiRoom):
         self.questionChoisie=random.choice(self.liste)
 
     def RoomIntroduction(self):
-        return Fore.MAGENTA+ """ SPHINX
+        return Fore.MAGENTA+ r""" SPHINX
  __   __                  
 /__` |__) |__| | |\ | \_/ 
 .__/ |    |  | | | \| / \ 

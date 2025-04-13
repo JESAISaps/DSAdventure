@@ -12,14 +12,19 @@ from colorama import Fore
 
 player = Player("Marine", 0)
 fefe = Antiseche("Antisèche", 50)
-menu=Map.menu
-petit=Map.petitStart
-shop=Map.shop
-trioInfernal=Map.trioInfernalRoom
-trioInfernalVide=Map.trioInfernalRoomVide
+global menu
+global shop
+global trioInfernal
+global trioInfernalVide
 
 
 def LancerJeu():
+    Map.initMap()
+    global menu, shop, trioInfernal, trioInfernalVide
+    menu=Map.menu
+    shop=Map.shop
+    trioInfernal=Map.trioInfernalRoom
+    trioInfernalVide=Map.trioInfernalRoomVide
     Starting()
     AttaqueTrioInfernal()
 

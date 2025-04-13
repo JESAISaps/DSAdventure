@@ -1,4 +1,4 @@
-from Player import Player, Enemi
+from Player import Player, Enemi, Character
 from Object import UsableObject, Object, Antiseche
 #from Room import FightRoom
 import questionary
@@ -30,6 +30,9 @@ class Fight:
             return False
 
     def DoRound(self):
+        if (self._enemies == []):
+            return
+            
         self.PlayerTurn()
 
         self.CheckForKilledEnemy()
@@ -91,6 +94,9 @@ class Fight:
         if self._player.GetAttackDelay() > 0:
             print("Tu ne peux pas attaquer.")
             return
+        sleep(2)
+        Clear()
+        print(f"Tu as actuellement {self._player.GetHp()} hp")
 
         itemToUse:UsableObject = self.AskForObjectUse()
         if itemToUse != False:
@@ -100,6 +106,9 @@ class Fight:
         enemiToAttack = self.GetEnemiToAttack()
         choice, attack= self.GetAttackPlayerChoice(attackList)
         damage = 0
+        if not self.GetTouched(self._player, enemiToAttack):
+            print(f"{enemiToAttack.GetName()} a esquivé ton attaque.")
+            return
         for attaque in attack:
             if attaque == AttackStats.Degats:
                 damage = attack[attaque]
@@ -150,16 +159,25 @@ class Fight:
 
     def EnemiTurn(self):
         if len(self._enemies) == 0:
-            print("Plus d'ennemi")
+            #print("Plus d'ennemi")
             return
         enemiesToPLay:int = random.randint(0, len(self._enemies))
 
         for _ in range(enemiesToPLay+1):
             attackingEnemi = self._enemies[random.randint(0, len(self._enemies)-1)]
-            attackName, damage = attackingEnemi.GetNextEnnemiAttack()
-            sleep(TIMETOWAITBETWEENATTACKS)
-            print(f"{attackingEnemi.GetName()} t'attaque avec {attackName} pour {Fore.RED} {damage} {Fore.RESET} degats !")
-            self._player.TakeDamage(damage)
+            isTouched = self.GetTouched(attackingEnemi, self._player)
+            if attackingEnemi.GetAttackDelay() == 0 and isTouched:
+                attackName, damage = attackingEnemi.GetNextEnnemiAttack()
+                sleep(TIMETOWAITBETWEENATTACKS)
+                print(f"{attackingEnemi.GetName()} t'attaque avec {attackName} pour {Fore.RED} {damage} {Fore.RESET} degats !")
+                self._player.TakeDamage(damage)
+            elif not isTouched:
+                print(f"Tu as esquivé l'attaque de {attackingEnemi.GetName()}")
+            else:
+                print(f"{attackingEnemi} ne peut pas attaquer.")
+
+    def GetTouched(self, attacker:Character, victim:Character):
+        return random.randint(0,100) <= attacker.GetPrecision() * ((100-victim.GetEvasion())/100)
 
     def GetAttackPlayerChoice(self, attackList):
         playerAttacks:dict[str:dict[AttackStats.Degats:int]] = self._player.GetAttacks()
@@ -194,11 +212,11 @@ class Fight:
 if __name__ == "__main__":
     crotter = Player("e")
     crotter.GetBag().bagSize = 2
-    enemi = Enemi("r", 10)
+    enemi = Enemi("r", 10, [("cacatoutmou", 0)])
     e2 = Enemi("ytrez", 10, [("cacatoutmou", 0)])
 
-    item = Antiseche("caca", 20)
-    crotter.AddItem(item)
+    #item = Antiseche("caca", 20)
+    #crotter.AddItem(item)
 
 
     fight = Fight(crotter, [enemi, e2])

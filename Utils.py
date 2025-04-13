@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from colorama import Fore
 import questionary
 from prompt_toolkit.styles import Style
+import os
 
 TIMETOWAITBETWEENATTACKS = .5
 
@@ -27,6 +28,9 @@ def CompareWord(mot1 : str,mot2 : str) -> bool :
     mot2modifie=mot2.lower().replace("s","").replace("é","e").replace("è","e").replace("'","").replace("ê","e").replace(" ","").replace("(","").replace(")","")
     return mot1modifie == mot2modifie
 
+
+def Clear():
+    os.system('cls' if os.name == 'nt' else 'clear')
 class CustomChoice(click.Choice):
     def fail(self, value, param=None, ctx=None):
         raise click.BadParameter(
