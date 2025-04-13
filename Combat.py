@@ -42,15 +42,15 @@ class Fight:
         enemiList = copy(self._enemies)
         for enemi in enemiList:
             if not enemi.IsAlive():
+                self.GivePlayerXp(enemi.GetLevel())
                 rewards = self.GetRewardsOnKill(enemi)
                 self.AddKillRewardsToPLayer(rewards)
-                self.GivePlayerXp(enemi.GetLevel())
                 self.KillEnemy(enemi)
 
     def GivePlayerXp(self, level):
         xpToAdd = math.ceil(self._player.GetXpCaps(level) * random.uniform(.2, .4)) # La quantite d'exp depend du niveau de l'enemi
         self._player.AjouterXp(xpToAdd)
-        print(f"Tu as obtenu {Fore.GREEN}{xpToAdd}{Fore.WHITE} points d'exp !")
+        print(f"Tu as obtenu {Fore.BLUE}{xpToAdd}{Fore.WHITE} points d'exp !")
 
     def GetRewardsOnKill(self, enemi:Enemi):
         dropTable = enemi.GetDropTable()
@@ -59,6 +59,8 @@ class Fight:
             if random.randint(0, 150) <= dropTable[item]:
                 if item.objectType == ObjectType.Money: # On ajoute deja l'argent, puis le reste.
                     self._player.AddItem(item)
+                    print(f'Tu as gagné {item.GetAmount()}€')
+                
                 else:
                     toDrop.append(item)
         

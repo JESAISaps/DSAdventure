@@ -65,6 +65,9 @@ class Money:
     def GetName(self):
         return f"Pieces - {self.amount}€"
     
+    def GetAmount(self):
+        return self.amount
+    
     def __str__(self):
         return self.GetName()
 
