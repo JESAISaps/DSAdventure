@@ -11,6 +11,7 @@ Une fois qu'on a terminé un mini jeu, il est terminé, on a plus besoin de le r
 On peut le refaire pour de l'exp. On ne fait un mini jeu qu'une fois par vie.
 
 Code-Name: Récompense: talisman de lecture des pensée: on voit a present les prochains coups de l'adversaire.
+lunettes: tu vois claire et peut reveler une salle secrete, se casse si porté a un combat.
 
 Morpion: On obtient un talisman, qui une fois par combat, permet d'attaquer 2 fois d'a filé.
 
@@ -24,7 +25,7 @@ Les mini-jeux sont des Week end, potentiellement de révision.
 
 Les objects: ramassable sur les corps des ennemis, ou achetable au shop, ou avec un coffre
 antisèche :rajoute 2 point de degats a la prochaine attaque
-lunettes: tu vois claire et peut reveler une salle secrete, se casse si porté a un combat.
+
 bouteille d'eau: augmente la precision.
 montre: meilleure gestion du temp: permet d'esquiver une attaque.
 amelioration trousse: on peut stocker 1 objet en plus.

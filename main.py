@@ -1,4 +1,4 @@
-from Player import Player
+from Player import *
 import click
 from Utils import *
 from Room import DefiRoom, Sphinx, CodeName,Integrale, Morpion, FightRoom, Menu, Shop, Room
@@ -30,7 +30,7 @@ def LancerJeu():
 
     while True:
         Map.initMap()
-        player.Revive()
+        player.Revive() 
         Partie()
 
 
@@ -74,22 +74,24 @@ def AskWhereToGo(caseActuelle : Room)-> Room:
     choices=caseActuelle.GetVoisins()
     accessiblechoices=[]
     for i in choices.keys():
-        if choices[i]!= None:
-            if i=="Passage":
-                pass
-                #TODO Verif si Lunettes
-            else :
-                accessiblechoices.append(i)
+        if choices[i]!= None and i !="Passage":
+            accessiblechoices.append(i)
+        if i=="Passage" and VerifLunettes()==True :
+            accessiblechoices.append(i)
     rep=questionary.select("Ou voulez vous aller?",choices=accessiblechoices).ask()
     return choices[rep]
 
+def VerifLunettes():
+    return player.talismans[1]==True
+
 def ActionShop():
     rep=questionary.select("Voulez vous acheter un objet?",choices=["Oui","Non, jouer"]).ask()
-    #TODO AFFICHER LARGENT
     if rep=="Oui":
         objet=shop.AchatObjet(player)
+        if objet == "Trousse":
+            player.AmeliorerSac(1)
         if objet != False :
-            AjouterObjetInventaire(objet)
+            AjouterObjetInventaire(objet)   
         else :
             print("C'est parti ! \n")
             sleep(1)
@@ -102,7 +104,6 @@ def ActionShop():
     
 def AjouterObjetInventaire(objet):
     player.GetBag().AddItem(objet)
-
 
 def AffichageRoomIntroduction(salleActuelle):
     if salleActuelle.GetEnemiNb()==0:

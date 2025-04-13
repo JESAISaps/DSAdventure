@@ -130,13 +130,19 @@ class Shop(Room):
             rep = questionary.select("Quel objet voulez vous acheter?",choices=self.dicoAffichage.keys()).ask()
             if rep == "Sortir du Shop" : 
                 return False
+            if rep == "Amélioration de la trousse":
+                return "Trousse"
+            if player.AddItem(self.dicoAffichage[rep][0])==False:
+                print("Vous n'avez pas assez de place dans votre inventaire, tentez d'améliorer la trousse?")
+                return
             prix = self.dicoAffichage[rep][1]
-            if prix > player.GetMoney():
+            if prix > player.GetMoney(): # n'afficher que si le joueur est pauvre
                 print("Vous n'avez pas assez d'argent, essayez peut-être un autre objet ?\n")
-            sleep(1)
+                return
+            sleep(.5)
         player.ChangeMoney(-prix)
         print("Objet ajouté à l'inventaire, vous pourrez désormais l'utiliser en combat\n")
-        sleep(0.5)
+        sleep(1)
         return self.dicoAffichage[rep][0]
     
 
@@ -203,12 +209,11 @@ class CodeName(DefiRoom):
     def StartGame(self):
         print(f"On commence le {self._name}")
         if self.StartManche()==True:
-            print("Bravo, vous avez gagné un Talisman")
             return True
         else:
             print("Erreur, c'est votre dernière chance")
             if self.StartManche():
-                print("Bravo, vous avez gagné un Talisman")
+                print("Bravo, vous avez gagné le Talisman Lunettes")
                 return True
             else : 
                 print("Vous n'avez rien gagné")
@@ -245,7 +250,8 @@ class Morpion(DefiRoom):
                 self.MancheJoueur()
                 playerWin=self.Win("x")
         if playerWin : 
-            print("Fin de la partie, vous avez gagné un le Talisman Rapidité")
+            print("Vous avez gagné un le Talisman Rapidité, il te permettra d'attaquer 2 fois d'affilée, " \
+            "et il peut être utilisé une fois par partie !")
             return True
         else:
             print("Vous avez perdu, bonne chance pour la suite")
@@ -360,11 +366,13 @@ class Sphinx(DefiRoom):
     def StartGame(self):
         print(f"On commence le {self._name}")
         if self.StartManche()==True:
-            print("Bravo, vous avez gagné un Talisman")
+            print("Bravo, vous avez gagné le Talisman Connaissance Ultime, " \
+            "il te permet d'obtenir une potion de guérison à chaque partie")
             return True
         else:
-            return False
             print("Vous n'avez rien gagné")
+            return False
+            
 class Integrale(DefiRoom):
     def __init__(self):
         super().__init__("Intégrales")
@@ -380,7 +388,7 @@ class Integrale(DefiRoom):
     def StartGame(self):
         reponse=self.AskQuestion()
         if CompareWord(reponse, "ln2") :
-            print("Bravo! Vous avez gagné le Talisman Puissance Calculatoire")
+            print("Bravo! Vous avez gagné le Talisman Puissance Calculatoire, il vous permettra de tuer un ennemi en un seul coup!")
             return True
         else :
             print("Très mauvais calcul, bon courage pour la suite.")

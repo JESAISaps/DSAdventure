@@ -2,9 +2,8 @@ from Room import FightRoom, CodeName, Menu, Sphinx, Morpion, Conseil, Integrale,
 from Player import Enemi
 
 
-global menu, shop, defiVoyance, defiOneShot, defiLunettes, defiDoubleCoup
-global trioInfernalRoom, trioInfernalRoomVide, barceloRoom, olivRoom, petitRoom, bigMaths
-global salletranquille, mecaSol, thermo, communs, conseil
+
+
 
 #menuStats=Menu("1ère année")
 #shopStats=Shop("Shop")
@@ -57,6 +56,8 @@ def initMap():
     global menu, shop, defiVoyance, defiOneShot, defiLunettes, defiDoubleCoup
     global trioInfernalRoom, trioInfernalRoomVide, barceloRoom, olivRoom, petitRoom, bigMaths
     global salletranquille, mecaSol, thermo, communs, conseil
+    global petitStart, babaStart, totoStart, barcelo, oliv, petit, bigMathBaba, bigMathsPetit
+    global deschamps, dias, communsBaba, communsOliv, communsPetit
     
     menu=Menu("1ère année")
     shop=Shop("Shop")

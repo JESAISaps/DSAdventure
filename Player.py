@@ -96,7 +96,7 @@ class Player(Character):
                 if len(self.content) >= self.bagSize:
                     return False # On ne peut pas inserer d'objet dans le sac
                 self.content.append(item)
-                return False
+                return True
                 
         def GetContent(self) -> list[Object.Object]:
             return self.content
@@ -145,7 +145,7 @@ class Player(Character):
         self.equipement = self.Equipement()
         self._baseDamage = 0
 
-        dicoTalisman = {1:("CodeName","Lecture des pensées"),2:("Morpion","Rapidité"),3:("Sphinx","Connaissance ultime"),4:("Integrale","Puissance calculatoire")}
+        dicoTalisman = {1:("CodeName","Lunettes"),2:("Morpion","Rapidité"),3:("Sphinx","Connaissance ultime"),4:("Integrale","Puissance calculatoire")}
         self.talismans = {id:False for id in dicoTalisman}
 
         self._money = 0

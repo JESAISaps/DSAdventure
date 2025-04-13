@@ -129,7 +129,7 @@ class Fight:
                 enemiToApplyEffect.AddEffect(*itemToUse.Utiliser())
             case _:
                 self._player.AddEffect(*itemToUse.Utiliser())
-            # TODO : Supprimer l'item apres utilisation (del marche pas)
+        self._player.RemoveItem(itemToUse)
 
     def AskForObjectUse(self):
         if self._player.GetUsableObjects() == []:
