@@ -47,6 +47,13 @@ class ObjectType(Enum):
     Usable = auto()
     Money = auto()
 
+class TalismanType(Enum):
+    CodeName = auto("Lunettes")
+    Morpion = auto("Rapidité")
+    Sphinx = auto("Connaissance ultime")
+    Integrale = auto("Puissance calculatoire")
+
+
 class Effect(Enum):
     AugmentationResistancePoint = "Augmentation de resitance"
     AugmentationDegatPoint = "Augmentation de degat"

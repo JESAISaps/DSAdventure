@@ -40,6 +40,8 @@ class Fight:
         self.EnemiTurn()
 
         self.EndRound()
+        sleep(2)
+        
 
         
 
@@ -97,11 +99,7 @@ class Fight:
         if self._player.GetAttackDelay() > 0:
             print("Tu ne peux pas attaquer.")
             return
-        
-        sleep(2)
-        Clear()
         print(f"Tu as actuellement {self._player.GetHp()} hp")
-
         itemToUse:UsableObject = self.AskForObjectUse()
         if itemToUse != False:
             self.UseObject(itemToUse)
@@ -139,12 +137,13 @@ class Fight:
                 enemiToApplyEffect.AddEffect(*itemToUse.Utiliser())
             case _:
                 self._player.AddEffect(*itemToUse.Utiliser())
-            # TODO : Supprimer l'item apres utilisation (del marche pas)
+        self._player.RemoveItem(itemToUse)
 
     def AskForObjectUse(self):
         if self._player.GetUsableObjects() == []:
             return False
 
+        self.ShowEnemies()
         if questionary.select("Voulez vous utiliser un objet ?", choices=CHOICEYESORNO, style=QUESTIONARYSTYLE).ask() == "Non":
             return False
         usableObjectList = self._player.GetUsableObjects()
@@ -208,14 +207,16 @@ class Fight:
         return choice, playerAttacks[choice]
 
     def GetEnemiToAttack(self, text:str="Quel ennemi voulez-vous attaquer ?"):
-        enemies = ""
         enemiNames = {f"{enemi.GetName()} - {enemi.GetHp()} hp":enemi for enemi in self._enemies}
-        for enemi in self._enemies:
-            enemies += f" {enemi.GetName()} - {enemi.GetHp()} hp\n"
-        
-        #print(enemies)
+
         choice = questionary.select(text, choices=enemiNames.keys(), style=QUESTIONARYSTYLE).ask()
         return enemiNames[choice]
+    
+    def ShowEnemies(self):
+        enemies = "Les ennemis:\n"
+        for enemi in self._enemies:
+            enemies += f" {enemi.GetName()} - {enemi.GetHp()} hp\n"
+        print(enemies)
     
     def KillEnemy(self, enemi):
         self._enemies.remove(enemi)
