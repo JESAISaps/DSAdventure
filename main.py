@@ -33,6 +33,7 @@ def LancerJeu():
         carte = Map()
         player.Revive() 
         Partie(carte)
+        print(Fore.RED + "Tu es mort." + Fore.RESET)
 
 
 def Starting(menu, shop) -> bool :
@@ -47,6 +48,7 @@ def AttaqueTrioInfernal(trioInfernalRoom:FightRoom):
     print(trioInfernalRoom.RoomIntroduction())
     sleep(0.5)
     trioInfernalRoom.StartFight(player)
+    print(Fore.RED + "Tu es mort." + Fore.RESET)
     if player.GetLevel() == 0:
         print("\nBon tu fais un peu pitié, voici de quoi level up")
         player.AjouterXp(10)
@@ -82,11 +84,11 @@ def AskWhereToGo(caseActuelle : Room)-> Room:
     for i in choices.keys():
         if choices[i]!= None and i !="Passage":
             accessiblechoices.append(i)
-        if i=="Passage" and VerifLunettes()==True :
+        if choices[i]!= None and i=="Passage" and VerifLunettes()==True :
             accessiblechoices.append(i)
     if player.GetEquipableItems() != []:
         accessiblechoices.append("Equipement")
-    flush_stdin()
+    ViderInputBuffer()
     rep=questionary.select("Ou voulez vous aller?",choices=accessiblechoices).ask()
     if rep == "Equipement": 
         EquiperJoueur()
@@ -97,27 +99,24 @@ def EquiperJoueur():
     choix = {item.GetName():item for item in player.GetEquipableItems()}
     choix["Annuler"] = "Annuler"
     print(choix)
-    flush_stdin()
+    ViderInputBuffer()
     reponse=questionary.select("Choisissez votre équipement", choices=choix.keys()).ask()
     if reponse != "Annuler" :
         player.EquipItem(choix[reponse])
 
 def VerifLunettes():
-    return player.talismans[TalismanType.Morpion]==True
+    """
+    Retourne True si le joueur possede les lunettes
+    """
+    return player.talismans[TalismanType.Morpion]
 
 def ActionShop(shop):    
-    flush_stdin()
+    ViderInputBuffer()
     rep=questionary.select("Voulez vous acheter un objet?",choices=["Oui","Non, jouer"]).ask()
     if rep=="Oui":
         objet=shop.AchatObjet(player)
         if objet == "Trousse":
             player.AmeliorerSac(1)
-        if objet != False :
-            AjouterObjetInventaire(objet)   
-        else :
-            print("C'est parti ! \n")
-            sleep(1)
-            return False
         return True
     else :
         print("C'est parti!\n")
@@ -150,5 +149,6 @@ def AffichageShop(shop):
     
 
 if __name__ == "__main__":
+
     LancerJeu()
     
