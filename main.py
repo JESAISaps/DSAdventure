@@ -42,7 +42,6 @@ def AttaqueTrioInfernal(trioInfernalRoom:FightRoom):
     print(trioInfernalRoom.RoomIntroduction())
     sleep(0.5)
     trioInfernalRoom.StartFight(player)
-    print("Tu es mort\n")
     if player.GetLevel() == 0:
         print("\nBon tu fais un peu pitié, voici de quoi level up")
         player.AjouterXp(10)
@@ -65,7 +64,7 @@ def Partie(carte:Map) -> bool :
             EquiperJoueur()
         WaitForSpace()
         Clear()
-        while salleActuelle != False : 
+        while salleActuelle == False : 
             salleActuelle=AskWhereToGo(salleActuelle)
     WaitForSpace()
     
