@@ -133,7 +133,7 @@ class Shop(Room):
             if rep == "Amélioration de la trousse":
                 return "Trousse"
             if player.AddItem(self.dicoAffichage[rep][0])==False:
-                print("Vous n'avez pas assez de place dans votre inventaire, tentez d'améliorer la trousse?")
+                print("Vous n'avez pas assez de place dans votre inventaire, tentez d'améliorer la trousse?\n")
                 return
             prix = self.dicoAffichage[rep][1]
             if prix > player.GetMoney(): # n'afficher que si le joueur est pauvre

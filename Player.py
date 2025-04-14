@@ -25,12 +25,14 @@ class Character(ABC):
 
         self._nameColor = color
 
+        self.armorBonusDef = 0
+
     @abstractmethod
     def Die(self):
         pass
     
     def TakeDamage(self, quantity):
-        self._hp -= quantity*1/(self._bonusResistance+self._resistance)
+        self._hp -= quantity*1/(self._bonusResistance+self._resistance + self.armorBonusDef)
         if self._hp <= 0:
             self.Die()
 
@@ -99,12 +101,16 @@ class Player(Character):
         def __init__(self, startingSize:int):
             self.bagSize = startingSize
             self.content:list[Object.Object] = []
+            
 
         def AddItem(self, item:Object.Object) -> bool:
                 if len(self.content) >= self.bagSize:
                     return False # On ne peut pas inserer d'objet dans le sac
                 self.content.append(item)
                 return True
+        
+        
+
                 
         def GetContent(self) -> list[Object.Object]:
             return self.content
@@ -128,22 +134,40 @@ class Player(Character):
             self.content = []
     class Equipement:
         def __init__(self):
-            self.equiped:dict[int:Object.EquipableObject] = {ObjectType.Arme:None, ObjectType.Chapeau:None,ObjectType.TShirt:None, ObjectType.Chaussures:None}
+            self.equiped:dict[ObjectType:Object.EquipableObject] = {ObjectType.Arme:None, ObjectType.Chapeau:None,ObjectType.TShirt:None, ObjectType.Chaussures:None}
         
+            self.bonusDef = 0
+            self.bonusHp = 0
+            self.bonusDamage = 0
+            self.bonusXp = 0
+
         def EquipItem(self, item:Object.EquipableObject) -> Object.EquipableObject | None:            
-            old = self.equiped[item.objectType.value]
-            self.equiped[item.objectType.value] = item
-            return old
+            old = self.equiped[item.objectType]
+            self.equiped[item.objectType] = item
+            return old        
         
-        def GetBonusStats(self):
-            bonusDef = 0
-            bonusHp = 0
-            bonusDamage = 0
-            bonusXp = 0
-            # TODO: donner les stats
+        def CalculerBonusEquipement(self):
+            for objectType in self.equiped:
+                if self.equiped[objectType] is not None:
+                    self.bonusDamage += self.equiped[objectType].GetDegat()
+                    self.bonusDef += self.equiped[objectType].GetDefense()
+                    self.bonusHp += self.equiped[objectType].GetPv()
+                    self.bonusXp += self.equiped[objectType].GetBoostXP()
 
         def GetEquiped(self):
-            return self.equiped
+            return copy(self.equiped)
+        
+        def GetDefense(self) -> int:
+            return self.bonusDef
+    
+        def GetDegat(self) -> int:
+            return self.bonusDamage
+
+        def GetPv(self) -> int:
+            return self.bonusHp
+
+        def GetBoostXP(self) -> int:
+            return self.bonusXp
 
 
     def __init__(self,name,xp=0, bagSize=2, startingHp=5):
@@ -153,8 +177,13 @@ class Player(Character):
         self.equipement = self.Equipement()
         self._baseDamage = 0
 
-        dicoTalisman = {TalismanType.CodeName:("CodeName","Lunettes"),TalismanType.Morpion:("Morpion","Rapidité"),TalismanType.Sphinx:("Sphinx","Connaissance ultime"),TalismanType.Integrale:("Integrale","Puissance calculatoire")}
+        dicoTalisman = {TalismanType.CodeName:("CodeName","Rapidité"),TalismanType.Morpion:("Morpion","Lunettes"),TalismanType.Sphinx:("Sphinx","Connaissance ultime"),TalismanType.Integrale:("Integrale","Puissance calculatoire")}
         self.talismans = {id:False for id in dicoTalisman}
+
+        self.armorBonusDef = 0
+        self.armorBonusHp = 0
+        self.armorBonusDamage = 0
+        self.armorBonusXp = 0
 
         self._money = 0
         self._xp=0
@@ -218,6 +247,7 @@ class Player(Character):
         self._money = qte
 
     def AjouterXp(self,quantite):
+        quantite*= (1+self.equipement.GetBoostXP())
         while (self._xp+quantite)>=self._xpCap[self._level]:
             quantite -= self._xpCap[self._level] - self._xp
             self.LevelUp()
@@ -261,7 +291,7 @@ class Player(Character):
 
     def Revive(self):
         self._isDead = False
-        self._hp = self._maxHp
+        self._hp = self._maxHp + self.armorBonusDamage
 
     def GetBag(self) -> Sac:
         return self.sac
@@ -275,10 +305,17 @@ class Player(Character):
             rep[attaque] = {}
             for stat in self._attacks[attaque]:
                 if stat == AttackStats.Degats: # Si la stat est les degats, alors on augmente les degats selon le bonus
-                    rep[attaque][stat] = (self._attacks[attaque][stat] + self._baseDamage) + self._bonusDamage
+                    rep[attaque][stat] = (self._attacks[attaque][stat] + self.GetBaseDamage()) + self._bonusDamage
                 else:
                     rep[attaque][stat] = self._attacks[attaque][stat]
         return rep
+    
+    def GetBaseDamage(self):
+        return self._baseDamage + self.armorBonusDamage
+    
+    def GetBaseArmor(self):
+        return self._resistance + self.armorBonusDef
+    
     def AddTalisman(self, id):
         self.talismans[id]=True
 
@@ -308,7 +345,16 @@ class Player(Character):
     def EquipItem(self, item):
         oldItem = self.equipement.EquipItem(item)
         self.RemoveItem(item)
-        self.AddItem(oldItem)
+        if oldItem is not None:
+            self.AddItem(oldItem)
+
+        self.equipement.CalculerBonusEquipement()
+        self.ActualiezEquipmentBonuses()
+    
+    def ActualiezEquipmentBonuses(self):
+        self.armorBonusDef = self.equipement.GetDefense()
+        self.armorBonusDamage = self.equipement.GetDegat()
+        self.armorBonusHp = self.equipement.GetPv()
 
     def GetEquipableItems(self):
         return [item for item in self.sac.content if item.objectType in [ObjectType.Arme, ObjectType.Chapeau, ObjectType.Chaussures, ObjectType.TShirt]]
