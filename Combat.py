@@ -101,7 +101,9 @@ class Fight:
             return
         print(f"Tu as actuellement {self._player.GetHp()} hp")
         itemToUse:UsableObject = self.AskForObjectUse()
-        if itemToUse != False:
+        if itemToUse == "Annuler":
+            pass
+        elif itemToUse != False:
             self.UseObject(itemToUse)
 
         attackList = []
@@ -123,8 +125,8 @@ class Fight:
                 case _: # Si on met juste un effet sur l'ennemi
                     enemiToAttack.AddEffect(attaque, attack[attaque])
         sleep(TIMETOWAITBETWEENATTACKS*2)
-        print(f"Tu attaque {enemiToAttack.GetName()} pour {Fore.GREEN} {damage} {Fore.RESET} degats avec {choice}")
-        enemiToAttack.TakeDamage(damage)
+        damageDone = enemiToAttack.TakeDamage(damage)
+        print(f"Tu attaque {enemiToAttack.GetName()} pour {Fore.GREEN} {damageDone} {Fore.RESET} degats avec {choice}")
 
     def UseObject(self, itemToUse:UsableObject):
         match itemToUse.GetEffectType(): # Utile si dans le futur on a + d'effets particuliers
@@ -153,6 +155,7 @@ class Fight:
         objectNames, nameAssociations = self.GetNamesFromItems(usableObjectList)
         print(objectWithStatsToShow)
         flush_stdin()
+        objectNames.append("Annuler")
         return nameAssociations[questionary.select("Quel objet veux-tu utiliser ?", choices=objectNames, style=QUESTIONARYSTYLE).ask()]
 
     def ConvertUsableObjectsToNiceString(self, usableObjectList:list[UsableObject]):
@@ -181,8 +184,8 @@ class Fight:
             if attackingEnemi.GetAttackDelay() == 0 and isTouched:
                 attackName, damage = attackingEnemi.GetNextEnnemiAttack()
                 sleep(TIMETOWAITBETWEENATTACKS)
-                print(f"{attackingEnemi.GetName()} t'attaque avec {attackName} pour {Fore.RED} {damage} {Fore.RESET} degats !")
-                self._player.TakeDamage(damage)
+                damageDone = self._player.TakeDamage(damage)
+                print(f"{attackingEnemi.GetName()} t'attaque avec {attackName} pour {Fore.RED} {damageDone} {Fore.RESET} degats !")
             elif not isTouched:
                 print(f"Tu as esquivé l'attaque de {attackingEnemi.GetName()}")
             else:

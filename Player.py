@@ -32,9 +32,11 @@ class Character(ABC):
         pass
     
     def TakeDamage(self, quantity):
-        self._hp -= quantity*1/(self._bonusResistance+self._resistance + self.armorBonusDef)
+        damage = quantity*1/(self._bonusResistance+self._resistance + self.armorBonusDef)
+        self._hp -= damage
         if self._hp <= 0:
             self.Die()
+        return damage
 
     def GetName(self):
         return f"{self._name}"
