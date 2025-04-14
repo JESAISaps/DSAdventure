@@ -18,6 +18,11 @@ def LancerJeu():
     menu=carte.menu
     shop=carte.shop
     trioInfernal=carte.trioInfernalRoom
+    # tests
+    #caca = EquipableObject("iuytre", ObjectType.TShirt)
+    #player.AddItem(caca)
+    #EquiperJoueur()
+
     Starting(menu, shop)
     AttaqueTrioInfernal(trioInfernal)
     SkipLines(3)
@@ -61,13 +66,16 @@ def Partie(carte:Map) -> bool :
         else : 
             if salleActuelle.StartGame() == True:
                 player.AddTalisman(salleActuelle.GetTalisman())
-        if player.GetEquipableItems() != []:
-            EquiperJoueur()
+        salleActuelle=ApresCombat(salleActuelle)
         WaitForSpace()
         Clear()
-        while salleActuelle != False : 
-            salleActuelle=AskWhereToGo(salleActuelle)
     WaitForSpace()
+
+def ApresCombat(salleDepart):
+    salleActuelle=AskWhereToGo(salleDepart)
+    while salleActuelle == False:
+        salleActuelle=AskWhereToGo(salleDepart)
+    return salleActuelle
     
 def AskWhereToGo(caseActuelle : Room)-> Room:
     choices=caseActuelle.GetVoisins()
@@ -86,14 +94,15 @@ def AskWhereToGo(caseActuelle : Room)-> Room:
     return choices[rep]
 
 def EquiperJoueur():
-    choices = player.GetEquipableItems().append("Annuler")
-    reponse=questionary.select("Choisissez votre équipement", player.GetEquipableItems())
+    choix = {item.GetName():item for item in player.GetEquipableItems()}
+    choix["Annuler"] = "Annuler"
+    print(choix)
+    reponse=questionary.select("Choisissez votre équipement", choices=choix.keys()).ask()
     if reponse != "Annuler" :
-        player.EquipItem(reponse)
-    else : pass
+        player.EquipItem(choix[reponse])
 
 def VerifLunettes():
-    return player.talismans[1]==True
+    return player.talismans[TalismanType.Morpion]==True
 
 def ActionShop(shop):
     rep=questionary.select("Voulez vous acheter un objet?",choices=["Oui","Non, jouer"]).ask()
@@ -136,6 +145,8 @@ def AffichageShop(shop):
     while acheter != False:
         acheter=ActionShop(shop)
     return True
+    
 
-
-LancerJeu()
+if __name__ == "__main__":
+    LancerJeu()
+    

@@ -60,10 +60,12 @@ class ObjectType(Enum):
     Money = auto()
 
 class TalismanType(Enum):
-    CodeName = auto("Lunettes")
-    Morpion = auto("Rapidité")
-    Sphinx = auto("Connaissance ultime")
-    Integrale = auto("Puissance calculatoire")
+    CodeName = "Rapidité"
+    Morpion = "Lunettes"
+    Sphinx = "Connaissance ultime"
+    Integrale = "Puissance calculatoire"
+    def __str__(self):
+        return str(self.value)
 
 
 class Effect(Enum):
