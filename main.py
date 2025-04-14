@@ -48,6 +48,7 @@ def AttaqueTrioInfernal(trioInfernalRoom:FightRoom):
     sleep(0.5)
     trioInfernalRoom.StartFight(player)
     if player.GetLevel() == 0:
+        print(Fore.RED + "Tu es mort." + Fore.RESET)
         print("\nBon tu fais un peu pitié, voici de quoi level up")
         player.AjouterXp(10)
 
@@ -82,7 +83,7 @@ def AskWhereToGo(caseActuelle : Room)-> Room:
     for i in choices.keys():
         if choices[i]!= None and i !="Passage":
             accessiblechoices.append(i)
-        if i=="Passage" and VerifLunettes()==True :
+        if choices[i]!= None and i=="Passage" and VerifLunettes()==True :
             accessiblechoices.append(i)
     if player.GetEquipableItems() != []:
         accessiblechoices.append("Equipement")
@@ -101,7 +102,10 @@ def EquiperJoueur():
         player.EquipItem(choix[reponse])
 
 def VerifLunettes():
-    return player.talismans[TalismanType.Morpion]==True
+    """
+    Retourne True si le joueur possede les lunettes
+    """
+    return player.talismans[TalismanType.Morpion]
 
 def ActionShop(shop):
     rep=questionary.select("Voulez vous acheter un objet?",choices=["Oui","Non, jouer"]).ask()
@@ -109,12 +113,6 @@ def ActionShop(shop):
         objet=shop.AchatObjet(player)
         if objet == "Trousse":
             player.AmeliorerSac(1)
-        if objet != False :
-            AjouterObjetInventaire(objet)   
-        else :
-            print("C'est parti ! \n")
-            sleep(1)
-            return False
         return True
     else :
         print("C'est parti!\n")
@@ -147,5 +145,6 @@ def AffichageShop(shop):
     
 
 if __name__ == "__main__":
+
     LancerJeu()
     
