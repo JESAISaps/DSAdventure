@@ -173,12 +173,16 @@ class DefiRoom(Room):
     @abstractmethod
     def StartGame(self):
         pass
+
+    def GetTalisman(self):
+        return self.talismanType
     
 class CodeName(DefiRoom):
     def __init__(self):
         super().__init__("Code Name")
         self.liste = [("police",("girophare","enfermer")),("barcelo",("cheveux","mathématiques"))]
-        self.tupleJeu=self.liste.pop()
+        self.tupleJeu=random.choice(self.liste)
+        self.talismanType = TalismanType.CodeName
 
     def RoomIntroduction(self):
         return Fore.MAGENTA + r"""

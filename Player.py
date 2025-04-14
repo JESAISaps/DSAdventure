@@ -145,7 +145,7 @@ class Player(Character):
         self.equipement = self.Equipement()
         self._baseDamage = 0
 
-        dicoTalisman = {1:("CodeName","Lunettes"),2:("Morpion","Rapidité"),3:("Sphinx","Connaissance ultime"),4:("Integrale","Puissance calculatoire")}
+        dicoTalisman = {TalismanType.CodeName:("CodeName","Lunettes"),TalismanType.Morpion:("Morpion","Rapidité"),TalismanType.Sphinx:("Sphinx","Connaissance ultime"),TalismanType.Integrale:("Integrale","Puissance calculatoire")}
         self.talismans = {id:False for id in dicoTalisman}
 
         self._money = 0

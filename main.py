@@ -13,6 +13,7 @@ player = Player("Marine", 0)
 fefe = Antiseche("Antisèche", 50)
 
 def LancerJeu():
+    Clear()
     carte = Map()
     menu=carte.menu
     shop=carte.shop
@@ -21,6 +22,7 @@ def LancerJeu():
     AttaqueTrioInfernal(trioInfernal)
 
     while True:
+        Clear()
         carte = Map()
         player.Revive() 
         Partie(carte)
@@ -38,12 +40,15 @@ def Starting(menu, shop) -> bool :
 def AttaqueTrioInfernal(trioInfernalRoom:FightRoom): 
     print(trioInfernalRoom.RoomIntroduction())
     sleep(0.5)
-    trioInfernalRoom.StartFight(player)
+    trioInfernalRoom.StartFight(player) 
     print("Tu es mort\n")
 
-def Partie(carte:Map) -> bool :
+def WaitForSpace():
     print("Appuyez sur Espace pour continuer le jeu \n")
     keyboard.wait("Space")
+
+def Partie(carte:Map) -> bool :
+    WaitForSpace()
     AffichageShop(carte.shop)
     salleActuelle=carte.trioInfernalRoomVide
     sleep(0.5)
@@ -57,9 +62,12 @@ def Partie(carte:Map) -> bool :
             else :
                 pass
         else : 
-            salleActuelle.StartGame() 
-            #TODO RETURN BOOL ADD TALISMAN 
-            
+            if salleActuelle.StartGame() == True:
+                player.AddTalisman(salleActuelle.GetTalisman())
+
+        WaitForSpace()
+        
+        Clear()
         salleActuelle=AskWhereToGo(salleActuelle)
     
 def AskWhereToGo(caseActuelle : Room)-> Room:
