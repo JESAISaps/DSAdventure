@@ -57,6 +57,8 @@ class Effect(Enum):
     AugmentationEsquive = "Augmentation de l'esquive"
     AugmentationDegatReciproque = "Augmente les degats de tout le monde"
     AmeliorationSac = "Augmentation de la place dansla trousse"
+    AugmentationDegatSelf = "Augmentation des dégats"
+    AnnulationAttaqueSelf = "Tu t'endors"
 
     def __str__(self):
         return str(self.value)
@@ -80,7 +82,6 @@ class AttackStats(Enum):
     def __str__(self):
         return str(self.value)
     Degats = "Degats"
-    DelaiAttaque = "Recul Attaque"
 
 class LevelUpRewardType(Enum):
     BonusPv = auto()

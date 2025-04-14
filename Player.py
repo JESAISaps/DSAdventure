@@ -55,6 +55,7 @@ class Character(ABC):
         match effet:
             case Effect.AnnulationAttaque:
                 self._attackDelayEffect += power
+                #print(f"DEBUG Character.AddEffect: A ajouté effet annulAtt a {self.GetName()}")
             case Effect.AugmentationDegatPoint:
                 self._bonusDamage += power
             case Effect.AugmentationDegatPourcentage:
@@ -69,6 +70,10 @@ class Character(ABC):
                 self._bonusEvasion += power
             case Effect.AmeliorationSac:
                 self.AmeliorerSac(power)
+            case Effect.AugmentationDegatSelf:
+                self._bonusDamage += power
+            case _:
+                print("Erreur Character.AddEffect effet non reconnu")
 
     def ActualizeEffectsAfterRound(self):
         if self._attackDelayEffect > 0:
@@ -83,6 +88,9 @@ class Character(ABC):
     
     def IsAlive(self):
         return not self._isDead
+    
+    def ReduceAttackDelayAfterTry(self):
+        self._attackDelayEffect -= 1
     
 
 class Player(Character):
@@ -176,10 +184,29 @@ class Player(Character):
                                          20:[5, 1, 3, 1, 1]}
         
         #TODO: mettre les recompenses de capacite
-        #temp = []
-        #self._recompenceCapaciteLevelUp = {i:temp[i] for i in range(1,21)}
-
-        self._attacks = {"Ecriture Soignee": {AttackStats.Degats:1}, "Boule de Fau":{AttackStats.Degats:1, AttackStats.DelaiAttaque:5}}
+        temp = [("0 étoiles",{AttackStats.Degats:0, Effect.AnnulationAttaque:1}), #1
+                (),
+                ("Negligeation", {AttackStats.Degats:5, Effect.AugmentationDegatPourcentage:.2}),
+                ("Révisions", {AttackStats.Degats:1, Effect.AugmentationDegatSelf:5, Effect.AugmentationPrecision:15}),
+                ("Absence", {AttackStats.Degats:-1, Effect.AugmentationEsquive:60}),
+                ("Revisions Nocturnes", {AttackStats.Degats:20, Effect.AnnulationAttaqueSelf:2}),
+                (),
+                (),
+                (),
+                (),
+                (),
+                (),
+                (),
+                (),
+                (),
+                (),
+                (),
+                (),
+                (),
+                ()
+                ]
+        self._recompenceCapaciteLevelUp = {i+1:temp[i] for i in range(0,20)}
+        self._attacks = {"Ecriture Soignee": {AttackStats.Degats:1}}
 
     def GetMoney(self):
         return self._money
@@ -206,6 +233,12 @@ class Player(Character):
     def AjouterLevelUpBonuses(self):
         level = self.GetLevel()
         self.LevelUpStats(self._recompensesLevelUpStats[level])
+        self.AjouterCapa(self._recompenceCapaciteLevelUp[level])
+
+    def AjouterCapa(self, capa):
+        print(capa)
+        if len(capa) != 0:
+            self._attacks.update({capa[0]:capa[1]})
 
     def LevelUpStats(self, bonus:list):
         # bonus de la forme [bonusVie, bonusArmure, bonusDegat, bonusVitesse, bonusPrecision]

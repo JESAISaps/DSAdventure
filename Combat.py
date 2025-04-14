@@ -41,6 +41,8 @@ class Fight:
 
         self.EndRound()
 
+        
+
     def CheckForKilledEnemy(self):
         enemiList = copy(self._enemies)
         for enemi in enemiList:
@@ -91,9 +93,11 @@ class Fight:
             enemi.ActualizeEffectsAfterRound()
 
     def PlayerTurn(self):
+
         if self._player.GetAttackDelay() > 0:
             print("Tu ne peux pas attaquer.")
             return
+        
         sleep(2)
         Clear()
         print(f"Tu as actuellement {self._player.GetHp()} hp")
@@ -106,14 +110,20 @@ class Fight:
         enemiToAttack = self.GetEnemiToAttack()
         choice, attack= self.GetAttackPlayerChoice(attackList)
         damage = 0
+
         if not self.GetTouched(self._player, enemiToAttack):
             print(f"{enemiToAttack.GetName()} a esquivé ton attaque.")
             return
         for attaque in attack:
-            if attaque == AttackStats.Degats:
-                damage = attack[attaque]
-            else:
-                enemiToAttack.AddEffect(attaque, attack[attaque])
+            match attaque:
+                case AttackStats.Degats:
+                    damage = attack[attaque]
+                case Effect.AugmentationDegatSelf:
+                    self._player.AddEffect(attaque, attack[attaque])
+                case Effect.AnnulationAttaqueSelf:
+                    self._player.AddEffect(attaque, attack[attaque])
+                case _: # Si on met juste un effet sur l'ennemi
+                    enemiToAttack.AddEffect(attaque, attack[attaque])
         sleep(TIMETOWAITBETWEENATTACKS*2)
         print(f"Tu attaque {enemiToAttack.GetName()} pour {Fore.GREEN} {damage} {Fore.RESET} degats avec {choice}")
         enemiToAttack.TakeDamage(damage)
@@ -174,7 +184,8 @@ class Fight:
             elif not isTouched:
                 print(f"Tu as esquivé l'attaque de {attackingEnemi.GetName()}")
             else:
-                print(f"{attackingEnemi} ne peut pas attaquer.")
+                print(f"{attackingEnemi.GetName()} ne peut pas attaquer.")
+                attackingEnemi.ReduceAttackDelayAfterTry()
 
     def GetTouched(self, attacker:Character, victim:Character):
         return random.randint(0,100) <= attacker.GetPrecision() * ((100-victim.GetEvasion())/100)
