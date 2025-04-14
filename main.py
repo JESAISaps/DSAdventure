@@ -89,7 +89,7 @@ def AskWhereToGo(caseActuelle : Room)-> Room:
     if player.GetEquipableItems() != []:
         accessiblechoices.append("Equipement")
     ViderInputBuffer()
-    rep=questionary.select("Ou voulez vous aller?",choices=accessiblechoices).ask()
+    rep=questionary.select("Ou voulez vous aller?",choices=accessiblechoices, style=QUESTIONARYSTYLE).ask()
     if rep == "Equipement": 
         EquiperJoueur()
         return False
@@ -100,7 +100,7 @@ def EquiperJoueur():
     choix["Annuler"] = "Annuler"
     print(choix)
     ViderInputBuffer()
-    reponse=questionary.select("Choisissez votre équipement", choices=choix.keys()).ask()
+    reponse=questionary.select("Choisissez votre équipement", choices=choix.keys(), style=QUESTIONARYSTYLE).ask()
     if reponse != "Annuler" :
         player.EquipItem(choix[reponse])
 
@@ -112,7 +112,7 @@ def VerifLunettes():
 
 def ActionShop(shop):    
     ViderInputBuffer()
-    rep=questionary.select("Voulez vous acheter un objet?",choices=["Oui","Non, jouer"]).ask()
+    rep=questionary.select("Voulez vous acheter un objet?",choices=["Oui","Non, jouer"], style=QUESTIONARYSTYLE).ask()
     if rep=="Oui":
         objet=shop.AchatObjet(player)
         if objet == "Trousse":

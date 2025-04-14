@@ -3,7 +3,7 @@ from enum import Enum, auto
 from dataclasses import dataclass
 from colorama import Fore
 import questionary
-from prompt_toolkit.styles import Style
+#from prompt_toolkit.styles import Style
 import os
 import keyboard
 import msvcrt
@@ -16,12 +16,12 @@ CHOICEYESORNO = [
 ]
 
 
-QUESTIONARYSTYLE = Style([
+QUESTIONARYSTYLE = questionary.Style([
     #('qmark', 'fg:#00ff00 bold'),     # Green question mark
     #('question', 'bold'),             # Bold question text
     #('answer', 'fg:#00ff00 bold'),    # Green answer when selected
     ('pointer', 'fg:#00ff00 bold'),   # Pointer › in green
-    ('highlighted', 'bold'),          # Highlighted item is bold
+    ('highlighted', 'bold')          # Highlighted item is bold
     #('selected', 'fg:#00ff00'),       # Selected item is green
 ])
 
