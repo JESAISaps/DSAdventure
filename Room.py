@@ -28,7 +28,7 @@ class Room(ABC):
         self._voisin["Sud"] = sud
         self._voisin["Est"] = est
         self._voisin["Ouest"] = ouest
-        self._voisin["passage"] = passage
+        self._voisin["Passage"] = passage
 
     def PaintRoom(self):
         return r"""
@@ -213,11 +213,14 @@ class CodeName(DefiRoom):
     def StartGame(self):
         print(f"On commence le {self._name}")
         if self.StartManche()==True:
+            print("Vous avez gagné un le Talisman Rapidité, il te permettra d'attaquer 2 fois d'affilée, " \
+            "et il peut être utilisé une fois par partie !")
             return True
         else:
             print("Erreur, c'est votre dernière chance")
             if self.StartManche():
-                print("Bravo, vous avez gagné le Talisman Lunettes")
+                print("Vous avez gagné un le Talisman Rapidité, il te permettra d'attaquer 2 fois d'affilée, " \
+                "et il peut être utilisé une fois par partie !")
                 return True
             else : 
                 print("Vous n'avez rien gagné")
@@ -226,6 +229,7 @@ class Morpion(DefiRoom):
     def __init__(self):
         super().__init__("Morpion")
         self.matrice=[[" "," "," ",],[" "," "," "],[" "," "," "]]
+        self.talismanType = TalismanType.Morpion
 
     def RoomIntroduction(self):
         return Fore.MAGENTA + r"""
@@ -254,8 +258,7 @@ class Morpion(DefiRoom):
                 self.MancheJoueur()
                 playerWin=self.Win("x")
         if playerWin : 
-            print("Vous avez gagné un le Talisman Rapidité, il te permettra d'attaquer 2 fois d'affilée, " \
-            "et il peut être utilisé une fois par partie !")
+            print("Bravo, vous avez gagné le Talisman Lunettes, il te permettra de débloquer des passages secrets)")
             return True
         else:
             print("Vous avez perdu, bonne chance pour la suite")
@@ -341,6 +344,7 @@ class Sphinx(DefiRoom):
                       ("Quels sont les 3 mots préférés de Monsieur Torinesi ?", "Vue de l'esprit"), 
                       ("Quelle est la marque d'ordinateur en 2 lettres?","hp")]
         self.questionChoisie=random.choice(self.liste)
+        self.talismanType = TalismanType.Sphinx
 
     def RoomIntroduction(self):
         return Fore.MAGENTA+ r""" SPHINX
@@ -380,6 +384,8 @@ class Sphinx(DefiRoom):
 class Integrale(DefiRoom):
     def __init__(self):
         super().__init__("Intégrales")
+
+        self.talismanType = TalismanType.Integrale
 
     def RoomIntroduction(self):
         return Fore.MAGENTA + r"""

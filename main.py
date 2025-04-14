@@ -33,6 +33,7 @@ def LancerJeu():
         carte = Map()
         player.Revive() 
         Partie(carte)
+        print(Fore.RED + "Tu es mort." + Fore.RESET)
 
 
 def Starting(menu, shop) -> bool :
@@ -47,8 +48,8 @@ def AttaqueTrioInfernal(trioInfernalRoom:FightRoom):
     print(trioInfernalRoom.RoomIntroduction())
     sleep(0.5)
     trioInfernalRoom.StartFight(player)
+    print(Fore.RED + "Tu es mort." + Fore.RESET)
     if player.GetLevel() == 0:
-        print(Fore.RED + "Tu es mort." + Fore.RESET)
         print("\nBon tu fais un peu pitié, voici de quoi level up")
         player.AjouterXp(10)
 

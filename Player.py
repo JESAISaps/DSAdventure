@@ -180,7 +180,7 @@ class Player(Character):
         dicoTalisman = {TalismanType.CodeName:("CodeName","Rapidité"),TalismanType.Morpion:("Morpion","Lunettes"),TalismanType.Sphinx:("Sphinx","Connaissance ultime"),TalismanType.Integrale:("Integrale","Puissance calculatoire")}
         self.talismans = {id:False for id in dicoTalisman}
 
-        self.armorBonusDef = 0
+        self.armorBonusDef = 100
         self.armorBonusHp = 0
         self.armorBonusDamage = 0
         self.armorBonusXp = 0
@@ -235,7 +235,7 @@ class Player(Character):
                 ()
                 ]
         self._recompenceCapaciteLevelUp = {i+1:temp[i] for i in range(0,20)}
-        self._attacks = {"Ecriture Soignee": {AttackStats.Degats:1}}
+        self._attacks = {"Ecriture Soignee": {AttackStats.Degats:100}}
 
     def GetMoney(self):
         return self._money

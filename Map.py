@@ -42,7 +42,7 @@ class Map:
         self.petit = Enemi(*self.petitStats)
         self.petitRoom=FightRoom([self.petit])
 
-        self.bigMathsPetit = Enemi(self.bigMathsPetitStats)
+        self.bigMathsPetit = Enemi(*self.bigMathsPetitStats)
         self.bigMathBaba = Enemi(*self.bigMathBabaStats)
         self.bigMaths=FightRoom([self.bigMathBaba,self.bigMathsPetit])
 
