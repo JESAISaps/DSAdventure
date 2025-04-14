@@ -87,7 +87,7 @@ def AskWhereToGo(caseActuelle : Room)-> Room:
             accessiblechoices.append(i)
     if player.GetEquipableItems() != []:
         accessiblechoices.append("Equipement")
-    flush_stdin()
+    ViderInputBuffer()
     rep=questionary.select("Ou voulez vous aller?",choices=accessiblechoices).ask()
     if rep == "Equipement": 
         EquiperJoueur()
@@ -98,7 +98,7 @@ def EquiperJoueur():
     choix = {item.GetName():item for item in player.GetEquipableItems()}
     choix["Annuler"] = "Annuler"
     print(choix)
-    flush_stdin()
+    ViderInputBuffer()
     reponse=questionary.select("Choisissez votre équipement", choices=choix.keys()).ask()
     if reponse != "Annuler" :
         player.EquipItem(choix[reponse])
@@ -110,7 +110,7 @@ def VerifLunettes():
     return player.talismans[TalismanType.Morpion]
 
 def ActionShop(shop):    
-    flush_stdin()
+    ViderInputBuffer()
     rep=questionary.select("Voulez vous acheter un objet?",choices=["Oui","Non, jouer"]).ask()
     if rep=="Oui":
         objet=shop.AchatObjet(player)

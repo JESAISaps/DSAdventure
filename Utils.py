@@ -50,7 +50,7 @@ def WaitForSpace(isFirst=False):
 def SkipLines(nb):
     print("\n"*nb)
     
-def flush_stdin():
+def ViderInputBuffer():
     while msvcrt.kbhit():
         msvcrt.getch()
 
