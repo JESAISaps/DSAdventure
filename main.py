@@ -20,6 +20,8 @@ def LancerJeu():
     trioInfernal=carte.trioInfernalRoom
     Starting(menu, shop)
     AttaqueTrioInfernal(trioInfernal)
+    SkipLines(3)
+    WaitForSpace()
 
     while True:
         Clear()
@@ -30,25 +32,22 @@ def LancerJeu():
 
 def Starting(menu, shop) -> bool :
     """
-    Retourne True dès que les achats sont terminés
+    Retourne True dès que les achats sont terminés <- Faux
     """
     AffichageMenu(menu)
-    print("Appuyez sur Espace pour" + Fore.CYAN + " commencer" + Fore.RESET +" le jeu \n")
-    keyboard.wait("Space")
-    AffichageShop(shop)   
+    WaitForSpace(True)
+    #AffichageShop(shop)
 
 def AttaqueTrioInfernal(trioInfernalRoom:FightRoom): 
     print(trioInfernalRoom.RoomIntroduction())
     sleep(0.5)
-    trioInfernalRoom.StartFight(player) 
+    trioInfernalRoom.StartFight(player)
     print("Tu es mort\n")
-
-def WaitForSpace():
-    print("Appuyez sur Espace pour continuer le jeu \n")
-    keyboard.wait("Space")
+    if player.GetLevel() == 0:
+        print("\nBon tu fais un peu pitié, voici de quoi level up")
+        player.AjouterXp(10)
 
 def Partie(carte:Map) -> bool :
-    WaitForSpace()
     AffichageShop(carte.shop)
     salleActuelle=carte.trioInfernalRoomVide
     sleep(0.5)
@@ -69,6 +68,7 @@ def Partie(carte:Map) -> bool :
         
         Clear()
         salleActuelle=AskWhereToGo(salleActuelle)
+    WaitForSpace()
     
 def AskWhereToGo(caseActuelle : Room)-> Room:
     choices=caseActuelle.GetVoisins()

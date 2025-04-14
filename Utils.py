@@ -5,6 +5,7 @@ from colorama import Fore
 import questionary
 from prompt_toolkit.styles import Style
 import os
+import keyboard
 
 TIMETOWAITBETWEENATTACKS = .5
 
@@ -31,11 +32,22 @@ def CompareWord(mot1 : str,mot2 : str) -> bool :
 
 def Clear():
     os.system('cls' if os.name == 'nt' else 'clear')
+
 class CustomChoice(click.Choice):
     def fail(self, value, param=None, ctx=None):
         raise click.BadParameter(
             f"Veuillez choisir parmi : {', '.join(self.choices)}"
         )
+    
+def WaitForSpace(isFirst=False):
+    if (isFirst):
+        print("Appuyez sur Espace pour" + Fore.CYAN + " commencer" + Fore.RESET +" le jeu \n")
+    else:
+        print("Appuyez sur Espace pour" + Fore.CYAN + " continuer" + Fore.RESET +" le jeu \n")
+    keyboard.wait("Space")
+
+def SkipLines(nb):
+    print("\n"*nb)
 
 class ObjectType(Enum):
     Objet = auto()

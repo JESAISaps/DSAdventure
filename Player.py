@@ -321,7 +321,7 @@ class Player(Character):
     
     
 class Enemi(Character):
-    def __init__(self, name, startingHp=5, attacks=[("Coup de poing",2), ("Coup de regle",1), ("Coup de tete",10)], level = 0):
+    def __init__(self, name, startingHp=5, attacks=[("Coup de poing",2), ("Coup de regle",1), ("Coup de tete",10)], level = 0, esquive=10):
         super().__init__(name, startingHp, level=level)
         # Les proba sont nb/150
         self.dropPossibilities = {Money(amount=randint(2, (self.GetLevel()+2)*3)):130,
@@ -343,6 +343,8 @@ class Enemi(Character):
                                     }
         self._attacks = copy(attacks)
         self._firstAttack = attacks[0]
+
+        self._evasion = esquive
 
     def Die(self):
         self._isDead = True

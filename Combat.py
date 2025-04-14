@@ -21,6 +21,7 @@ class Fight:
     def StartFight(self):
         while self._enemies != [] and self._player.IsAlive(): #On continue tant qu'il y a des ennemis, et que le joueur est vivant.
             self.DoRound()
+            WaitForSpace()
 
         if self._player.IsAlive():
             #print("Tu peux a present changer de salle.")
@@ -40,10 +41,7 @@ class Fight:
         self.EnemiTurn()
 
         self.EndRound()
-        sleep(2)
-        
-
-        
+        sleep(2)        
 
     def CheckForKilledEnemy(self):
         enemiList = copy(self._enemies)
