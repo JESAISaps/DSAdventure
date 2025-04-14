@@ -59,16 +59,15 @@ def Partie(carte:Map) -> bool :
             if salleActuelle.StartFight(player)==False:
                 print("Tu es mort \n")
                 return False
-            else :
-                pass
         else : 
             if salleActuelle.StartGame() == True:
                 player.AddTalisman(salleActuelle.GetTalisman())
-
+        if player.GetEquipableItems() != []:
+            EquiperJoueur()
         WaitForSpace()
-        
         Clear()
-        salleActuelle=AskWhereToGo(salleActuelle)
+        while salleActuelle != False : 
+            salleActuelle=AskWhereToGo(salleActuelle)
     
 def AskWhereToGo(caseActuelle : Room)-> Room:
     choices=caseActuelle.GetVoisins()
@@ -78,8 +77,20 @@ def AskWhereToGo(caseActuelle : Room)-> Room:
             accessiblechoices.append(i)
         if i=="Passage" and VerifLunettes()==True :
             accessiblechoices.append(i)
+    if player.GetEquipableItems() != []:
+        accessiblechoices.append("Equipement")
     rep=questionary.select("Ou voulez vous aller?",choices=accessiblechoices).ask()
+    if rep == "Equipement": 
+        EquiperJoueur()
+        return False
     return choices[rep]
+
+def EquiperJoueur():
+    choices = player.GetEquipableItems().append("Annuler")
+    reponse=questionary.select("Choisissez votre équipement", player.GetEquipableItems())
+    if reponse != "Annuler" :
+        player.EquipItem(reponse)
+    else : pass
 
 def VerifLunettes():
     return player.talismans[1]==True
