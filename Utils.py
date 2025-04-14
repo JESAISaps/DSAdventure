@@ -6,6 +6,7 @@ import questionary
 from prompt_toolkit.styles import Style
 import os
 import keyboard
+import msvcrt
 
 TIMETOWAITBETWEENATTACKS = .5
 
@@ -48,6 +49,10 @@ def WaitForSpace(isFirst=False):
 
 def SkipLines(nb):
     print("\n"*nb)
+    
+def flush_stdin():
+    while msvcrt.kbhit():
+        msvcrt.getch()
 
 class ObjectType(Enum):
     Objet = auto()

@@ -84,6 +84,7 @@ class Fight:
             
             while(self._player.GetBag().GetEmptySpacesNb() > 0):
                 rewardDico = {item.GetName():item for item in rewards}
+                flush_stdin()
                 item = questionary.select("Quel objet veux-tu prendre ?", choices=rewardDico.keys(), style=QUESTIONARYSTYLE).ask()
                 self._player.AddItem(rewardDico[item])
                 rewards.remove(rewardDico[item])        
@@ -143,12 +144,15 @@ class Fight:
             return False
 
         self.ShowEnemies()
+        flush_stdin()
+
         if questionary.select("Voulez vous utiliser un objet ?", choices=CHOICEYESORNO, style=QUESTIONARYSTYLE).ask() == "Non":
             return False
         usableObjectList = self._player.GetUsableObjects()
         objectWithStatsToShow = self.ConvertUsableObjectsToNiceString(usableObjectList)
         objectNames, nameAssociations = self.GetNamesFromItems(usableObjectList)
         print(objectWithStatsToShow)
+        flush_stdin()
         return nameAssociations[questionary.select("Quel objet veux-tu utiliser ?", choices=objectNames, style=QUESTIONARYSTYLE).ask()]
 
     def ConvertUsableObjectsToNiceString(self, usableObjectList:list[UsableObject]):
@@ -202,12 +206,14 @@ class Fight:
         sleep(TIMETOWAITBETWEENATTACKS)
         print(attacksToShow)
         sleep(TIMETOWAITBETWEENATTACKS)
+        flush_stdin()
         choice = questionary.select("Quelle attaque voulez vous utiliser ?", choices=attackList, instruction=" ", style=QUESTIONARYSTYLE).ask()
         return choice, playerAttacks[choice]
 
     def GetEnemiToAttack(self, text:str="Quel ennemi voulez-vous attaquer ?"):
         enemiNames = {f"{enemi.GetName()} - {enemi.GetHp()} hp":enemi for enemi in self._enemies}
 
+        flush_stdin()
         choice = questionary.select(text, choices=enemiNames.keys(), style=QUESTIONARYSTYLE).ask()
         return enemiNames[choice]
     
