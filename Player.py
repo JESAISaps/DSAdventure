@@ -102,17 +102,13 @@ class Player(Character):
     class Sac:
         def __init__(self, startingSize:int):
             self.bagSize = startingSize
-            self.content:list[Object.Object] = []
-            
+            self.content:list[Object.Object] = []            
 
         def AddItem(self, item:Object.Object) -> bool:
                 if len(self.content) >= self.bagSize:
                     return False # On ne peut pas inserer d'objet dans le sac
                 self.content.append(item)
                 return True
-        
-        
-
                 
         def GetContent(self) -> list[Object.Object]:
             return self.content
@@ -171,7 +167,6 @@ class Player(Character):
         def GetBoostXP(self) -> int:
             return self.bonusXp
 
-
     def __init__(self,name,xp=0, bagSize=2, startingHp=5):
         super().__init__(name, startingHp, color=Fore.CYAN) #Tous les joueurs commencent avec 10 PV au niveau 0
 
@@ -214,7 +209,6 @@ class Player(Character):
                                          19:[5, 1, 3, 1, 1],
                                          20:[5, 1, 3, 1, 1]}
         
-        #TODO: mettre les recompenses de capacite
         temp = [("0 étoiles",{AttackStats.Degats:0, Effect.AnnulationAttaque:1}), #1
                 (),
                 ("Negligeation", {AttackStats.Degats:5, Effect.AugmentationDegatPourcentage:.2}),
@@ -268,7 +262,7 @@ class Player(Character):
         self.AjouterCapa(self._recompenceCapaciteLevelUp[level])
 
     def AjouterCapa(self, capa):
-        print(capa)
+        #print(capa)
         if len(capa) != 0:
             self._attacks.update({capa[0]:capa[1]})
 

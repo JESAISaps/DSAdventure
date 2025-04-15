@@ -30,7 +30,6 @@ def CompareWord(mot1 : str,mot2 : str) -> bool :
     mot2modifie=mot2.lower().replace("s","").replace("é","e").replace("è","e").replace("'","").replace("ê","e").replace(" ","").replace("(","").replace(")","")
     return mot1modifie == mot2modifie
 
-
 def Clear():
     os.system('cls' if os.name == 'nt' else 'clear')
 

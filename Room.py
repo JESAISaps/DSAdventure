@@ -23,6 +23,9 @@ class Room(ABC):
     def GetVoisins(self):
         return self._voisin
     
+    def GetEnemiNb(self):
+        return 0
+    
     def SetVoisins(self, nord=None, sud=None, est=None, ouest=None, passage=None):
         self._voisin["Nord"] = nord
         self._voisin["Sud"] = sud
