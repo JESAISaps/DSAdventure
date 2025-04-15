@@ -55,7 +55,8 @@ def AttaqueTrioInfernal(trioInfernalRoom:FightRoom):
 
 def Partie(carte:Map) -> bool :
     AffichageShop(carte.shop)
-    salleActuelle=carte.trioInfernalRoomVide
+   # salleActuelle=carte.trioInfernalRoomVide
+    salleActuelle=carte.defiVoyance
     sleep(0.5)
     while player.IsAlive():
         if isinstance(salleActuelle, FightRoom):
@@ -66,7 +67,10 @@ def Partie(carte:Map) -> bool :
                 return False
         else : 
             if salleActuelle.StartGame() == True:
-                player.AddTalisman(salleActuelle.GetTalisman())
+                player.RecompenseDefi(salleActuelle.GetTalisman())
+                print(salleActuelle.GetUtilite())
+            else : 
+                print("Vous avez perdu, bonne chance pour la suite")
         salleActuelle=ApresCombat(salleActuelle)
         WaitForSpace()
         Clear()
@@ -98,7 +102,6 @@ def AskWhereToGo(caseActuelle : Room)-> Room:
 def EquiperJoueur():
     choix = {item.GetName():item for item in player.GetEquipableItems()}
     choix["Annuler"] = "Annuler"
-    print(choix)
     ViderInputBuffer()
     reponse=questionary.select("Choisissez votre équipement", choices=choix.keys(), style=QUESTIONARYSTYLE).ask()
     if reponse != "Annuler" :
