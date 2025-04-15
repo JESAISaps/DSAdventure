@@ -56,6 +56,9 @@ class Menu(Room):
     def __init__(self, name):
         super().__init__()
         self._name = name
+
+    def RoomIntroduction(self):
+        return f"Bienvenue au {self._name} ! \n"
     
     def PaintRoom(self):
         return Fore.BLUE + r"""
@@ -157,10 +160,12 @@ class FightRoom(Room):
         return fight.StartFight()        
 
     def RoomIntroduction(self):
-        return f"Tu arrive en face de {self._nbEnemies} ennemis"
+        if self.GetEnemiNb()==0:
+            return "Cette salle est bien tranquille..."
+        return f"\nTu arrive en face de {self.GetEnemiNb()} ennemis."
     
     def GetEnemiNb(self) :
-        return self._nbEnemies
+        return len(self._enemies)
 
 class DefiRoom(Room):
     def __init__(self, name):

@@ -1,5 +1,5 @@
 from Player import Player, Enemi, Character
-from Object import UsableObject, Object
+from Object import UsableObject, Object, Antiseche
 #from Room import FightRoom
 import questionary
 import random
@@ -15,9 +15,6 @@ class Fight:
     def __init__(self, player:Player, enemiList:list[Enemi]):
         self._player:Player = player
         self._enemies:list[Enemi] = enemiList
-
-        self.seeNextTurn = player.GetTalisman(TalismanType.CodeName)
-        self.hasPlayerAttackedTwice = not player.GetTalisman(TalismanType.Morpion) # Morpion permet d'attaquer deux fois
 
         #self._enemiNames = {f"{enemi.GetName()} - {enemi.GetHp()} hp":enemi for enemi in enemiList}
 
@@ -42,21 +39,10 @@ class Fight:
 
         self.CheckForKilledEnemy()
 
-        if not self.hasPlayerAttackedTwice:
-            if self.AskForSecondTurn():
-                self.hasPlayerAttackedTwice = True
-                print(f"\n Tu attaques une seconde fois.")
-                self.PlayerTurn()
-
         self.EnemiTurn()
 
         self.EndRound()
-        sleep(2) 
-
-    def AskForSecondTurn(self) -> bool:
-        return questionary.select("Veux-tu utiliser le talisman d'attaque double ?",
-                                  choices=[questionary.Choice(title=f'Oui', value=True),
-                                            questionary.Choice(title=f'Non', value=False)])  
+        sleep(2)        
 
     def CheckForKilledEnemy(self):
         enemiList = copy(self._enemies)
@@ -146,8 +132,8 @@ class Fight:
         match itemToUse.GetEffectType(): # Utile si dans le futur on a + d'effets particuliers
             case Effect.AugmentationDegatReciproque: # Dans ce cas la on augmente l'ennemi et le joueur
                 effet = itemToUse.Utiliser()
-                random.choice(self._enemies).AddEffect(Effect.AugmentationDegatPoint, effet[1][1])
-                self._player.AddEffect(Effect.AugmentationDegatPoint, effet[1][0])
+                random.choice(self._enemies).AddEffect(effet[0], effet[1][1])
+                self._player.AddEffect(effet[0], effet[1][0])
             case Effect.AnnulationAttaque:
                 enemiToApplyEffect = self.GetEnemiToAttack("Sur quel ennemi voulez vous appliquer l'effet ?")
                 enemiToApplyEffect.AddEffect(*itemToUse.Utiliser())
@@ -222,17 +208,16 @@ class Fight:
             attacksToShow += "\n"
         # Affiche la liste des attaques et leurs effects
         sleep(TIMETOWAITBETWEENATTACKS)
+        Clear()
         print(attacksToShow)
         sleep(TIMETOWAITBETWEENATTACKS)
+        Clear()
         ViderInputBuffer()
         choice = questionary.select("Quelle attaque voulez vous utiliser ?", choices=attackList, instruction=" ", style=QUESTIONARYSTYLE).ask()
         return choice, playerAttacks[choice]
 
     def GetEnemiToAttack(self, text:str="Quel ennemi voulez-vous attaquer ?"):
-        if self.seeNextTurn:
-            enemiNames = {f"{enemi.GetName()} - {enemi.GetHp()} hp --> {enemi.GetNextEnnemiAttack(True)}":enemi for enemi in self._enemies}
-        else:
-            enemiNames = {f"{enemi.GetName()} - {enemi.GetHp()} hp":enemi for enemi in self._enemies}
+        enemiNames = {f"{enemi.GetName()} - {enemi.GetHp()} hp":enemi for enemi in self._enemies}
 
         ViderInputBuffer()
         choice = questionary.select(text, choices=enemiNames.keys(), style=QUESTIONARYSTYLE).ask()

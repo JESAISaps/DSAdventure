@@ -44,6 +44,8 @@ def Starting(menu, shop) -> bool :
     WaitForSpace(True)
 
 def AttaqueTrioInfernal(trioInfernalRoom:FightRoom): 
+    print("L'année commence déjà ! Tu arrives face à des professeurs redoutables, essaie de t'en sortir...")
+    sleep(1.5)
     print(trioInfernalRoom.RoomIntroduction())
     sleep(0.5)
     trioInfernalRoom.StartFight(player)
@@ -51,6 +53,7 @@ def AttaqueTrioInfernal(trioInfernalRoom:FightRoom):
     if player.GetLevel() == 0:
         print("\nBon tu fais un peu pitié, voici de quoi level up")
         player.AjouterXp(10)
+        sleep(1)
 
 def Partie(carte:Map) -> bool :
     AffichageShop(carte.shop)
