@@ -56,9 +56,6 @@ class Menu(Room):
     def __init__(self, name):
         super().__init__()
         self._name = name
-
-    def RoomIntroduction(self):
-        return f"Bienvenue dans l'accueil nommé {self._name} !"
     
     def PaintRoom(self):
         return Fore.BLUE + r"""

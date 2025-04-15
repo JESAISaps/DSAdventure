@@ -42,7 +42,6 @@ def Starting(menu, shop) -> bool :
     """
     AffichageMenu(menu)
     WaitForSpace(True)
-    #AffichageShop(shop)
 
 def AttaqueTrioInfernal(trioInfernalRoom:FightRoom): 
     print(trioInfernalRoom.RoomIntroduction())
@@ -56,7 +55,6 @@ def AttaqueTrioInfernal(trioInfernalRoom:FightRoom):
 def Partie(carte:Map) -> bool :
     AffichageShop(carte.shop)
     salleActuelle=carte.trioInfernalRoomVide
-    #salleActuelle=carte.defiVoyance
     sleep(0.5)
     while player.IsAlive():
         if isinstance(salleActuelle, FightRoom):
@@ -75,6 +73,7 @@ def Partie(carte:Map) -> bool :
         WaitForSpace()
         Clear()
     WaitForSpace()
+
 
 def ApresCombat(salleDepart):
     salleActuelle=AskWhereToGo(salleDepart)
@@ -136,8 +135,10 @@ def AffichageRoomIntroduction(salleActuelle):
         print(salleActuelle.RoomIntroduction())
 
 def AffichageMenu(menu:Room):
-    print(menu.RoomIntroduction())
     print(menu.PaintRoom())
+    print("Bienvenue dans DSAdventure ! \n" \
+    "Revis ton année de prépa en attaquant tes profs, gagne des Talismans, des objets et complète des minis jeux. \n" \
+    "Ton objectif est d'arriver au conseil avec au moins 10 de moyenne!")
 
 def AffichageShop(shop):
     """ 
