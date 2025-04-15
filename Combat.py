@@ -1,5 +1,5 @@
 from Player import Player, Enemi, Character
-from Object import UsableObject, Object, Antiseche
+from Object import UsableObject, Object
 #from Room import FightRoom
 import questionary
 import random
@@ -146,8 +146,8 @@ class Fight:
         match itemToUse.GetEffectType(): # Utile si dans le futur on a + d'effets particuliers
             case Effect.AugmentationDegatReciproque: # Dans ce cas la on augmente l'ennemi et le joueur
                 effet = itemToUse.Utiliser()
-                random.choice(self._enemies).AddEffect(effet[0], effet[1][1])
-                self._player.AddEffect(effet[0], effet[1][0])
+                random.choice(self._enemies).AddEffect(Effect.AugmentationDegatPoint, effet[1][1])
+                self._player.AddEffect(Effect.AugmentationDegatPoint, effet[1][0])
             case Effect.AnnulationAttaque:
                 enemiToApplyEffect = self.GetEnemiToAttack("Sur quel ennemi voulez vous appliquer l'effet ?")
                 enemiToApplyEffect.AddEffect(*itemToUse.Utiliser())

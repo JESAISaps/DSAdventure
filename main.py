@@ -55,8 +55,8 @@ def AttaqueTrioInfernal(trioInfernalRoom:FightRoom):
 
 def Partie(carte:Map) -> bool :
     AffichageShop(carte.shop)
-   # salleActuelle=carte.trioInfernalRoomVide
-    salleActuelle=carte.defiVoyance
+    salleActuelle=carte.trioInfernalRoomVide
+    #salleActuelle=carte.defiVoyance
     sleep(0.5)
     while player.IsAlive():
         if isinstance(salleActuelle, FightRoom):
