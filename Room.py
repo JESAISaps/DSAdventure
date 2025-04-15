@@ -166,9 +166,8 @@ class FightRoom(Room):
         return self._nbEnemies
 
 class DefiRoom(Room):
-    def __init__(self, name,player:Player):
+    def __init__(self, name):
         self._name = name
-        self._player:Player = player
         super().__init__()
     
     def RoomIntroduction(self):
@@ -187,6 +186,7 @@ class CodeName(DefiRoom):
         self.liste = [("police",("girophare","enfermer")),("barcelo",("cheveux","mathématiques"))]
         self.tupleJeu=random.choice(self.liste)
         self.talismanType = TalismanType.CodeName
+        self.utilite="Tu peux désormais voir les prochains coups de l'adversaire!"
 
     def RoomIntroduction(self):
         return Fore.MAGENTA + r"""
@@ -202,6 +202,9 @@ class CodeName(DefiRoom):
     def GetAnswer(self):
         reponse=click.prompt("A quoi je pense?", type=str)
         return reponse
+            
+    def GetUtilite(self):
+        return self.utilite
 
     def Verification(self, reponse):
         if self.liste==[]:
@@ -216,17 +219,11 @@ class CodeName(DefiRoom):
         
     def StartGame(self):
         print(f"On commence le {self._name}")
-        if self.StartManche()==True and self._player.talismans[TalismanType.CodeName]==False  :
-            print("Vous avez gagné un le Talisman Rapidité, il te permettra d'attaquer 2 fois d'affilée, " \
-            "et il peut être utilisé une fois par partie !")
+        if self.StartManche()==True :
             return True
-        if self.StartManche()==True and self._player.talismans[TalismanType.CodeName]==True  :
-            print("Vous gagnez de l'xp")
         else:
             print("Erreur, c'est votre dernière chance")
-            if self.StartManche()==True and self._player.talismans[TalismanType.CodeName]==False :
-                print("Vous avez gagné un le Talisman Rapidité, il te permettra d'attaquer 2 fois d'affilée, " \
-                "et il peut être utilisé une fois par partie !")
+            if self.StartManche()==True:
                 return True
             else : 
                 print("Vous n'avez rien gagné")
@@ -238,6 +235,7 @@ class Morpion(DefiRoom):
         super().__init__("Morpion")
         self.matrice=[[" "," "," ",],[" "," "," "],[" "," "," "]]
         self.talismanType = TalismanType.Morpion
+        self.utilite="Une fois par combat tu pourras l'utiliser pour attaquer 2 fois d'affilée !"
 
     def RoomIntroduction(self):
         return Fore.MAGENTA + r"""
@@ -246,7 +244,10 @@ class Morpion(DefiRoom):
  |  | \__/ |  \ |    | \__/ | \| 
                                  
 """ + Fore.RESET
-        
+    
+            
+    def GetUtilite(self):
+        return self.utilite
 
     def ShowMatrice(self):
         rep=""
@@ -272,15 +273,11 @@ class Morpion(DefiRoom):
                 self.MancheJoueur()
                 playerWin=self.Win("x")
         self.ShowMatrice()
-        if playerWin and player.talismans[TalismanType.Morpion]==False :
-            print("Bravo, vous avez gagné le Talisman Lunettes, il te permettra de débloquer des passages secrets!")
-            return True
-        if playerWin and self._player.talismans[TalismanType.Morpion]==True :
-            print("Bravo, vous avez déjà le Talisman Lunettes, maintenant vous gagnez de l'xp ! ")
-            self._player.AjouterXp(self._player.GetXpCaps(self._player.GetLevel())*0.15)
-        else:
-            print("Vous avez perdu, bonne chance pour la suite")
-            return False
+        return playerWin
+    
+            
+    def GetUtilite(self):
+        return self.utilite
 
     def IsComplete(self):
         for i in range(3):
@@ -361,7 +358,12 @@ class Sphinx(DefiRoom):
                       ("Quelle est la marque d'ordinateur en 2 lettres?","hp")]
         self.questionChoisie=random.choice(self.liste)
         self.talismanType = TalismanType.Sphinx
+        self.utilite="Tu pourras utiliser cette potion de guérison une fois par partie pour booster tes points de vie au maximum!"
 
+        
+    def GetUtilite(self):
+        return self.utilite
+    
     def RoomIntroduction(self):
         return Fore.MAGENTA+ r""" SPHINX
  __   __                  
@@ -402,6 +404,7 @@ class Integrale(DefiRoom):
         super().__init__("Intégrales")
 
         self.talismanType = TalismanType.Integrale
+        self.utilite="Cette puissance calculatoire te permet, une fois par partie, de tuer un ennemi en 1 seul coup"
 
     def RoomIntroduction(self):
         return Fore.MAGENTA + r"""
@@ -419,6 +422,7 @@ class Integrale(DefiRoom):
         else :
             print("Très mauvais calcul, bon courage pour la suite.")
             return False
+
         
     def AskQuestion(self)->str:
         

@@ -177,7 +177,7 @@ class Player(Character):
         dicoTalisman = {TalismanType.CodeName:("CodeName","Rapidité"),TalismanType.Morpion:("Morpion","Lunettes"),TalismanType.Sphinx:("Sphinx","Connaissance ultime"),TalismanType.Integrale:("Integrale","Puissance calculatoire")}
         self.talismans = {id:False for id in dicoTalisman}
 
-        self.armorBonusDef = 100
+        self.armorBonusDef = 0
         self.armorBonusHp = 0
         self.armorBonusDamage = 0
         self.armorBonusXp = 0
@@ -231,7 +231,7 @@ class Player(Character):
                 ()
                 ]
         self._recompenceCapaciteLevelUp = {i+1:temp[i] for i in range(0,20)}
-        self._attacks = {"Ecriture Soignee": {AttackStats.Degats:100}}
+        self._attacks = {"Ecriture Soignee": {AttackStats.Degats:1}}
 
     def GetMoney(self):
         return self._money
@@ -359,8 +359,15 @@ class Player(Character):
         equipedItems = self.equipement.GetEquiped()
         return f"Tete: {equipedItems[ObjectType.Chapeau]}\n\nCorp: {equipedItems[ObjectType.TShirt]}\
        Arme: {equipedItems[ObjectType.Arme]}\n\n Bas: {equipedItems[ObjectType.Chaussures]}"
-        
     
+    def RecompenseDefi(self, talismanType: TalismanType):
+        if self.talismans[talismanType]==True :
+            print(f"Vous possedez deja le Talisman {talismanType}, vous gagnez cependant de l'xp!")
+            self.AjouterXp(self.GetXpCaps(self.GetLevel())*0.15)
+        else :
+            print(f'Bravo, vous avez gagné le Talisman {talismanType}')
+            self.AddTalisman(talismanType)
+
     
 class Enemi(Character):
     def __init__(self, name, startingHp=5, attacks=[("Coup de poing",2), ("Coup de regle",1), ("Coup de tete",10)], level = 0, esquive=10):
