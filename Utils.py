@@ -84,6 +84,7 @@ class Effect(Enum):
     AmeliorationSac = "Augmentation de la place dansla trousse"
     AugmentationDegatSelf = "Augmentation des dégats"
     AnnulationAttaqueSelf = "Tu t'endors"
+    PotGue = "Tu re-gagne tous tes points de vie."
 
     def __str__(self):
         return str(self.value)

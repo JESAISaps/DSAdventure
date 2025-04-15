@@ -76,6 +76,11 @@ class Character(ABC):
                 self.AmeliorerSac(power)
             case Effect.AugmentationDegatSelf:
                 self._bonusDamage += power
+            case Effect.PotGue:
+                try:
+                    self._hp = self.GetMaxHp()
+                except:
+                    print("Tu ne peux pas guérir un ennemi.")
             case _:
                 print("Erreur Character.AddEffect effet non reconnu")
 
@@ -236,6 +241,9 @@ class Player(Character):
     def GetMoney(self):
         return self._money
     
+    def GetTalisman(self, talisman:TalismanType):
+        return self.talismans[talisman]
+    
     def ChangeMoney(self,qte):
         self._money += qte
 
@@ -287,7 +295,13 @@ class Player(Character):
 
     def Revive(self):
         self._isDead = False
-        self._hp = self._maxHp + self.armorBonusDamage
+        self._hp = self._maxHp + self.armorBonusHp
+        if self.talismans[TalismanType.Sphinx]:
+            potionGuerison = Object.PotionGuerison("Tasse de café")
+            self.AddItem(potionGuerison)
+        
+    def GetMaxHp(self):
+        return self._maxHp + self.armorBonusHp
 
     def GetBag(self) -> Sac:
         return self.sac
@@ -392,10 +406,15 @@ class Enemi(Character):
         self._isDead = True
         del self
 
-    def GetNextEnnemiAttack(self)->tuple[str, int]:
+    def GetNextEnnemiAttack(self, isOnlyLook=False)->tuple[str, int]:
         if len(self._attacks) == 0:
-            return self._firstAttack
-        return self._attacks.pop(0)
+            attack =  self._firstAttack
+        else:
+            if isOnlyLook:
+                return self._attacks[0][0]
+            else:    
+                attack = self._attacks.pop(0)
+        return attack
     
     def SetDropPossibilities(self, dropTable:dict[Object:int]):
         self.dropPossibilities = dropTable

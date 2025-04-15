@@ -151,6 +151,19 @@ class Bouteille(UsableObject):
     
     def GetEffectAsString(self):
         return f"+ {self.puissance} % de precision"
+    
+class PotionGuerison(UsableObject):
+    def __init__(self, name):
+        super().__init__(name)
+        self._effect = Effect.PotGue
+        self.puissance = -1
+    
+    @property
+    def _description(self):
+        return "Talisman créé pout te soigner."
+    
+    def GetEffectAsString(self):
+        return f"Te soigne"
 
 
 class EquipableObject(Object):

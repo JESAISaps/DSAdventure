@@ -16,6 +16,9 @@ class Fight:
         self._player:Player = player
         self._enemies:list[Enemi] = enemiList
 
+        self.seeNextTurn = player.GetTalisman(TalismanType.CodeName)
+        self.hasPlayerAttackedTwice = not player.GetTalisman(TalismanType.Morpion) # Morpion permet d'attaquer deux fois
+
         #self._enemiNames = {f"{enemi.GetName()} - {enemi.GetHp()} hp":enemi for enemi in enemiList}
 
     def StartFight(self):
@@ -39,10 +42,21 @@ class Fight:
 
         self.CheckForKilledEnemy()
 
+        if not self.hasPlayerAttackedTwice:
+            if self.AskForSecondTurn():
+                self.hasPlayerAttackedTwice = True
+                print(f"\n Tu attaques une seconde fois.")
+                self.PlayerTurn()
+
         self.EnemiTurn()
 
         self.EndRound()
-        sleep(2)        
+        sleep(2) 
+
+    def AskForSecondTurn(self) -> bool:
+        return questionary.select("Veux-tu utiliser le talisman d'attaque double ?",
+                                  choices=[questionary.Choice(title=f'Oui', value=True),
+                                            questionary.Choice(title=f'Non', value=False)])  
 
     def CheckForKilledEnemy(self):
         enemiList = copy(self._enemies)
@@ -215,7 +229,10 @@ class Fight:
         return choice, playerAttacks[choice]
 
     def GetEnemiToAttack(self, text:str="Quel ennemi voulez-vous attaquer ?"):
-        enemiNames = {f"{enemi.GetName()} - {enemi.GetHp()} hp":enemi for enemi in self._enemies}
+        if self.seeNextTurn:
+            enemiNames = {f"{enemi.GetName()} - {enemi.GetHp()} hp --> {enemi.GetNextEnnemiAttack(True)}":enemi for enemi in self._enemies}
+        else:
+            enemiNames = {f"{enemi.GetName()} - {enemi.GetHp()} hp":enemi for enemi in self._enemies}
 
         ViderInputBuffer()
         choice = questionary.select(text, choices=enemiNames.keys(), style=QUESTIONARYSTYLE).ask()
