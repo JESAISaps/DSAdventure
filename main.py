@@ -77,7 +77,7 @@ def ApresCombat(salleDepart):
     while salleActuelle == False:
         salleActuelle=AskWhereToGo(salleDepart)
     return salleActuelle
-    
+
 def AskWhereToGo(caseActuelle : Room)-> Room:
     choices=caseActuelle.GetVoisins()
     accessiblechoices=[]
@@ -132,7 +132,7 @@ def AffichageRoomIntroduction(salleActuelle):
     else :
         print(salleActuelle.RoomIntroduction())
 
-def AffichageMenu(menu):
+def AffichageMenu(menu:Room):
     print(menu.RoomIntroduction())
     print(menu.PaintRoom())
 
