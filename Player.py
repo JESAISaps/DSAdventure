@@ -413,8 +413,10 @@ class Enemi(Character):
         self._isDead = True
         del self
 
-    def GetNextEnnemiAttack(self, isOnlyLook=False)->tuple[str, int]:
+    def GetNextEnnemiAttack(self, isOnlyLook=False)->tuple[str, int] | str:
         if len(self._attacks) == 0:
+            if isOnlyLook:
+                return self._firstAttack[0]
             attack =  self._firstAttack
         else:
             if isOnlyLook:
