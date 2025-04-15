@@ -163,8 +163,9 @@ class FightRoom(Room):
         return self._nbEnemies
 
 class DefiRoom(Room):
-    def __init__(self, name):
+    def __init__(self, name,player:Player):
         self._name = name
+        self._player:Player = player
         super().__init__()
     
     def RoomIntroduction(self):
@@ -212,19 +213,23 @@ class CodeName(DefiRoom):
         
     def StartGame(self):
         print(f"On commence le {self._name}")
-        if self.StartManche()==True:
+        if self.StartManche()==True and self._player.talismans[TalismanType.CodeName]==False  :
             print("Vous avez gagné un le Talisman Rapidité, il te permettra d'attaquer 2 fois d'affilée, " \
             "et il peut être utilisé une fois par partie !")
             return True
+        if self.StartManche()==True and self._player.talismans[TalismanType.CodeName]==True  :
+            print("Vous gagnez de l'xp")
         else:
             print("Erreur, c'est votre dernière chance")
-            if self.StartManche():
+            if self.StartManche()==True and self._player.talismans[TalismanType.CodeName]==False :
                 print("Vous avez gagné un le Talisman Rapidité, il te permettra d'attaquer 2 fois d'affilée, " \
                 "et il peut être utilisé une fois par partie !")
                 return True
             else : 
                 print("Vous n'avez rien gagné")
                 return False
+            
+
 class Morpion(DefiRoom):
     def __init__(self):
         super().__init__("Morpion")
@@ -249,17 +254,27 @@ class Morpion(DefiRoom):
 
 
     def StartGame(self):
+        Clear()
         computeurWin=False
         playerWin=False
         while playerWin == False and computeurWin==False and self.IsComplete()==False:
-            self.MancheComputeur()
+            Clear()
+            self.ShowMatrice()
+            sleep(.5)
+            self.MancheComputeur() 
+            Clear()           
+            self.ShowMatrice()
             computeurWin=self.Win("o")
             if not computeurWin:
                 self.MancheJoueur()
                 playerWin=self.Win("x")
-        if playerWin : 
-            print("Bravo, vous avez gagné le Talisman Lunettes, il te permettra de débloquer des passages secrets)")
+        self.ShowMatrice()
+        if playerWin and player.talismans[TalismanType.Morpion]==False :
+            print("Bravo, vous avez gagné le Talisman Lunettes, il te permettra de débloquer des passages secrets!")
             return True
+        if playerWin and self._player.talismans[TalismanType.Morpion]==True :
+            print("Bravo, vous avez déjà le Talisman Lunettes, maintenant vous gagnez de l'xp ! ")
+            self._player.AjouterXp(self._player.GetXpCaps(self._player.GetLevel())*0.15)
         else:
             print("Vous avez perdu, bonne chance pour la suite")
             return False
@@ -273,11 +288,9 @@ class Morpion(DefiRoom):
 
     def MancheComputeur(self):
         self.ModifierMatrice(self.ComputerTour(),"o")
-        self.ShowMatrice()
     
     def MancheJoueur(self,):
         self.ModifierMatrice(self.AskChoice(),"x")
-        self.ShowMatrice()
     
     def Verif(self,rep):
         match rep :
@@ -434,4 +447,5 @@ if __name__ == "__main__":
 
     #Integrale().StartGame()
     shop=Shop("shop")
-    print(Shop.PaintRoom(shop))
+    codeName=CodeName()
+    codeName.StartGame()

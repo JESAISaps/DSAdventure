@@ -156,6 +156,7 @@ class Fight:
         print(objectWithStatsToShow)
         ViderInputBuffer()
         objectNames.append("Annuler")
+        nameAssociations["Annuler"]="Annuler"
         return nameAssociations[questionary.select("Quel objet veux-tu utiliser ?", choices=objectNames, style=QUESTIONARYSTYLE).ask()]
 
     def ConvertUsableObjectsToNiceString(self, usableObjectList:list[UsableObject]):
