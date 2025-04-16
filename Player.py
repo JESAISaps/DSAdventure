@@ -77,9 +77,9 @@ class Character(ABC):
             case Effect.AugmentationDegatSelf:
                 self._bonusDamage += power
             case Effect.PotGue:
-                try:
-                    self._hp = self.GetMaxHp()
-                except:
+                if isinstance(self, Player):
+                    self._hp = self.SetToMaxHp()
+                else:
                     print("Tu ne peux pas guérir un ennemi.")
             case _:
                 print("Erreur Character.AddEffect effet non reconnu")
@@ -300,7 +300,7 @@ class Player(Character):
             potionGuerison = Object.PotionGuerison("Tasse de café")
             self.AddItem(potionGuerison)
         
-    def GetMaxHp(self):
+    def SetToMaxHp(self):
         return self._maxHp + self.armorBonusHp
 
     def GetBag(self) -> Sac:
