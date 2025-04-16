@@ -99,7 +99,7 @@ class Fight:
         if self._player.GetAttackDelay() > 0:
             print("Tu ne peux pas attaquer.")
             return
-        print(f"Tu as actuellement {self._player.GetHp()} hp")
+        print(f"Tu as actuellement {round(self._player.GetHp(),2)} hp")
         itemToUse:UsableObject = self.AskForObjectUse()
         if itemToUse == "Annuler":
             pass
@@ -126,7 +126,7 @@ class Fight:
                     enemiToAttack.AddEffect(attaque, attack[attaque])
         sleep(TIMETOWAITBETWEENATTACKS*2)
         damageDone = enemiToAttack.TakeDamage(damage)
-        print(f"Tu attaque {enemiToAttack.GetName()} pour {Fore.GREEN} {damageDone} {Fore.RESET} degats avec {choice}")
+        print(f"Tu attaque {enemiToAttack.GetName()} pour {Fore.GREEN} {round(damageDone,2)} {Fore.RESET} degats avec {choice}")
 
     def UseObject(self, itemToUse:UsableObject):
         match itemToUse.GetEffectType(): # Utile si dans le futur on a + d'effets particuliers
@@ -186,7 +186,7 @@ class Fight:
                 attackName, damage = attackingEnemi.GetNextEnnemiAttack()
                 sleep(TIMETOWAITBETWEENATTACKS)
                 damageDone = self._player.TakeDamage(damage)
-                print(f"{attackingEnemi.GetName()} t'attaque avec {attackName} pour {Fore.RED} {damageDone} {Fore.RESET} degats !")
+                print(f"{attackingEnemi.GetName()} t'attaque avec {attackName} pour {Fore.RED} {round(damageDone, 2)} {Fore.RESET} degats !")
             elif not isTouched:
                 print(f"Tu as esquivé l'attaque de {attackingEnemi.GetName()}")
             else:
