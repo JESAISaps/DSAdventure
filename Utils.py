@@ -7,6 +7,7 @@ import questionary
 import os
 import keyboard
 import msvcrt
+from time import sleep
 
 TIMETOWAITBETWEENATTACKS = .5
 
@@ -24,6 +25,15 @@ QUESTIONARYSTYLE = questionary.Style([
     ('highlighted', 'bold')          # Highlighted item is bold
     #('selected', 'fg:#00ff00'),       # Selected item is green
 ])
+
+def NicePrint(word, lettersBySeconds=60):
+    """
+    Prints the word letter by letter, with speed of letters by seconds
+    """
+    for letter in word:
+        print(letter, end="", flush=True)
+        sleep(1/lettersBySeconds)
+    print()
 
 def CompareWord(mot1 : str,mot2 : str) -> bool :
     mot1modifie=mot1.lower().replace("s","").replace("é","e").replace("è","e").replace("'","").replace("ê","e").replace(" ","").replace("(","").replace(")","")
@@ -116,3 +126,6 @@ class LevelUpRewardType(Enum):
     BonusXp = auto()
     BonusVitesse = auto()
     BonusPrecision = auto()
+
+if __name__ == "__main__":
+    NicePrint("loikujyhtgvrcdexzdef'(ghynh gvfvrgthyjunh gvftghynhbgthyujnhbgvfc)", 60)

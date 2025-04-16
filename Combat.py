@@ -208,12 +208,11 @@ class Fight:
             attacksToShow += "\n"
         # Affiche la liste des attaques et leurs effects
         sleep(TIMETOWAITBETWEENATTACKS)
-        Clear()
         print(attacksToShow)
         sleep(TIMETOWAITBETWEENATTACKS)
-        Clear()
         ViderInputBuffer()
         choice = questionary.select("Quelle attaque voulez vous utiliser ?", choices=attackList, instruction=" ", style=QUESTIONARYSTYLE).ask()
+        Clear()
         return choice, playerAttacks[choice]
 
     def GetEnemiToAttack(self, text:str="Quel ennemi voulez-vous attaquer ?"):

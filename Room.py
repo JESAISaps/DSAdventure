@@ -78,6 +78,29 @@ class Conseil(Room):
     def RoomIntroduction(self):
         return "Tu veux un bon conseil ? Bah non."
     
+    def StartConseil(self, playerLevel):
+        Clear()
+        NicePrint("Cest la fin de l'année.", 40)
+        sleep(.75)
+        NicePrint("\nTout le monde est content d'arriver au bout\n", 50)
+        sleep(1)
+        if playerLevel < 10:
+            NicePrint("Seulement, tous n'en sortirons pas vainqueurs...", 50)
+            sleep(.5)
+            NicePrint("Et oui, tu n'as pas la moyenne, bon courage pour la suite !\n")
+
+        else:
+            NicePrint(f"Et tu t'en sors avec {playerLevel} points !")
+            sleep(.5)
+            NicePrint(f"Bravo ! Tu réussis l'année avec brio, mais je pense\nqu'un retour dans le passé ne te feras pas de mal..")
+            sleep(.5)
+            NicePrint(f"Le conseil a jugé que tu as de quoi etre encore meilleur, et te fais redoubler.")
+
+        
+        sleep(.75)
+        print(f"{Fore.RED}Tu es mort...{Fore.RESET}")
+        return playerLevel >= 10
+    
 class Shop(Room):
     def __init__(self, name):
         super().__init__()
@@ -455,6 +478,7 @@ if __name__ == "__main__":
     #print(shop.PaintRoom())
 
     #Integrale().StartGame()
-    shop=Shop("shop")
-    codeName=CodeName()
-    codeName.StartGame()
+    #shop=Shop("shop")
+    #codeName=CodeName()
+    #codeName.StartGame()
+    Conseil().StartConseil(15)

@@ -1,7 +1,7 @@
 from Player import *
 import click
 from Utils import *
-from Room import DefiRoom, Sphinx, CodeName,Integrale, Morpion, FightRoom, Menu, Shop, Room
+from Room import DefiRoom, Sphinx, CodeName,Integrale, Morpion, FightRoom, Menu, Shop, Room, Conseil
 import questionary
 import keyboard
 from Map import Map
@@ -73,6 +73,9 @@ def Partie(carte:Map) -> bool :
             else : 
                 print("Vous avez perdu, bonne chance pour la suite")
         salleActuelle=ApresCombat(salleActuelle)
+
+        if isinstance(salleActuelle, Conseil):
+            salleActuelle.StartConseil(player.GetLevel())
         WaitForSpace()
         Clear()
     WaitForSpace()
