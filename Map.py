@@ -1,4 +1,4 @@
-from Room import FightRoom, CodeName, Menu, Sphinx, Morpion, Conseil, Integrale, Room,Shop
+from Room import FightRoom, CodeName, Menu, Sphinx, Morpion, Conseil, Integrale, Shop
 from Player import Enemi
 
 

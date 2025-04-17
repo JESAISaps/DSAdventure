@@ -1,14 +1,14 @@
-from Player import Player, Enemi, Character
-from Object import UsableObject, Object, Antiseche
-#from Room import FightRoom
 import questionary
 import random
 from time import sleep
-from Utils import *
+from Utils import WaitForSpace, ObjectType, TIMETOWAITBETWEENATTACKS
+from Utils import ViderInputBuffer, QUESTIONARYSTYLE, AttackStats, Effect, CHOICEYESORNO, Clear
 from copy import copy, deepcopy
 from colorama import Fore
 from colorama import Fore
 import math
+from Player import Player, Enemi, Character
+from Object import UsableObject, Object
 
 
 class Fight:

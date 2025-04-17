@@ -1,29 +1,27 @@
-from Player import *
-import click
-from Utils import *
-from Room import DefiRoom, Sphinx, CodeName,Integrale, Morpion, FightRoom, Menu, Shop, Room, Conseil
+"""
+Script principal
+"""
+from Player import Player
+from Utils import Clear, SkipLines, WaitForSpace, ViderInputBuffer, QUESTIONARYSTYLE, TalismanType
+from Room import FightRoom, Room, Conseil
 import questionary
-import keyboard
 from Map import Map
-from Object import *
 from time import sleep
 from colorama import Fore
 
 player = Player("Marine", 0)
-fefe = Antiseche("Antisèche", 50)
 
 def LancerJeu():
     Clear()
     carte = Map()
     menu=carte.menu
-    shop=carte.shop
     trioInfernal=carte.trioInfernalRoom
     # tests
     #caca = EquipableObject("iuytre", ObjectType.TShirt)
     #player.AddItem(caca)
     #EquiperJoueur()
 
-    Starting(menu, shop)
+    Starting(menu)
     AttaqueTrioInfernal(trioInfernal)
     SkipLines(3)
     WaitForSpace()
@@ -31,19 +29,19 @@ def LancerJeu():
     while True:
         Clear()
         carte = Map()
-        player.Revive() 
+        player.Revive()
         Partie(carte)
         print(Fore.RED + "Tu es mort." + Fore.RESET)
 
 
-def Starting(menu, shop) -> bool :
+def Starting(menu) -> bool :
     """
     Retourne True dès que les achats sont terminés <- Faux
     """
     AffichageMenu(menu)
     WaitForSpace(True)
 
-def AttaqueTrioInfernal(trioInfernalRoom:FightRoom): 
+def AttaqueTrioInfernal(trioInfernalRoom:FightRoom):
     print("L'année commence déjà ! Tu arrives face à des professeurs redoutables, essaie de t'en sortir...")
     sleep(1.5)
     print(trioInfernalRoom.RoomIntroduction())
@@ -65,12 +63,12 @@ def Partie(carte:Map) -> bool :
             sleep(0.5)
             if salleActuelle.StartFight(player)==False:
                 print("Tu es mort \n")
-                return False
-        else : 
+                return
+        else :
             if salleActuelle.StartGame() == True:
                 player.RecompenseDefi(salleActuelle.GetTalisman())
                 print(salleActuelle.GetUtilite())
-            else : 
+            else :
                 print("Vous avez perdu, bonne chance pour la suite")
         salleActuelle=ApresCombat(salleActuelle)
 
@@ -99,7 +97,7 @@ def AskWhereToGo(caseActuelle : Room)-> Room:
         accessiblechoices.append("Equipement")
     ViderInputBuffer()
     rep=questionary.select("Ou voulez vous aller?",choices=accessiblechoices, style=QUESTIONARYSTYLE).ask()
-    if rep == "Equipement": 
+    if rep == "Equipement":
         EquiperJoueur()
         return False
     return choices[rep]
@@ -120,7 +118,7 @@ def VerifLunettes():
     """
     return player.talismans[TalismanType.Morpion]
 
-def ActionShop(shop):    
+def ActionShop(shop):
     ViderInputBuffer()
     rep=questionary.select("Voulez vous acheter un objet?",choices=["Oui","Non, jouer"], style=QUESTIONARYSTYLE).ask()
     if rep=="Oui":
@@ -128,10 +126,9 @@ def ActionShop(shop):
         if objet == "Trousse":
             player.AmeliorerSac(1)
         return True
-    else :
-        print("C'est parti!\n")
-        sleep(0.5)
-        return False
+    print("C'est parti!\n")
+    sleep(0.5)
+    return False
     
 def AjouterObjetInventaire(objet):
     player.GetBag().AddItem(objet)
@@ -151,16 +148,15 @@ def AffichageMenu(menu:Room):
 def AffichageShop(shop):
     """ 
     La fonction retourne True dès que le joueur veut commencer le jeu, sinon il est en train de faires des achats
-    """    
+    """
     print(shop.PaintRoom())
     print(shop.RoomIntroduction())
     acheter=ActionShop(shop)
     while acheter != False:
         acheter=ActionShop(shop)
     return True
-    
+
 
 if __name__ == "__main__":
 
     LancerJeu()
-    

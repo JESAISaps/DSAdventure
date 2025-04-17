@@ -2,12 +2,11 @@ from abc import ABC, abstractmethod
 import click 
 import questionary
 import random
-from Utils import * 
-from sympy import integrate, symbols, oo, exp, ln, pprint, init_printing, latex, Integral
+from Utils import Clear, NicePrint, TalismanType, CompareWord, CustomChoice
 import matplotlib.pyplot as plt
-from Player import *
+from Player import Player, Enemi
 from Combat import Fight
-from Object import *
+from Object import Antiseche, AmeliorationSac, Bouteille, Montre, Blanco, ChatGPT
 from time import sleep
 from colorama import Fore
 

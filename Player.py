@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 import Object
-from Utils import *
+from Utils import Effect, ObjectType, TalismanType, AttackStats, Money
 from random import randint
 from colorama import Fore
 from copy import copy
