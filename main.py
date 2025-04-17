@@ -108,6 +108,8 @@ def EquiperJoueur():
     choix = {item.GetName():item for item in player.GetEquipableItems()}
     choix["Annuler"] = "Annuler"
     ViderInputBuffer()
+    print("\nVotre équipement:")
+    print(player.GetEquipementAffichage())
     reponse=questionary.select("Choisissez votre équipement", choices=choix.keys(), style=QUESTIONARYSTYLE).ask()
     if reponse != "Annuler" :
         player.EquipItem(choix[reponse])

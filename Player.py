@@ -369,7 +369,7 @@ class Player(Character):
     def GetEquipableItems(self):
         return [item for item in self.sac.content if item.objectType in [ObjectType.Arme, ObjectType.Chapeau, ObjectType.Chaussures, ObjectType.TShirt]]
     
-    def PrintEquipment(self):
+    def GetEquipementAffichage(self):
         equipedItems = self.equipement.GetEquiped()
         return f"Tete: {equipedItems[ObjectType.Chapeau]}\n\nCorp: {equipedItems[ObjectType.TShirt]}\
        Arme: {equipedItems[ObjectType.Arme]}\n\n Bas: {equipedItems[ObjectType.Chaussures]}"
