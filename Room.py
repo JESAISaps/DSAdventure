@@ -13,8 +13,12 @@ from colorama import Fore
 
 
 class Room(ABC):
-    def __init__(self):
+    def __init__(self, name = ""):
         self._voisin = {}
+        self._name = name
+
+    def GetName(self) -> str:
+        return self._name
 
     @abstractmethod
     def RoomIntroduction(self):
@@ -32,6 +36,9 @@ class Room(ABC):
         self._voisin["Est"] = est
         self._voisin["Ouest"] = ouest
         self._voisin["Passage"] = passage
+
+    def GetVoisinsAsList(self):
+        return [self._voisin[i] for i in self._voisin.keys() if self._voisin[i] is not None]
 
     def PaintRoom(self):
         return r"""
@@ -73,7 +80,7 @@ class Menu(Room):
     
 class Conseil(Room):
     def __init__(self):
-        super().__init__()
+        super().__init__("Conseil")
     
     def RoomIntroduction(self):
         return "Tu veux un bon conseil ? Bah non."
@@ -173,10 +180,10 @@ class Shop(Room):
     
 
 class FightRoom(Room):
-    def __init__(self, ennemies:list[Enemi]):
+    def __init__(self, ennemies:list[Enemi], name="fightroom"):
+        super().__init__(name)
         self._enemies = ennemies
         self._nbEnemies = len(ennemies)
-        super().__init__()
 
     def StartFight(self, player):
         fight = Fight(player, self._enemies)
@@ -192,8 +199,8 @@ class FightRoom(Room):
 
 class DefiRoom(Room):
     def __init__(self, name):
-        self._name = name
         super().__init__()
+        self._name = name
     
     def RoomIntroduction(self):
         return f"Super, un peu de repos, tu arrives dans la salle {self._name}"

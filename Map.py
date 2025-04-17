@@ -30,34 +30,34 @@ class Map:
         self.petitStart = Enemi(*self.petitStartStats)
         self.babaStart = Enemi(*self.babaStartStats)
         self.totoStart = Enemi(*self.totoStartStats)
-        self.trioInfernalRoom=FightRoom([self.petitStart,self.babaStart, self.totoStart])
-        self.trioInfernalRoomVide=FightRoom([])
+        self.trioInfernalRoom=FightRoom([self.petitStart,self.babaStart, self.totoStart], "Trio Infernal")
+        self.trioInfernalRoomVide=FightRoom([], "Salle Vide")
 
         self.barcelo = Enemi(*self.barceloStats)
-        self.barceloRoom=FightRoom([self.barcelo])
+        self.barceloRoom=FightRoom([self.barcelo], "Boss Baba")
 
         self.oliv = Enemi(*self.olivStats)
-        self.olivRoom=FightRoom([self.oliv])
+        self.olivRoom=FightRoom([self.oliv], "Boss Oliv")
 
         self.petit = Enemi(*self.petitStats)
-        self.petitRoom=FightRoom([self.petit])
+        self.petitRoom=FightRoom([self.petit], "Petit Fight")
 
         self.bigMathsPetit = Enemi(*self.bigMathsPetitStats)
         self.bigMathBaba = Enemi(*self.bigMathBabaStats)
-        self.bigMaths=FightRoom([self.bigMathBaba,self.bigMathsPetit])
+        self.bigMaths=FightRoom([self.bigMathBaba,self.bigMathsPetit], "Big Math")
 
         self.salletranquille=FightRoom([])
 
         self.deschamps = Enemi(*self.deschampsStats)
-        self.mecaSol=FightRoom([self.deschamps])
+        self.mecaSol=FightRoom([self.deschamps], "Mecanique Solide")
 
         self.dias = Enemi(*self.diasStats)
-        self.thermo=FightRoom([self.dias])
+        self.thermo=FightRoom([self.dias], "Boss Thermique")
 
         self.communsPetit = Enemi(*self.communsPetitStats)
         self.communsBaba = Enemi(*self.communsBabaStats)
         self.communsOliv = Enemi(*self.communsOlivStats)
-        self.communs=FightRoom([self.communsPetit,self.communsBaba, self.communsOliv])
+        self.communs=FightRoom([self.communsPetit,self.communsBaba, self.communsOliv], "Communs")
 
         self.conseil=Conseil()
 

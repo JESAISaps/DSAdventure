@@ -1,0 +1,22 @@
+digraph g {
+"Shop" -> "Trio Infernal";
+"Trio Infernal" -> "Boss Baba";
+"Boss Baba" -> "Boss Oliv";
+"Boss Baba" -> "Code Name";
+"Boss Oliv" -> "Big Math";
+"Boss Oliv" -> "Petit Fight";
+"Boss Oliv" -> "Salle Tranquille" [label="Passage Secret", color=red, fontcolor=red];
+"Code Name" -> "Boss Baba";
+"Big Math" -> "Salle Tranquille";
+"Petit Fight" -> "Boss Oliv";
+"Petit Fight" -> "Sphinx";
+"Salle Tranquille" -> "Mecanique Solide";
+"Sphinx" -> "Petit Fight";
+"Mecanique Solide" -> "Boss Thermique";
+"Mecanique Solide" -> "Integrales";
+"Mecanique Solide" -> "Conseil" [label="Passage Secret", color=red, fontcolor=red];
+"Boss Thermique" -> "Communs";
+"Integrales" -> "Mecanique Solide";
+"Communs" -> "Morpion";
+"Communs" -> "Conseil";
+}
