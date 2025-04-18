@@ -5,7 +5,6 @@ from Utils import WaitForSpace, ObjectType, TIMETOWAITBETWEENATTACKS, TalismanTy
 from Utils import ViderInputBuffer, QUESTIONARYSTYLE, AttackStats, Effect, CHOICEYESORNO, Clear
 from copy import copy, deepcopy
 from colorama import Fore
-from colorama import Fore
 import math
 from Player import Player, Enemi, Character
 from Object import UsableObject, Object

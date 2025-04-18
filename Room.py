@@ -473,6 +473,7 @@ if __name__ == "__main__":
     #sphinx = DefiRoom("sphinx")
     #integrale = DefiRoom("intégrale")
 
-    #morpion=Morpion()
+    
+    morpion=Morpion().StartGame()
     #morpion.StartGame()
-    Conseil().StartConseil(15)
+    #Conseil().StartConseil(15)

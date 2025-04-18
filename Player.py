@@ -374,12 +374,13 @@ class Player(Character):
         return f"Tete: {equipedItems[ObjectType.Chapeau]}\n\nCorp: {equipedItems[ObjectType.TShirt]}\
        Arme: {equipedItems[ObjectType.Arme]}\n\n Bas: {equipedItems[ObjectType.Chaussures]}"
     
-    def RecompenseDefi(self, talismanType: TalismanType):
+    def RecompenseDefi(self, talismanType: TalismanType, utilite):
         if self.talismans[talismanType]==True :
             print(f"Vous possedez deja le Talisman {talismanType}, vous gagnez cependant de l'xp!")
             self.AjouterXp(self.GetXpCaps(self.GetLevel())*0.15)
         else :
             print(f'Bravo, vous avez gagné le Talisman {talismanType}')
+            print(utilite)
             self.AddTalisman(talismanType)
 
     

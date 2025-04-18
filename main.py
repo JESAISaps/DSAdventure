@@ -71,8 +71,8 @@ def Partie(carte:Map) -> bool :
         else :
             show_cursor()
             if salleActuelle.StartGame() == True:
-                player.RecompenseDefi(salleActuelle.GetTalisman())
-                print(salleActuelle.GetUtilite())
+                player.RecompenseDefi(salleActuelle.GetTalisman(), salleActuelle.GetUtilite())
+                
             else :
                 print("Vous avez perdu, bonne chance pour la suite")
             hide_cursor()
