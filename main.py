@@ -23,7 +23,6 @@ def LancerJeu():
     WaitForSpace()
 
     GameLoop()
-
     
 
 def GameLoop():
