@@ -55,7 +55,7 @@ class Character(ABC):
     
     def AddEffect(self, effet:Effect, power):
         #print(f"{effet} et la puissance {power}")
-        print(f"{self.GetName()} recois l'effet {effet}")
+        print(f"{self.GetName()} recois l'effet {Fore.MAGENTA}{effet}{Fore.RESET}")
         match effet:
             case Effect.AnnulationAttaque:
                 self._attackDelayEffect += power

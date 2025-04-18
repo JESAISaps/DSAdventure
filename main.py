@@ -2,7 +2,7 @@
 Script principal
 """
 from Player import Player
-from Utils import Clear, SkipLines, WaitForSpace, ViderInputBuffer, QUESTIONARYSTYLE, TalismanType
+from Utils import Clear, SkipLines, WaitForSpace, ViderInputBuffer, QUESTIONARYSTYLE, TalismanType, hide_cursor, show_cursor
 from Room import FightRoom, Room, Conseil
 import questionary
 from Map import Map
@@ -12,6 +12,7 @@ from colorama import Fore
 player = Player("Marine", 0)
 
 def LancerJeu():
+    hide_cursor()
     Clear()
     carte = Map()
     menu=carte.menu
@@ -69,11 +70,13 @@ def Partie(carte:Map) -> bool :
                 print("Tu es mort \n")
                 return
         else :
+            show_cursor()
             if salleActuelle.StartGame() == True:
                 player.RecompenseDefi(salleActuelle.GetTalisman())
                 print(salleActuelle.GetUtilite())
             else :
                 print("Vous avez perdu, bonne chance pour la suite")
+            hide_cursor()
         salleActuelle=ApresCombat(salleActuelle)
 
         if isinstance(salleActuelle, Conseil):
@@ -145,9 +148,9 @@ def AffichageRoomIntroduction(salleActuelle):
 
 def AffichageMenu(menu:Room):
     print(menu.PaintRoom())
-    print("Bienvenue dans DSAdventure ! \n" \
+    print("\nBienvenue dans DSAdventure ! \n\n" \
     "Revis ton année de prépa en attaquant tes profs, gagne des Talismans, des objets et complète des minis jeux. \n" \
-    "Ton objectif est d'arriver au conseil avec au moins 10 de moyenne!")
+    "Ton objectif est d'arriver au conseil avec au moins 10 de moyenne!\n")
 
 def AffichageShop(shop):
     """ 
