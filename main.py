@@ -16,16 +16,20 @@ def LancerJeu():
     carte = Map()
     menu=carte.menu
     trioInfernal=carte.trioInfernalRoom
-    # tests
-    #caca = EquipableObject("iuytre", ObjectType.TShirt)
-    #player.AddItem(caca)
-    #EquiperJoueur()
 
     Starting(menu)
     AttaqueTrioInfernal(trioInfernal)
     SkipLines(3)
     WaitForSpace()
 
+    GameLoop()
+
+    
+
+def GameLoop():
+    """
+    Starts Game Loop, it's an infinite loop.
+    """
     while True:
         Clear()
         carte = Map()
