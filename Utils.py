@@ -8,6 +8,15 @@ import os
 import keyboard
 import msvcrt
 from time import sleep
+import sys
+import os
+
+if os.name == 'nt':
+    import msvcrt
+    import ctypes
+    class _CursorInfo(ctypes.Structure):
+        _fields_ = [("size", ctypes.c_int),
+                    ("visible", ctypes.c_byte)]
 
 TIMETOWAITBETWEENATTACKS = .5
 
@@ -25,6 +34,30 @@ QUESTIONARYSTYLE = questionary.Style([
     ('highlighted', 'bold')          # Highlighted item is bold
     #('selected', 'fg:#00ff00'),       # Selected item is green
 ])
+
+    
+
+def hide_cursor():
+    if os.name == 'nt':
+        ci = _CursorInfo()
+        handle = ctypes.windll.kernel32.GetStdHandle(-11)
+        ctypes.windll.kernel32.GetConsoleCursorInfo(handle, ctypes.byref(ci))
+        ci.visible = False
+        ctypes.windll.kernel32.SetConsoleCursorInfo(handle, ctypes.byref(ci))
+    elif os.name == 'posix':
+        sys.stdout.write("\033[?25l")
+        sys.stdout.flush()
+
+def show_cursor():
+    if os.name == 'nt':
+        ci = _CursorInfo()
+        handle = ctypes.windll.kernel32.GetStdHandle(-11)
+        ctypes.windll.kernel32.GetConsoleCursorInfo(handle, ctypes.byref(ci))
+        ci.visible = True
+        ctypes.windll.kernel32.SetConsoleCursorInfo(handle, ctypes.byref(ci))
+    elif os.name == 'posix':
+        sys.stdout.write("\033[?25h")
+        sys.stdout.flush()
 
 def NicePrint(word, lettersBySeconds=60):
     """
@@ -54,6 +87,7 @@ def WaitForSpace(isFirst=False):
         print("Appuyez sur Espace pour" + Fore.CYAN + " commencer" + Fore.RESET +" le jeu \n")
     else:
         print("Appuyez sur Espace pour" + Fore.CYAN + " continuer" + Fore.RESET +" le jeu \n")
+    hide_cursor()
     keyboard.wait("Space")
 
 def SkipLines(nb):

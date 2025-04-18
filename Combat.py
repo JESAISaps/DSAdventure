@@ -1,7 +1,7 @@
 import questionary
 import random
 from time import sleep
-from Utils import WaitForSpace, ObjectType, TIMETOWAITBETWEENATTACKS
+from Utils import WaitForSpace, ObjectType, TIMETOWAITBETWEENATTACKS, TalismanType
 from Utils import ViderInputBuffer, QUESTIONARYSTYLE, AttackStats, Effect, CHOICEYESORNO, Clear
 from copy import copy, deepcopy
 from colorama import Fore
@@ -99,7 +99,7 @@ class Fight:
         if self._player.GetAttackDelay() > 0:
             print("Tu ne peux pas attaquer.")
             return
-        print(f"Tu as actuellement {round(self._player.GetHp(),2)} hp")
+        print(f"Tu as actuellement {Fore.GREEN}{round(self._player.GetHp(),2)}{Fore.RESET} hp")
         itemToUse:UsableObject = self.AskForObjectUse()
         if itemToUse == "Annuler":
             pass
@@ -216,7 +216,10 @@ class Fight:
         return choice, playerAttacks[choice]
 
     def GetEnemiToAttack(self, text:str="Quel ennemi voulez-vous attaquer ?"):
-        enemiNames = {f"{enemi.GetName()} - {enemi.GetHp()} hp":enemi for enemi in self._enemies}
+        if not self._player.GetTalisman(TalismanType.CodeName):
+            enemiNames = {f"{enemi.GetName()} - {enemi.GetHp()} hp":enemi for enemi in self._enemies}
+        else: 
+            enemiNames = {f"{enemi.GetName()} - {enemi.GetHp()} hp | 👁 -> {enemi.GetNextEnnemiAttack(True)}":enemi for enemi in self._enemies}
 
         ViderInputBuffer()
         choice = questionary.select(text, choices=enemiNames.keys(), style=QUESTIONARYSTYLE).ask()

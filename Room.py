@@ -216,7 +216,7 @@ class CodeName(DefiRoom):
         self.liste = [("police",("girophare","enfermer")),("barcelo",("cheveux","mathématiques"))]
         self.tupleJeu=random.choice(self.liste)
         self.talismanType = TalismanType.CodeName
-        self.utilite="Tu peux désormais voir les prochains coups de l'adversaire!"
+        self.utilite="Tu peux désormais voir les prochains coups de l'adversaire 👁 !"
 
     def RoomIntroduction(self):
         return Fore.MAGENTA + r"""
