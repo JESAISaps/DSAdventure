@@ -111,6 +111,7 @@ class TalismanType(Enum):
     Morpion = "Lunettes"
     Sphinx = "Connaissance ultime"
     Integrale = "Puissance calculatoire"
+    Lunette = "Vision Nocturne"
     def __str__(self):
         return str(self.value)
 

@@ -77,3 +77,4 @@ class Map:
         self.communs.SetVoisins(nord=self.defiLunettes, sud=self.conseil)
         self.shop.SetVoisins(est=self.trioInfernalRoom)
         self.defiVoyance.SetVoisins(ouest = self.barceloRoom)
+        self.defiDoubleCoup.SetVoisins(sud= self.communs)

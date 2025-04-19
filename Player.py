@@ -196,7 +196,7 @@ class Player(Character):
         self.equipement = self.Equipement()
         self._baseDamage = 0
 
-        dicoTalisman = {TalismanType.CodeName:("CodeName","Rapidité"),TalismanType.Morpion:("Morpion","Lunettes"),TalismanType.Sphinx:("Sphinx","Connaissance ultime"),TalismanType.Integrale:("Integrale","Puissance calculatoire")}
+        dicoTalisman = {TalismanType.CodeName:("CodeName","Rapidité"),TalismanType.Morpion:("Morpion","Attaque double"),TalismanType.Sphinx:("Sphinx","Connaissance ultime"),TalismanType.Integrale:("Integrale","Puissance calculatoire"), TalismanType.Lunette:("Niveau8", "Vision Nocturne")}
         self.talismans = {id:False for id in dicoTalisman}
 
         self.armorBonusDef = 0
@@ -289,6 +289,10 @@ class Player(Character):
         level = self.GetLevel()
         self.LevelUpStats(self._recompensesLevelUpStats[level])
         self.AjouterCapa(self._recompenceCapaciteLevelUp[level])
+        if level == 8:
+            # On ajoute les lunettes
+            self.talismans[TalismanType.Lunette] = True
+            print(f"\nTu as obtenu des {Fore.CYAN}lunettes{Fore.RESET}, tu y vois a présent plus clair ...")
 
     def AjouterCapa(self, capa):
         #print(capa)

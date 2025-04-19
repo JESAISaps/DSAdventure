@@ -153,7 +153,7 @@ def VerifLunettes():
     """
     Retourne True si le joueur possede les lunettes
     """
-    return player.talismans[TalismanType.Morpion]
+    return player.talismans[TalismanType.Lunette]
 
 def ActionShop(shop):
     ViderInputBuffer()
