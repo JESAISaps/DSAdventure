@@ -142,12 +142,24 @@ def AskWhereToGo(caseActuelle : Room)-> Room:
 def EquiperJoueur():
     choix = {item.GetName():item for item in player.GetEquipableItems()}
     choix["Annuler"] = "Annuler"
-    ViderInputBuffer()
+    choix["Detruire Objet"] = "Detruire Objet"
     print("\nVotre équipement:")
     print(player.GetEquipementAffichage())
+    ViderInputBuffer()
     reponse=questionary.select("Choisissez votre équipement", choices=choix.keys(), style=QUESTIONARYSTYLE).ask()
     if reponse != "Annuler" :
-        player.EquipItem(choix[reponse])
+        if reponse == "Detruire Objet":
+            AskObjectToDestroy(choix)
+        else:
+            player.EquipItem(choix[reponse])
+    
+def AskObjectToDestroy(choix):
+    choices = [questionary.Choice(item, choix[item]) for item in choix if item != "Detruire Objet"]
+    ViderInputBuffer()
+    toDelete = questionary.select("Quel objet veux-tu supprimer ?", choices=choices, style=QUESTIONARYSTYLE)
+    if toDelete != "Annuler":
+        player.RemoveItem(toDelete)
+    EquiperJoueur()
 
 def VerifLunettes():
     """

@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 import click 
 import questionary
 import random
-from Utils import Clear, NicePrint, TalismanType, CompareWord, CustomChoice
+from Utils import Clear, NicePrint, TalismanType, CompareWord, CustomChoice, QUESTIONARYSTYLE, ViderInputBuffer
 import matplotlib.pyplot as plt
 from Player import Player, Enemi
 from Combat import Fight
@@ -158,7 +158,8 @@ class Shop(Room):
         print(f'Vous avez de {player.GetMoney()}€ dans votre portefeuille \n')
         sleep(1)
         while prix > player.GetMoney():
-            rep = questionary.select("Quel objet voulez vous acheter?",choices=self.dicoAffichage.keys()).ask()
+            ViderInputBuffer()
+            rep = questionary.select("Quel objet voulez vous acheter?",choices=self.dicoAffichage.keys(), style=QUESTIONARYSTYLE).ask()
             if rep == "Sortir du Shop" : 
                 return False
             if rep == "Amélioration de la trousse":
