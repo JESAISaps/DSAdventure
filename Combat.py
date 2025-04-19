@@ -135,6 +135,9 @@ class Fight:
             match attaque:
                 case AttackStats.Degats:
                     damage = attack[attaque]
+                case Effect.AugmentationDegatReciproque:
+                    self._player.AddEffect(Effect.AugmentationDegatPoint, attack[attaque][0])
+                    enemiToAttack.AddEffect(Effect.AugmentationDegatPoint, attack[attaque][1])
                 case Effect.CombatAugmentationDegatSelf:
                     self._player.AddEffect(attaque, attack[attaque])
                 case Effect.AnnulationAttaqueSelf:
