@@ -130,7 +130,8 @@ class Player(Character):
             r"""
             supprime l'item de l'inventaire d'un joueur.
             """
-            self.content.remove(item)
+            if item in self.content:
+                self.content.remove(item)
 
         def isEmpty(self):
             return self.content == []
@@ -193,7 +194,6 @@ class Player(Character):
         self._xp=0
         self._level = 0
         self._xpCap = [10, 50, 100, 200, 250, 300, 500, 750, 1000, 2000, 3250, 5000, 6000, 7000, 8000, 9000, 10000, 15000, 20000, 50000, 100000]
-        self.AjouterXp(xp)
         # Recompense de level up des stats de la forme {niveau:[bonusVie, bonusArmure, bonusDegat, bonusVitesse, bonusPrecision]}
         self._recompensesLevelUpStats = {1:[5, 1, 3, 1, 1],
                                          2:[2, 1, 1, 1, 1],
@@ -239,6 +239,8 @@ class Player(Character):
                 ]
         self._recompenceCapaciteLevelUp = {i+1:temp[i] for i in range(0,20)}
         self._attacks = {"Ecriture Soignee": {AttackStats.Degats:1}}
+        
+        self.AjouterXp(xp)
 
     def GetMoney(self):
         return self._money
@@ -251,6 +253,9 @@ class Player(Character):
 
     def SetMoney(self,qte):
         self._money = qte
+
+    def GetEquipedItems(self):
+        return self.equipement.GetEquiped()
 
     def AjouterXp(self,quantite):
         quantite*= (1+self.equipement.GetBoostXP())

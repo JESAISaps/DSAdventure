@@ -8,8 +8,7 @@ import questionary
 from Map import Map
 from time import sleep
 from colorama import Fore
-
-player = Player("Marine", 0)
+from SaveGame import LoadGame, SaveGame
 
 def LancerJeu():
     hide_cursor()
@@ -19,9 +18,10 @@ def LancerJeu():
     trioInfernal=carte.trioInfernalRoom
 
     Starting(menu)
-    AttaqueTrioInfernal(trioInfernal)
-    SkipLines(3)
-    WaitForSpace()
+    if isFirstTime:
+        AttaqueTrioInfernal(trioInfernal)
+        SkipLines(3)
+        WaitForSpace()
 
     GameLoop()
     
@@ -34,8 +34,10 @@ def GameLoop():
         Clear()
         carte = Map()
         player.Revive()
+        SaveGame(player)
         Partie(carte)
-        print(Fore.RED + "Tu es mort." + Fore.RESET)
+        print(Fore.RED + "Tu es mort." + Fore.RESET + "\n")
+        WaitForSpace()
 
 
 def Starting(menu) -> bool :
@@ -164,5 +166,9 @@ def AffichageShop(shop):
 
 
 if __name__ == "__main__":
-
+    isFirstTime = False
+    player = LoadGame()
+    if player == False:
+        isFirstTime = True
+        player = Player("Marine", 0, 3)
     LancerJeu()
