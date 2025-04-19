@@ -164,6 +164,19 @@ class PotionGuerison(UsableObject):
     
     def GetEffectAsString(self):
         return f"Te soigne"
+    
+class LnNegatif(UsableObject):
+    def __init__(self, name):
+        super().__init__(name)
+        self._effect = Effect.Death
+        self.puissance = -1
+    
+    @property
+    def _description(self):
+        return "Talisman qui tuera ton ennemi."
+    
+    def GetEffectAsString(self):
+        return f"Tue."
 
 
 class EquipableObject(Object):

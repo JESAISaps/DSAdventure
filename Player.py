@@ -81,6 +81,8 @@ class Character(ABC):
                     self._hp = self.SetToMaxHp()
                 else:
                     print("Tu ne peux pas guérir un ennemi.")
+            case Effect.Death:
+                self.Die()
             case _:
                 print("Erreur Character.AddEffect effet non reconnu")
 
@@ -299,6 +301,7 @@ class Player(Character):
         if self.talismans[TalismanType.Sphinx]:
             potionGuerison = Object.PotionGuerison("Tasse de café")
             self.AddItem(potionGuerison)
+            self.AddItem(Object.LnNegatif("ln(-1)"))
         
     def SetToMaxHp(self):
         return self._maxHp + self.armorBonusHp
@@ -328,6 +331,10 @@ class Player(Character):
     
     def AddTalisman(self, id):
         self.talismans[id]=True
+        if id == TalismanType.Sphinx:
+            self.AddItem(Object.PotionGuerison("Tasse de café"))
+        elif id == TalismanType.Integrale:
+            self.AddItem(Object.LnNegatif("ln(-1)"))
 
     def GetUsableObjects(self) -> list[Object.UsableObject]:
         rep = []
@@ -412,7 +419,7 @@ class Enemi(Character):
 
     def Die(self):
         self._isDead = True
-        del self
+        #del self
 
     def GetNextEnnemiAttack(self, isOnlyLook=False)->tuple[str, int] | str:
         if len(self._attacks) == 0:

@@ -98,7 +98,8 @@ class Fight:
                 ViderInputBuffer()
                 item = questionary.select("Quel objet veux-tu prendre ?", choices=rewardDico.keys(), style=QUESTIONARYSTYLE).ask()
                 self._player.AddItem(rewardDico[item])
-                rewards.remove(rewardDico[item])        
+                rewards.remove(rewardDico[item])   
+        print()     
 
     def EndRound(self):
         self._player.ActualizeEffectsAfterRound()
@@ -116,6 +117,8 @@ class Fight:
             pass
         elif itemToUse != False:
             self.UseObject(itemToUse)
+
+        self.CheckForKilledEnemy() # Selon l'effet on peut avoir tué un ennemi
 
         attackList = []
         enemiToAttack = self.GetEnemiToAttack()
@@ -148,6 +151,9 @@ class Fight:
             case Effect.AnnulationAttaque:
                 enemiToApplyEffect = self.GetEnemiToAttack("Sur quel ennemi voulez vous appliquer l'effet ?")
                 enemiToApplyEffect.AddEffect(*itemToUse.Utiliser())
+            case Effect.Death:
+                enemiToApplyEffect = self.GetEnemiToAttack("Sur quel ennemi voulez vous appliquer l'effet ?")
+                enemiToApplyEffect.AddEffect(*itemToUse.Utiliser())
             case _:
                 self._player.AddEffect(*itemToUse.Utiliser())
         self._player.RemoveItem(itemToUse)
@@ -157,8 +163,8 @@ class Fight:
             return False
 
         self.ShowEnemies()
-        ViderInputBuffer()
 
+        ViderInputBuffer()
         if questionary.select("Voulez vous utiliser un objet ?", choices=CHOICEYESORNO, style=QUESTIONARYSTYLE).ask() == "Non":
             return False
         usableObjectList = self._player.GetUsableObjects()
