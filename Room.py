@@ -190,7 +190,7 @@ class FightRoom(Room):
     def RoomIntroduction(self):
         if self.GetEnemiNb()==0:
             return "Cette salle est bien tranquille..."
-        return f"\nTu arrive en face de {self.GetEnemiNb()} ennemis."
+        return f"\nBienvenue dans la salle {Fore.LIGHTYELLOW_EX}{self.GetName()}{Fore.RESET}\nTu arrive en face de {self.GetEnemiNb()} ennemis."
     
     def GetEnemiNb(self) :
         return len(self._enemies)

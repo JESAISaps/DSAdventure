@@ -125,7 +125,7 @@ class Effect(Enum):
     AnnulationAttaque = "Annulation de l'attaque"
     AugmentationEsquive = "Augmentation de l'esquive"
     AugmentationDegatReciproque = "Augmente les degats de tout le monde"
-    AmeliorationSac = "Augmentation de la place dansla trousse"
+    AmeliorationSac = "Augmentation taille trousse"
     CombatAugmentationDegatSelf = "Augmentation des dégats"
     AnnulationAttaqueSelf = "Tu t'endors"
     PotGue = "Tu re-gagne tous tes points de vie."

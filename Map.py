@@ -34,13 +34,13 @@ class Map:
         self.trioInfernalRoomVide=FightRoom([], "Salle Vide")
 
         self.barcelo = Enemi(*self.barceloStats)
-        self.barceloRoom=FightRoom([self.barcelo], "Boss Baba")
+        self.barceloRoom=FightRoom([self.barcelo], "DS nombres complexes")
 
         self.oliv = Enemi(*self.olivStats)
-        self.olivRoom=FightRoom([self.oliv], "Boss Oliv")
+        self.olivRoom=FightRoom([self.oliv], "Cour éléctrique")
 
         self.petit = Enemi(*self.petitStats)
-        self.petitRoom=FightRoom([self.petit], "Petit Fight")
+        self.petitRoom=FightRoom([self.petit], "Espaces Normés")
 
         self.bigMathsPetit = Enemi(*self.bigMathsPetitStats)
         self.bigMathBaba = Enemi(*self.bigMathBabaStats)
@@ -52,7 +52,7 @@ class Map:
         self.mecaSol=FightRoom([self.deschamps], "Mecanique Solide")
 
         self.dias = Enemi(*self.diasStats)
-        self.thermo=FightRoom([self.dias], "Boss Thermique")
+        self.thermo=FightRoom([self.dias], "Thermique")
 
         self.communsPetit = Enemi(*self.communsPetitStats)
         self.communsBaba = Enemi(*self.communsBabaStats)
