@@ -8,10 +8,10 @@ class Map:
 
         self.petitStartStats = ("Petit Boss", 25, [("Norme",3), ("Regard Percant",1), ("Espace métrique",10)], 2)
         self.babaStartStats = ("Baba Boss", 30, [("Fausses révisions", 5), ("Calcul lourd", 3), ("Lancer de stylo", 10)], 2)
-        self.totoStartStats = ("Toto Boss", 1, [("ODG", 100)], 2, -10000000000) # On baisse beacoup l'esquive de depart de Toto, pour etre sur de le toucher
+        self.totoStartStats = ("Toto Boss", 1, [("ODG", 100)], 2, -10000000000) # On baisse beaucoup l'esquive de depart de Toto, pour etre sur de le toucher
         self.barceloStats = ("Baba", 10, [("Norme",2), ("Regard Percant",1), ("Espace métrique",5)], 2)
         self.olivStats = ("Oliv", 15, [("ODG", 10), ("Outils Maths", 5), ("Vue de l'esprit", 50)], 4)
-        self.petitStats = ("Le Cam", 100, [("Norme",3), ("Regard Percant",1), ("Espace métrique",10)], 7)
+        self.petitStats = ("Le Cam", 150, [("Norme",40), ("Regard Percant",30), ("Espace métrique",50)], 7)
         self.bigMathsPetitStats = ("Petit", 20, [("Norme",10), ("Regard Percant",5), ("Espace métrique",15)], 5)
         self.bigMathBabaStats = ("Baba", 20, [("Norme",10), ("Regard Percant",7), ("Espace métrique",9)], 5)
         self.deschampsStats = ("Didier", 50, [("Moment cinetique", 20), ("Coupe du monde 98", 30), ("Pied de biche", 50)], 6)

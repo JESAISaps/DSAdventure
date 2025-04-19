@@ -23,6 +23,9 @@ class Character(ABC):
         self._bonusResistance = 0
         self._bonusEvasion = 0
 
+        self._combatBonusPrecision = 0
+        self._combatBonusDamage = 0
+
         self._nameColor = color
 
         self.armorBonusDef = 0
@@ -64,19 +67,23 @@ class Character(ABC):
             case Effect.AugmentationDegatPoint:
                 self._bonusDamage += power
             case Effect.AugmentationDegatPourcentage:
-                self._bonusDamage += 1+power/100
+                self._bonusDamage *= power
             case Effect.AugmentationResistancePoint:
                 self._bonusResistance += power
             case Effect.AugmentationResistancePourcentage:
-                self._bonusResistance *= 1+power/100
+                self._bonusResistance *= power
             case Effect.AugmentationPrecision:
                 self._bonusPrecision += power
             case Effect.AugmentationEsquive:
                 self._bonusEvasion += power
             case Effect.AmeliorationSac:
                 self.AmeliorerSac(power)
-            case Effect.AugmentationDegatSelf:
-                self._bonusDamage += power
+            case Effect.CombatAugmentationDegatSelf:
+                self._combatBonusDamage += power
+            case Effect.AugmentationEsquiveSelf:
+                self._bonusEvasion += power
+            case Effect.AugmentationPrecisionSelf:
+                self._bonusPrecision += power
             case Effect.PotGue:
                 if isinstance(self, Player):
                     self._hp = self.SetToMaxHp()
@@ -96,6 +103,10 @@ class Character(ABC):
         self._bonusPrecision = 0
         self._bonusEvasion = 0
         self._bonusResistance = 0
+
+    def ActualizeEffectsAfterFight(self):
+        self._combatBonusDamage = 0
+        self._combatBonusPrecision = 0
 
     def GetAttackDelay(self):
         return self._attackDelayEffect
@@ -219,10 +230,10 @@ class Player(Character):
                                          19:[5, 1, 3, 1, 1],
                                          20:[5, 1, 3, 1, 1]}
         
-        temp = [("0 étoiles",{AttackStats.Degats:0, Effect.AnnulationAttaque:1}), #1
+        temp = [("0 étoiles",{AttackStats.Degats:-3, Effect.AnnulationAttaque:1}), #1
                 (),
-                ("Negligeation", {AttackStats.Degats:5, Effect.AugmentationDegatPourcentage:.2}),
-                ("Révisions", {AttackStats.Degats:1, Effect.AugmentationDegatSelf:5, Effect.AugmentationPrecision:15}),
+                ("Negligeation", {AttackStats.Degats:5, Effect.AugmentationDegatPourcentage:1.4}),
+                ("Révisions", {AttackStats.Degats:-6, Effect.CombatAugmentationDegatSelf:5, Effect.AugmentationPrecisionSelf:15}),
                 ("Absence", {AttackStats.Degats:-1, Effect.AugmentationEsquive:60}),
                 ("Revisions Nocturnes", {AttackStats.Degats:20, Effect.AnnulationAttaqueSelf:2}),
                 (),
@@ -332,7 +343,7 @@ class Player(Character):
         return rep
     
     def GetBaseDamage(self):
-        return self._baseDamage + self.armorBonusDamage
+        return self._baseDamage + self.armorBonusDamage + self._combatBonusDamage
     
     def GetBaseArmor(self):
         return self._resistance + self.armorBonusDef
@@ -387,7 +398,7 @@ class Player(Character):
     def GetEquipementAffichage(self):
         equipedItems = self.equipement.GetEquiped()
         return f"Tete: {equipedItems[ObjectType.Chapeau]}\n\nCorp: {equipedItems[ObjectType.TShirt]}\
-       Arme: {equipedItems[ObjectType.Arme]}\n\n Bas: {equipedItems[ObjectType.Chaussures]}"
+       Arme: {equipedItems[ObjectType.Arme]}\n\nBas: {equipedItems[ObjectType.Chaussures]}\n\n"
     
     def RecompenseDefi(self, talismanType: TalismanType, utilite):
         if self.talismans[talismanType]==True :

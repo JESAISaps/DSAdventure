@@ -125,10 +125,13 @@ class Effect(Enum):
     AugmentationEsquive = "Augmentation de l'esquive"
     AugmentationDegatReciproque = "Augmente les degats de tout le monde"
     AmeliorationSac = "Augmentation de la place dansla trousse"
-    AugmentationDegatSelf = "Augmentation des dégats"
+    CombatAugmentationDegatSelf = "Augmentation des dégats"
     AnnulationAttaqueSelf = "Tu t'endors"
     PotGue = "Tu re-gagne tous tes points de vie."
     Death = "La mort"
+    AugmentationEsquiveSelf = "Augmentation de l'esquive"
+    AugmentationPrecisionSelf = "Augmentation de la précision"
+    AugmentationDegatCombatSelf = "Augmentation des degat pour le DS entier."
 
     def __str__(self):
         return str(self.value)

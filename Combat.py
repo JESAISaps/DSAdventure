@@ -26,6 +26,8 @@ class Fight:
             if self._player.IsAlive():
                 WaitForSpace()
 
+        self._player.ActualizeEffectsAfterFight()
+
         if self._player.IsAlive():
             #print("Tu peux a present changer de salle.")
             return True
@@ -133,9 +135,13 @@ class Fight:
             match attaque:
                 case AttackStats.Degats:
                     damage = attack[attaque]
-                case Effect.AugmentationDegatSelf:
+                case Effect.CombatAugmentationDegatSelf:
                     self._player.AddEffect(attaque, attack[attaque])
                 case Effect.AnnulationAttaqueSelf:
+                    self._player.AddEffect(attaque, attack[attaque])
+                case Effect.AugmentationEsquiveSelf:
+                    self._player.AddEffect(attaque, attack[attaque])
+                case Effect.AugmentationPrecisionSelf:
                     self._player.AddEffect(attaque, attack[attaque])
                 case _: # Si on met juste un effet sur l'ennemi
                     enemiToAttack.AddEffect(attaque, attack[attaque])

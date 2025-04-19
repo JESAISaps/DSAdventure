@@ -200,13 +200,16 @@ class DefiRoom(Room):
         super().__init__()
         self._name = name
         self.utilite = ""
+        self.done = False
     
     def RoomIntroduction(self):
         return f"Super, un peu de repos, tu arrives dans la salle {self._name}"
-    
-    @abstractmethod
+
     def StartGame(self):
-        pass
+        if self.done:
+            print("Tu as deja fait ce defi, va-t-en !")
+            return False
+        return True
 
     def GetTalisman(self):
         return self.talismanType
@@ -252,16 +255,21 @@ class CodeName(DefiRoom):
         return self.Verification(reponse)
         
     def StartGame(self):
+        if not super().StartGame():
+            return False
         print(f"On commence le {self._name}")
         if self.StartManche()==True :
+            self.done = True
             return True
         else:
             print("Erreur, c'est votre dernière chance")
             if self.StartManche()==True:
+                self.done = True
                 return True
             else : 
                 print("Vous n'avez rien gagné")
                 return False
+            
             
 
 class Morpion(DefiRoom):
@@ -292,6 +300,8 @@ class Morpion(DefiRoom):
 
 
     def StartGame(self):
+        if not super().StartGame():
+            return False
         Clear()
         computeurWin=False
         playerWin=False
@@ -307,6 +317,7 @@ class Morpion(DefiRoom):
                 self.MancheJoueur()
                 playerWin=self.Win("x")
         self.ShowMatrice()
+        self.done = playerWin
         return playerWin
     
             
@@ -424,10 +435,13 @@ class Sphinx(DefiRoom):
         return self.Verification(reponse)
         
     def StartGame(self):
+        if not super().StartGame():
+            return False
         print(f"On commence le {self._name}")
         if self.StartManche()==True:
             print("Bravo, vous avez gagné le Talisman Connaissance Ultime, " \
             "il te permet d'obtenir une potion de guérison à chaque partie")
+            self.done = True
             return True
         else:
             print("Vous n'avez rien gagné")
@@ -449,10 +463,14 @@ class Integrale(DefiRoom):
 """ + Fore.RESET
 
     def StartGame(self):
+        if not super().StartGame():
+            return False
         reponse=self.AskQuestion()
         if CompareWord(reponse, "ln2") :
             print("Bravo! Vous avez gagné le Talisman Puissance Calculatoire, il vous permettra de tuer un ennemi en un seul coup!")
+            self.done = True
             return True
+
         else :
             print("Très mauvais calcul, bon courage pour la suite.")
             return False
