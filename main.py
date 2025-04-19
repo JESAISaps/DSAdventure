@@ -141,6 +141,8 @@ def AskWhereToGo(caseActuelle : Room)-> Room:
 
 def EquiperJoueur():
     choix = {item.GetName():item for item in player.GetEquipableItems()}
+    if len(choix) == 0:
+        return
     choix["Annuler"] = "Annuler"
     choix["Detruire Objet"] = "Detruire Objet"
     print("\nVotre équipement:")
@@ -156,9 +158,10 @@ def EquiperJoueur():
 def AskObjectToDestroy(choix):
     choices = [questionary.Choice(item, choix[item]) for item in choix if item != "Detruire Objet"]
     ViderInputBuffer()
-    toDelete = questionary.select("Quel objet veux-tu supprimer ?", choices=choices, style=QUESTIONARYSTYLE)
+    toDelete = questionary.select("Quel objet veux-tu supprimer ?", choices=choices, style=QUESTIONARYSTYLE).ask()
     if toDelete != "Annuler":
         player.RemoveItem(toDelete)
+    Clear()
     EquiperJoueur()
 
 def VerifLunettes():

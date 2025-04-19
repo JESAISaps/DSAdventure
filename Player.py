@@ -422,12 +422,12 @@ class Enemi(Character):
         # Les proba sont nb/150
         self.dropPossibilities = {Money(amount=randint(2, (self.GetLevel()+2)*3)):130,
                                     
-                                    Object.Armure("Casquette Stylée", objectType=ObjectType.Chapeau, defense=2, degat=0, pv=5): 4,
-                                    Object.Armure("T-Shirt Déchiré", objectType=ObjectType.TShirt, defense=1, degat=0, pv=3): 5,
-                                    Object.Armure("Bottes Cloutées", objectType=ObjectType.Chaussures, defense=4, degat=1, pv=6): 5,
-                                    Object.Armure("Stylo de Bureau", objectType=ObjectType.Arme, defense=0, degat=8, pv=0): 4,
-                                    Object.Armure("Pull de Mamie", objectType=ObjectType.TShirt, defense=3, degat=0, pv=8): 3,
-                                    Object.Armure("Lunettes de Nerd", objectType=ObjectType.Chapeau, defense=1, degat=1, pv=2): 2,
+                                    Object.Armure("Casquette Stylée", objectType=ObjectType.Chapeau, defense=2, degat=0, pv=5): 8,
+                                    Object.Armure("T-Shirt Déchiré", objectType=ObjectType.TShirt, defense=1, degat=0, pv=3): 10,
+                                    Object.Armure("Bottes Cloutées", objectType=ObjectType.Chaussures, defense=4, degat=1, pv=6): 10,
+                                    Object.Armure("Stylo de Bureau", objectType=ObjectType.Arme, defense=0, degat=8, pv=0): 6,
+                                    Object.Armure("Pull de Mamie", objectType=ObjectType.TShirt, defense=3, degat=0, pv=8): 6,
+                                    Object.Armure("Lunettes de Nerd", objectType=ObjectType.Chapeau, defense=1, degat=1, pv=2): 5,
 
                                     Object.Antiseche("Mouille", 10): 7,
                                     Object.Antiseche("Carton Plié", 7): 15,
