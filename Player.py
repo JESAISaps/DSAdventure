@@ -320,6 +320,8 @@ class Player(Character):
         if self.talismans[TalismanType.Sphinx]:
             potionGuerison = Object.PotionGuerison("Tasse de café")
             self.AddItem(potionGuerison)
+        
+        if self.talismans[TalismanType.Integrale]:
             self.AddItem(Object.LnNegatif("ln(-1)"))
         
     def SetToMaxHp(self):
