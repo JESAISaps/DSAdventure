@@ -32,7 +32,8 @@ class Character(ABC):
         pass
     
     def TakeDamage(self, quantity):
-        damage = quantity*1/(self._bonusResistance+self._resistance + self.armorBonusDef)
+        resistanceTotale = self._bonusResistance+self._resistance + self.armorBonusDef
+        damage = quantity/((resistanceTotale)**(1/4))
         self._hp -= damage
         if self._hp <= 0:
             self.Die()
@@ -83,8 +84,10 @@ class Character(ABC):
                     print("Tu ne peux pas guérir un ennemi.")
             case Effect.Death:
                 self.Die()
+            case Effect.AnnulationAttaqueSelf:
+                self._attackDelayEffect += power
             case _:
-                print("Erreur Character.AddEffect effet non reconnu")
+                print(f"Erreur Character.AddEffect effet non reconnu '{effet}'")
 
     def ActualizeEffectsAfterRound(self):
         if self._attackDelayEffect > 0:

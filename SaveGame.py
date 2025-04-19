@@ -7,10 +7,16 @@ import _pickle as pickle
 
 
 def SaveGame(player:Player):
+    try:
+        with open("saved_game.pkl", "rb") as file:
+            dico = pickle.load(file)
+    except FileNotFoundError:
+        dico = {}
+    dico[player.GetName()] = player
     with open("saved_game.pkl", "wb") as file:
-        pickle.dump(player, file, -1)
+        pickle.dump(dico, file, -1)
 
-def LoadGame() -> Player:
+def LoadGame() -> dict[Player]:
     try:
         with open("saved_game.pkl", "rb") as file:
             toReturn = pickle.load(file)

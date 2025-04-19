@@ -199,6 +199,7 @@ class DefiRoom(Room):
     def __init__(self, name):
         super().__init__()
         self._name = name
+        self.utilite = ""
     
     def RoomIntroduction(self):
         return f"Super, un peu de repos, tu arrives dans la salle {self._name}"
@@ -209,6 +210,9 @@ class DefiRoom(Room):
 
     def GetTalisman(self):
         return self.talismanType
+    
+    def GetUtilite(self):
+        return self.utilite
     
 class CodeName(DefiRoom):
     def __init__(self):

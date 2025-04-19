@@ -41,7 +41,7 @@ class Fight:
 
         self.CheckForKilledEnemy()
 
-        if not self.hasAttackedTwice:
+        if not self.hasAttackedTwice and len(self._enemies) != 0:
             ViderInputBuffer()
             if questionary.select("Veux-tu attaquer une deuxieme fois ?", choices=[
                 questionary.Choice("Oui", value=True),
@@ -119,7 +119,8 @@ class Fight:
             self.UseObject(itemToUse)
 
         self.CheckForKilledEnemy() # Selon l'effet on peut avoir tué un ennemi
-
+        if len(self._enemies) == 0:
+            return
         attackList = []
         enemiToAttack = self.GetEnemiToAttack()
         choice, attack= self.GetAttackPlayerChoice(attackList)

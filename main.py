@@ -17,7 +17,7 @@ def LancerJeu():
     menu=carte.menu
     trioInfernal=carte.trioInfernalRoom
 
-    Starting(menu)
+    isFirstTime = Starting(menu)
     if isFirstTime:
         AttaqueTrioInfernal(trioInfernal)
         SkipLines(3)
@@ -42,10 +42,39 @@ def GameLoop():
 
 def Starting(menu) -> bool :
     """
-    Retourne True dès que les achats sont terminés <- Faux
+    Retourne Vrai si on a un nouveau joueur
     """
     AffichageMenu(menu)
+    isNewPLayer = ChoosePlayer()
     WaitForSpace(True)
+    return isNewPLayer
+
+def ChoosePlayer() -> bool:
+    global player
+    players = LoadGame()
+    if not players:
+        player = CreateNewPlayer([])
+        return True
+    else:
+        choices = []
+        for key in players:
+            choices.append(questionary.Choice(key, players[key]))
+        choices.append(questionary.Choice("Créer un nouveau poersonnage", value= False))
+        ViderInputBuffer()
+        playerChoice = questionary.select("Quel Partie voulez vous continuer ?", choices=choices, style=QUESTIONARYSTYLE).ask()
+        if not playerChoice:
+            player = CreateNewPlayer(players.keys())
+            return True
+        else:
+            player = playerChoice
+        return False
+    
+def CreateNewPlayer(alreadyExisting) -> Player:
+    name = questionary.text("Comment voulez-vous appeler votre nouveau personnage ?", 
+                     default="",
+                    validate= lambda val:True if val != "" and val not in alreadyExisting else "Tu doit entrer un nom, et il ne peut pas déjà exister.").ask()
+    return Player(name, 0, 3)
+    
 
 def AttaqueTrioInfernal(trioInfernalRoom:FightRoom):
     print("L'année commence déjà ! Tu arrives face à des professeurs redoutables, essaie de t'en sortir...")
@@ -164,11 +193,7 @@ def AffichageShop(shop):
         acheter=ActionShop(shop)
     return True
 
+player:Player
 
 if __name__ == "__main__":
-    isFirstTime = False
-    player = LoadGame()
-    if player == False:
-        isFirstTime = True
-        player = Player("Marine", 0, 3)
     LancerJeu()

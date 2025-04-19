@@ -35,8 +35,12 @@ QUESTIONARYSTYLE = questionary.Style([
     #('selected', 'fg:#00ff00'),       # Selected item is green
 ])
 
-    
-
+class CustomChoice(click.Choice):
+    def fail(self, value, param=None, ctx=None):
+        raise click.BadParameter(
+            f"Veuillez choisir parmi : {', '.join(self.choices)}"
+            )
+        
 def hide_cursor():
     if os.name == 'nt':
         ci = _CursorInfo()
@@ -76,11 +80,6 @@ def CompareWord(mot1 : str,mot2 : str) -> bool :
 def Clear():
     os.system('cls' if os.name == 'nt' else 'clear')
 
-class CustomChoice(click.Choice):
-    def fail(self, value, param=None, ctx=None):
-        raise click.BadParameter(
-            f"Veuillez choisir parmi : {', '.join(self.choices)}"
-        )
     
 def WaitForSpace(isFirst=False):
     if (isFirst):
