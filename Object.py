@@ -16,6 +16,9 @@ class Object(ABC):
     
     def GetName(self):
         return self._name
+    
+    def __str__(self):
+        return self.GetName()
 
 class Talisman(Object):
     def __init__(self, name):
