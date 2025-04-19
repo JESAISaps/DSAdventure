@@ -14,10 +14,13 @@ class Fight:
     def __init__(self, player:Player, enemiList:list[Enemi]):
         self._player:Player = player
         self._enemies:list[Enemi] = enemiList
+        self.hasAttackedTwice = True
 
         #self._enemiNames = {f"{enemi.GetName()} - {enemi.GetHp()} hp":enemi for enemi in enemiList}
 
-    def StartFight(self):
+    def StartFight(self) -> bool:
+        self.hasAttackedTwice = not self._player.GetTalisman(TalismanType.Morpion)
+
         while self._enemies != [] and self._player.IsAlive(): #On continue tant qu'il y a des ennemis, et que le joueur est vivant.
             self.DoRound()
             if self._player.IsAlive():
@@ -37,6 +40,15 @@ class Fight:
         self.PlayerTurn()
 
         self.CheckForKilledEnemy()
+
+        if not self.hasAttackedTwice:
+            ViderInputBuffer()
+            if questionary.select("Veux-tu attaquer une deuxieme fois ?", choices=[
+                questionary.Choice("Oui", value=True),
+                questionary.Choice("Non", value=False)]).ask():
+                self.PlayerTurn()
+                self.CheckForKilledEnemy()
+                self.hasAttackedTwice = True
 
         self.EnemiTurn()
 
