@@ -81,7 +81,6 @@ def CompareWord(mot1 : str,mot2 : str) -> bool :
 
 def Clear():
     os.system('cls' if os.name == 'nt' else 'clear')
-
     
 def WaitForSpace(isFirst=False):
     if (isFirst):

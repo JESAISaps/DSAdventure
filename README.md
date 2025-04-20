@@ -16,3 +16,13 @@ Code Name:
 - language, reptile : 'python'
 
 Integrale: 'Par un astucieux changement de variable, on trouve 'ln2'
+===
+
+Python 3.12 or better.
+Windows:
+
+- La premiere fois, lancez InitGame_windows.bat
+- Ensuite lancez run_main.bat
+
+Linux:
+- Meme chose que windows mais avec InitGame_linux.

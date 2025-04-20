@@ -2,7 +2,10 @@ from Player import Player
 from Object import Armure, Arme
 from Utils import ObjectType
 
-import _pickle as pickle
+try:
+    import _pickle as pickle
+except:
+    import pickle
 
 
 
