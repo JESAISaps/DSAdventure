@@ -1,219 +1,243 @@
 <?xml version="1.0" standalone="no"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="470pt" height="717pt" viewBox="0.00 0.00 470.15 716.80">
-<g id="graph0" class="graph" transform="translate(7.7864525653395305,662.866085640848) scale(0.9271552058091478)" data-name="g">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="539pt" height="717pt" viewBox="0.00 0.00 539.04 716.8">
+<g id="graph0" class="graph" transform="translate(-3.9786245469882715,664.0828616921549) scale(0.9265880618903711)" data-name="g">
 
-<polygon fill="white" stroke="none" points="-4,4 -4,-712.8 466.15,-712.8 466.15,4 -4,4" style=""/>
+<polygon fill="white" stroke="none" points="-4,4 -4,-712.8 535.04,-712.8 535.04,4 -4,4"/>
 <!-- Shop -->
 <g id="node1" class="node" pointer-events="visible" data-name="Shop">
 
-<ellipse fill="none" stroke="black" cx="399.6" cy="-690.8" rx="30.79" ry="18" style=""/>
-<text text-anchor="middle" x="399.6" y="-686.6" font-family="Times,serif" font-size="14.00" style="">Shop</text>
+<ellipse fill="none" stroke="rgb(0, 128, 0)" cx="404.4" cy="-690.8" rx="30.79" ry="18"/>
+<text text-anchor="middle" x="404.4" y="-686.6" font-family="Times,serif" font-size="14.00" fill="rgb(0, 128, 0)">Shop</text>
 </g>
 <!-- Trio Infernal -->
-<g id="node2" class="node" pointer-events="visible" data-name="Trio Infernal">
+<g id="node3" class="node" pointer-events="visible" data-name="Trio Infernal">
 
-<ellipse fill="none" stroke="black" cx="399.6" cy="-617.8" rx="60.77" ry="18" style=""/>
-<text text-anchor="middle" x="399.6" y="-613.6" font-family="Times,serif" font-size="14.00" style="">Trio Infernal</text>
+<ellipse fill="none" stroke="black" cx="470.4" cy="-617.8" rx="60.77" ry="18"/>
+<text text-anchor="middle" x="470.4" y="-613.6" font-family="Times,serif" font-size="14.00">Trio Infernal</text>
 </g>
 <!-- Shop&#45;&gt;Trio Infernal -->
 <g id="edge1" class="edge" data-name="Shop-&gt;Trio Infernal">
 
-<path fill="none" stroke="black" d="M399.6,-672.61C399.6,-665.03 399.6,-655.9 399.6,-647.34" style=""/>
-<polygon fill="black" stroke="black" points="403.1,-647.34 399.6,-637.34 396.1,-647.34 403.1,-647.34" style=""/>
-</g>
-<!-- Boss Baba -->
-<g id="node3" class="node" pointer-events="visible" data-name="Boss Baba">
+<path fill="none" stroke="black" d="M418.72,-674.39C427.02,-665.47 437.66,-654.03 447.13,-643.84"/>
+<polygon fill="black" stroke="black" points="449.45,-646.48 453.7,-636.77 444.32,-641.72 449.45,-646.48"/>
+</g><g id="edge2" class="edge" data-name="Shop-&gt;Salle Vide" data-comment="Shop-&gt;Trio Infernal">
 
-<ellipse fill="none" stroke="black" cx="399.6" cy="-544.8" rx="52.16" ry="18" style=""/>
-<text text-anchor="middle" x="399.6" y="-540.6" font-family="Times,serif" font-size="14.00" style="">Boss Baba</text>
+<path fill="none" stroke="black" d="M390.52,-674.39C382.5,-665.5 372.22,-654.09 363.06,-643.93"/>
+<polygon fill="black" stroke="black" points="365.69,-641.62 356.39,-636.54 360.49,-646.31 365.69,-641.62"/>
 </g>
-<!-- Trio Infernal&#45;&gt;Boss Baba -->
-<g id="edge2" class="edge" data-name="Trio Infernal-&gt;Boss Baba">
+<!-- DS nombres complexes -->
+<g id="node4" class="node" pointer-events="visible" data-name="DS nombres complexes">
 
-<path fill="none" stroke="black" d="M399.6,-599.61C399.6,-592.03 399.6,-582.9 399.6,-574.34" style=""/>
-<polygon fill="black" stroke="black" points="403.1,-574.34 399.6,-564.34 396.1,-574.34 403.1,-574.34" style=""/>
+<ellipse fill="none" stroke="black" cx="404.4" cy="-544.8" rx="102.53" ry="18"/>
+<text text-anchor="middle" x="404.4" y="-540.6" font-family="Times,serif" font-size="14.00">DS nombres complexes</text>
+</g><g id="node2" class="node" pointer-events="visible" data-name="Salle Vide" data-comment="DS nombres complexes">
+
+<ellipse fill="none" stroke="black" cx="340.4" cy="-617.8" rx="51.56" ry="18"/>
+<text text-anchor="middle" x="340.4" y="-613.6" font-family="Times,serif" font-size="14.00">Salle Vide</text>
 </g>
-<!-- Boss Oliv -->
-<g id="node4" class="node" pointer-events="visible" data-name="Boss Oliv">
+<!-- Trio Infernal&#45;&gt;DS nombres complexes -->
+<g id="edge4" class="edge" data-name="Trio Infernal-&gt;DS nombres complexes">
 
-<ellipse fill="none" stroke="black" cx="275.6" cy="-471.8" rx="49.31" ry="18" style=""/>
-<text text-anchor="middle" x="275.6" y="-467.6" font-family="Times,serif" font-size="14.00" style="">Boss Oliv</text>
+<path fill="none" stroke="black" d="M454.76,-599.97C446.82,-591.43 437.01,-580.88 428.16,-571.36"/>
+<polygon fill="black" stroke="black" points="430.79,-569.05 421.42,-564.11 425.67,-573.81 430.79,-569.05"/>
 </g>
-<!-- Boss Baba&#45;&gt;Boss Oliv -->
-<g id="edge3" class="edge" data-name="Boss Baba-&gt;Boss Oliv">
+<!-- Cours �l�ctrique -->
+<g id="node5" class="node" pointer-events="visible" data-name="Cours éléctrique" data-comment="Cours �l�ctrique">
 
-<path fill="none" stroke="black" d="M373.61,-528.92C355.47,-518.53 331.03,-504.54 311.1,-493.12" style=""/>
-<polygon fill="black" stroke="black" points="312.87,-490.1 302.45,-488.17 309.39,-496.18 312.87,-490.1" style=""/>
+<ellipse fill="none" stroke="black" cx="253.4" cy="-471.8" rx="75.85" ry="18"/>
+<text text-anchor="middle" x="253.4" y="-467.6" font-family="Times,serif" font-size="14.00">Cours éléctrique</text>
+</g>
+<!-- DS nombres complexes&#45;&gt;Cours �l�ctrique -->
+<g id="edge5" class="edge" data-name="DS nombres complexes-&gt;Cours éléctrique" data-comment="DS nombres complexes-&gt;Cours �l�ctrique">
+
+<path fill="none" stroke="black" d="M369.76,-527.51C348.09,-517.32 319.99,-504.11 296.84,-493.22"/>
+<polygon fill="black" stroke="black" points="298.5,-490.14 287.96,-489.05 295.52,-496.47 298.5,-490.14"/>
+</g><g id="edge3" class="edge" data-name="Salle Vide-&gt;DS nombres complexes" data-comment="DS nombres complexes-&gt;Cours �l�ctrique">
+
+<path fill="none" stroke="black" d="M355.25,-600.33C363.05,-591.68 372.79,-580.88 381.53,-571.18"/>
+<polygon fill="black" stroke="black" points="384.09,-573.57 388.18,-563.8 378.89,-568.88 384.09,-573.57"/>
 </g>
 <!-- Code Name -->
-<g id="node5" class="node" pointer-events="visible" data-name="Code Name">
+<g id="node6" class="node" pointer-events="visible" data-name="Code Name">
 
-<ellipse fill="none" stroke="black" cx="399.6" cy="-471.8" rx="56.79" ry="18" style=""/>
-<text text-anchor="middle" x="399.6" y="-467.6" font-family="Times,serif" font-size="14.00" style="">Code Name</text>
+<ellipse fill="none" stroke="rgb(0, 0, 255)" cx="404.4" cy="-471.8" rx="56.79" ry="18"/>
+<text text-anchor="middle" x="404.4" y="-467.6" font-family="Times,serif" font-size="14.00" fill="rgb(0, 0, 255)">Code Name</text>
 </g>
-<!-- Boss Baba&#45;&gt;Code Name -->
-<g id="edge4" class="edge" data-name="Boss Baba-&gt;Code Name">
+<!-- DS nombres complexes&#45;&gt;Code Name -->
+<g id="edge6" class="edge" data-name="DS nombres complexes-&gt;Code Name">
 
-<path fill="none" stroke="black" d="M393.73,-526.61C392.92,-518.94 392.67,-509.69 392.98,-501.04" style=""/>
-<polygon fill="black" stroke="black" points="396.45,-501.55 393.64,-491.34 389.47,-501.08 396.45,-501.55" style=""/>
+<path fill="none" stroke="black" d="M398.53,-526.61C397.72,-518.94 397.47,-509.69 397.78,-501.04"/>
+<polygon fill="black" stroke="black" points="401.25,-501.55 398.44,-491.34 394.27,-501.08 401.25,-501.55"/>
 </g>
 <!-- Big Math -->
-<g id="node6" class="node" pointer-events="visible" data-name="Big Math">
+<g id="node7" class="node" pointer-events="visible" data-name="Big Math">
 
-<ellipse fill="none" stroke="black" cx="174.6" cy="-398.8" rx="47.58" ry="18" style=""/>
-<text text-anchor="middle" x="174.6" y="-394.6" font-family="Times,serif" font-size="14.00" style="">Big Math</text>
+<ellipse fill="none" stroke="rgb(255, 0, 0)" cx="117.4" cy="-398.8" rx="47.58" ry="18"/>
+<text text-anchor="middle" x="117.4" y="-394.6" font-family="Times,serif" font-size="14.00">Big Math</text>
 </g>
-<!-- Boss Oliv&#45;&gt;Big Math -->
-<g id="edge5" class="edge" data-name="Boss Oliv-&gt;Big Math">
+<!-- Cours �l�ctrique&#45;&gt;Big Math -->
+<g id="edge7" class="edge" data-name="Cours éléctrique-&gt;Big Math" data-comment="Cours �l�ctrique-&gt;Big Math">
 
-<path fill="none" stroke="black" d="M253.69,-455.39C239.66,-445.53 221.24,-432.58 205.71,-421.67" style=""/>
-<polygon fill="black" stroke="black" points="207.91,-418.93 197.71,-416.05 203.88,-424.66 207.91,-418.93" style=""/>
+<path fill="none" stroke="black" d="M222.88,-454.87C202.69,-444.33 176.09,-430.44 154.65,-419.25"/>
+<polygon fill="black" stroke="black" points="156.42,-416.22 145.94,-414.7 153.18,-422.43 156.42,-416.22"/>
 </g>
-<!-- Petit Fight -->
-<g id="node7" class="node" pointer-events="visible" data-name="Petit Fight">
+<!-- Espaces Norm�s -->
+<g id="node8" class="node" pointer-events="visible" data-name="Espaces Normés" data-comment="Espaces Norm�s">
 
-<ellipse fill="none" stroke="black" cx="410.6" cy="-398.8" rx="51.6" ry="18" style=""/>
-<text text-anchor="middle" x="410.6" y="-394.6" font-family="Times,serif" font-size="14.00" style="">Petit Fight</text>
+<ellipse fill="none" stroke="black" cx="377.4" cy="-398.8" rx="75.84" ry="18"/>
+<text text-anchor="middle" x="377.4" y="-394.6" font-family="Times,serif" font-size="14.00">Espaces Normés</text>
 </g>
-<!-- Boss Oliv&#45;&gt;Petit Fight -->
-<g id="edge6" class="edge" data-name="Boss Oliv-&gt;Petit Fight">
+<!-- Cours �l�ctrique&#45;&gt;Espaces Norm�s -->
+<g id="edge8" class="edge" data-name="Cours éléctrique-&gt;Espaces Normés" data-comment="Cours �l�ctrique-&gt;Espaces Norm�s">
 
-<path fill="none" stroke="black" d="M298.91,-455.57C318.28,-444.69 346.12,-429.98 369.21,-418.4" style=""/>
-<polygon fill="black" stroke="black" points="370.69,-421.58 378.09,-414 367.58,-415.31 370.69,-421.58" style=""/>
+<path fill="none" stroke="black" d="M276.36,-454.33C292.68,-444.36 314.94,-431.53 334.46,-420.83"/>
+<polygon fill="black" stroke="black" points="335.92,-424.02 343.04,-416.17 332.58,-417.86 335.92,-424.02"/>
 </g>
-<!-- Salle Tranquille -->
-<g id="node8" class="node" pointer-events="visible" data-name="Salle Tranquille">
+<!-- fightroom -->
+<g id="node9" class="node" pointer-events="visible" data-name="Interruptions pédagogiques" data-comment="fightroom">
 
-<ellipse fill="none" stroke="black" cx="216.6" cy="-325.8" rx="72.96" ry="18" style=""/>
-<text text-anchor="middle" x="216.6" y="-321.6" font-family="Times,serif" font-size="14.00" style="">Salle Tranquille</text>
+<ellipse fill="none" stroke="black" cx="174.4" cy="-325.8" rx="116.95" ry="18"/>
+<text text-anchor="middle" x="174.4" y="-321.6" font-family="Times,serif" font-size="14.00">Interruptions pédagogiques</text>
 </g>
-<!-- Boss Oliv&#45;&gt;Salle Tranquille -->
-<g id="edge7" class="edge" data-name="Boss Oliv-&gt;Salle Tranquille">
+<!-- Cours �l�ctrique&#45;&gt;fightroom -->
+<g id="edge9" class="edge" data-name="Cours éléctrique-&gt;Interruptions pédagogiques" data-comment="Cours �l�ctrique-&gt;fightroom">
 
-<path fill="none" stroke="red" d="M268.6,-453.72C258.54,-429.14 239.86,-383.55 227.84,-354.23" style=""/>
-<polygon fill="red" stroke="red" points="231.2,-353.19 224.17,-345.26 224.72,-355.84 231.2,-353.19" style=""/>
-<text text-anchor="middle" x="295.01" y="-394.6" font-family="Times,serif" font-size="14.00" fill="red" style="">Passage Secret</text>
+<path fill="none" stroke="rgb(255, 0, 0)" d="M237.33,-453.82C228.32,-443.65 217.37,-430.15 209.6,-416.8 198.19,-397.2 189.02,-373.21 182.9,-354.92"/>
+<polygon fill="red" stroke="red" points="186.27,-353.99 179.87,-345.54 179.61,-356.13 186.27,-353.99"/>
+<text text-anchor="middle" x="251.81" y="-394.6" font-family="Times,serif" font-size="14.00" fill="red">Passage Secret</text>
 </g>
-<!-- Code Name&#45;&gt;Boss Baba -->
-<g id="edge8" class="edge" data-name="Code Name-&gt;Boss Baba">
+<!-- Code Name&#45;&gt;DS nombres complexes -->
+<g id="edge10" class="edge" data-name="Code Name-&gt;DS nombres complexes">
 
-<path fill="none" stroke="black" d="M405.47,-489.83C406.28,-497.48 406.53,-506.72 406.23,-515.38" style=""/>
-<polygon fill="black" stroke="black" points="402.76,-514.89 405.58,-525.1 409.74,-515.36 402.76,-514.89" style=""/>
+<path fill="none" stroke="black" d="M410.27,-489.83C411.08,-497.48 411.33,-506.72 411.03,-515.38"/>
+<polygon fill="black" stroke="black" points="407.56,-514.89 410.38,-525.1 414.54,-515.36 407.56,-514.89"/>
 </g>
-<!-- Big Math&#45;&gt;Salle Tranquille -->
-<g id="edge9" class="edge" data-name="Big Math-&gt;Salle Tranquille">
+<!-- Big Math&#45;&gt;fightroom -->
+<g id="edge11" class="edge" data-name="Big Math-&gt;Interruptions pédagogiques" data-comment="Big Math-&gt;fightroom">
 
-<path fill="none" stroke="black" d="M184.56,-380.97C189.35,-372.87 195.22,-362.95 200.62,-353.83" style=""/>
-<polygon fill="black" stroke="black" points="203.58,-355.69 205.66,-345.3 197.56,-352.13 203.58,-355.69" style=""/>
+<path fill="none" stroke="black" d="M130.62,-381.33C137.4,-372.89 145.82,-362.41 153.46,-352.89"/>
+<polygon fill="black" stroke="black" points="155.98,-355.34 159.51,-345.35 150.52,-350.96 155.98,-355.34"/>
 </g>
-<!-- Petit Fight&#45;&gt;Boss Oliv -->
-<g id="edge10" class="edge" data-name="Petit Fight-&gt;Boss Oliv">
+<!-- Espaces Norm�s&#45;&gt;Cours �l�ctrique -->
+<g id="edge12" class="edge" data-name="Espaces Normés-&gt;Cours éléctrique" data-comment="Espaces Norm�s-&gt;Cours �l�ctrique">
 
-<path fill="none" stroke="black" d="M387.24,-415.07C367.77,-426 339.79,-440.78 316.65,-452.37" style=""/>
-<polygon fill="black" stroke="black" points="315.17,-449.2 307.76,-456.77 318.28,-455.47 315.17,-449.2" style=""/>
+<path fill="none" stroke="black" d="M354.34,-416.33C337.99,-426.32 315.72,-439.15 296.22,-449.85"/>
+<polygon fill="black" stroke="black" points="294.77,-446.65 287.65,-454.5 298.1,-452.8 294.77,-446.65"/>
 </g>
 <!-- Sphinx -->
-<g id="node9" class="node" pointer-events="visible" data-name="Sphinx">
+<g id="node11" class="node" pointer-events="visible" data-name="Sphinx">
 
-<ellipse fill="none" stroke="black" cx="410.6" cy="-325.8" rx="38.31" ry="18" style=""/>
-<text text-anchor="middle" x="410.6" y="-321.6" font-family="Times,serif" font-size="14.00" style="">Sphinx</text>
+<ellipse fill="none" stroke="rgb(0, 0, 255)" cx="377.4" cy="-325.8" rx="38.31" ry="18"/>
+<text text-anchor="middle" x="377.4" y="-321.6" font-family="Times,serif" font-size="14.00" fill="rgb(0, 0, 255)">Sphinx</text>
 </g>
-<!-- Petit Fight&#45;&gt;Sphinx -->
-<g id="edge11" class="edge" data-name="Petit Fight-&gt;Sphinx">
+<!-- Espaces Norm�s&#45;&gt;Sphinx -->
+<g id="edge13" class="edge" data-name="Espaces Normés-&gt;Sphinx" data-comment="Espaces Norm�s-&gt;Sphinx">
 
-<path fill="none" stroke="black" d="M404.73,-380.61C403.92,-372.94 403.67,-363.69 403.98,-355.04" style=""/>
-<polygon fill="black" stroke="black" points="407.45,-355.55 404.64,-345.34 400.47,-355.08 407.45,-355.55" style=""/>
+<path fill="none" stroke="black" d="M371.53,-380.61C370.72,-372.94 370.47,-363.69 370.78,-355.04"/>
+<polygon fill="black" stroke="black" points="374.25,-355.55 371.44,-345.34 367.27,-355.08 374.25,-355.55"/>
 </g>
 <!-- Mecanique Solide -->
 <g id="node10" class="node" pointer-events="visible" data-name="Mecanique Solide">
 
-<ellipse fill="none" stroke="black" cx="216.6" cy="-252.8" rx="81.06" ry="18" style=""/>
-<text text-anchor="middle" x="216.6" y="-248.6" font-family="Times,serif" font-size="14.00" style="">Mecanique Solide</text>
+<ellipse fill="none" stroke="black" cx="174.4" cy="-252.8" rx="81.06" ry="18"/>
+<text text-anchor="middle" x="174.4" y="-248.6" font-family="Times,serif" font-size="14.00">Mecanique Solide</text>
 </g>
-<!-- Salle Tranquille&#45;&gt;Mecanique Solide -->
-<g id="edge12" class="edge" data-name="Salle Tranquille-&gt;Mecanique Solide">
+<!-- fightroom&#45;&gt;Mecanique Solide -->
+<g id="edge14" class="edge" data-name="Interruptions pédagogiques-&gt;Mecanique Solide" data-comment="fightroom-&gt;Mecanique Solide">
 
-<path fill="none" stroke="black" d="M216.6,-307.61C216.6,-300.03 216.6,-290.9 216.6,-282.34" style=""/>
-<polygon fill="black" stroke="black" points="220.1,-282.34 216.6,-272.34 213.1,-282.34 220.1,-282.34" style=""/>
+<path fill="none" stroke="black" d="M174.4,-307.61C174.4,-300.03 174.4,-290.9 174.4,-282.34"/>
+<polygon fill="black" stroke="black" points="177.9,-282.34 174.4,-272.34 170.9,-282.34 177.9,-282.34"/>
 </g>
-<!-- Sphinx&#45;&gt;Petit Fight -->
-<g id="edge13" class="edge" data-name="Sphinx-&gt;Petit Fight">
+<!-- Sphinx&#45;&gt;Espaces Norm�s -->
+<g id="edge15" class="edge" data-name="Sphinx-&gt;Espaces Normés" data-comment="Sphinx-&gt;Espaces Norm�s">
 
-<path fill="none" stroke="black" d="M416.47,-343.83C417.28,-351.48 417.53,-360.72 417.23,-369.38" style=""/>
-<polygon fill="black" stroke="black" points="413.76,-368.89 416.58,-379.1 420.74,-369.36 413.76,-368.89" style=""/>
+<path fill="none" stroke="black" d="M383.27,-343.83C384.08,-351.48 384.33,-360.72 384.03,-369.38"/>
+<polygon fill="black" stroke="black" points="380.56,-368.89 383.38,-379.1 387.54,-369.36 380.56,-368.89"/>
 </g>
-<!-- Boss Thermique -->
-<g id="node11" class="node" pointer-events="visible" data-name="Boss Thermique">
+<!-- Thermique -->
+<g id="node12" class="node" pointer-events="visible" data-name="Thermique">
 
-<ellipse fill="none" stroke="black" cx="74.6" cy="-179.8" rx="74.71" ry="18" style=""/>
-<text text-anchor="middle" x="74.6" y="-175.6" font-family="Times,serif" font-size="14.00" style="">Boss Thermique</text>
+<ellipse fill="none" stroke="black" cx="53.4" cy="-179.8" rx="53.31" ry="18"/>
+<text text-anchor="middle" x="53.4" y="-175.6" font-family="Times,serif" font-size="14.00">Thermique</text>
 </g>
-<!-- Mecanique Solide&#45;&gt;Boss Thermique -->
-<g id="edge14" class="edge" data-name="Mecanique Solide-&gt;Boss Thermique">
+<!-- Mecanique Solide&#45;&gt;Thermique -->
+<g id="edge16" class="edge" data-name="Mecanique Solide-&gt;Thermique">
 
-<path fill="none" stroke="black" d="M184.74,-235.87C164.41,-225.7 137.85,-212.42 115.91,-201.45" style=""/>
-<polygon fill="black" stroke="black" points="117.74,-198.45 107.23,-197.11 114.61,-204.72 117.74,-198.45" style=""/>
+<path fill="none" stroke="black" d="M146.64,-235.51C129.45,-225.42 107.22,-212.38 88.77,-201.55"/>
+<polygon fill="black" stroke="black" points="90.67,-198.61 80.28,-196.57 87.13,-204.65 90.67,-198.61"/>
 </g>
-<!-- Integrales -->
-<g id="node12" class="node" pointer-events="visible" data-name="Integrales">
+<!-- Int�grales -->
+<g id="node13" class="node" pointer-events="visible" data-name="Intégrales" data-comment="Int�grales">
 
-<ellipse fill="none" stroke="black" cx="216.6" cy="-179.8" rx="49.22" ry="18" style=""/>
-<text text-anchor="middle" x="216.6" y="-175.6" font-family="Times,serif" font-size="14.00" style="">Integrales</text>
+<ellipse fill="none" stroke="rgb(0, 0, 255)" cx="174.4" cy="-179.8" rx="49.8" ry="18"/>
+<text text-anchor="middle" x="174.4" y="-175.6" font-family="Times,serif" font-size="14.00" fill="rgb(0, 0, 255)">Intégrales</text>
 </g>
-<!-- Mecanique Solide&#45;&gt;Integrales -->
-<g id="edge15" class="edge" data-name="Mecanique Solide-&gt;Integrales">
+<!-- Mecanique Solide&#45;&gt;Int�grales -->
+<g id="edge17" class="edge" data-name="Mecanique Solide-&gt;Intégrales" data-comment="Mecanique Solide-&gt;Int�grales">
 
-<path fill="none" stroke="black" d="M210.73,-234.61C209.92,-226.94 209.67,-217.69 209.98,-209.04" style=""/>
-<polygon fill="black" stroke="black" points="213.45,-209.55 210.64,-199.34 206.47,-209.08 213.45,-209.55" style=""/>
+<path fill="none" stroke="black" d="M168.53,-234.61C167.72,-226.94 167.47,-217.69 167.78,-209.04"/>
+<polygon fill="black" stroke="black" points="171.25,-209.55 168.44,-199.34 164.27,-209.08 171.25,-209.55"/>
 </g>
 <!-- Conseil -->
-<g id="node13" class="node" pointer-events="visible" data-name="Conseil">
+<g id="node14" class="node" pointer-events="visible" data-name="Conseil">
 
-<ellipse fill="none" stroke="black" cx="279.6" cy="-18" rx="40.59" ry="18" style=""/>
-<text text-anchor="middle" x="279.6" y="-13.8" font-family="Times,serif" font-size="14.00" style="">Conseil</text>
+<ellipse fill="none" stroke="black" cx="240.4" cy="-18" rx="40.59" ry="18"/>
+<text text-anchor="middle" x="240.4" y="-13.8" font-family="Times,serif" font-size="14.00">Conseil</text>
 </g>
 <!-- Mecanique Solide&#45;&gt;Conseil -->
-<g id="edge16" class="edge" data-name="Mecanique Solide-&gt;Conseil">
+<g id="edge18" class="edge" data-name="Mecanique Solide-&gt;Conseil">
 
-<path fill="none" stroke="red" d="M242.26,-235.24C254.41,-225.86 267.75,-212.97 274.6,-197.8 296.78,-148.73 291.21,-84.1 285.31,-47.51" style=""/>
-<polygon fill="red" stroke="red" points="288.76,-46.97 283.59,-37.72 281.87,-48.18 288.76,-46.97" style=""/>
-<text text-anchor="middle" x="332.01" y="-131.2" font-family="Times,serif" font-size="14.00" fill="red" style="">Passage Secret</text>
+<path fill="none" stroke="rgb(255, 0, 0)" d="M200.42,-235.3C212.77,-225.94 226.33,-213.04 233.4,-197.8 256.07,-148.94 251.24,-84.24 245.77,-47.57"/>
+<polygon fill="red" stroke="red" points="249.23,-47.07 244.17,-37.77 242.32,-48.2 249.23,-47.07"/>
+<text text-anchor="middle" x="291.81" y="-131.2" font-family="Times,serif" font-size="14.00" fill="rgb(255, 0, 0)">Passage Secret</text>
 </g>
 <!-- Communs -->
-<g id="node14" class="node" pointer-events="visible" data-name="Communs">
+<g id="node15" class="node" pointer-events="visible" data-name="Communs">
 
-<ellipse fill="none" stroke="black" cx="147.6" cy="-91" rx="50.99" ry="18" style=""/>
-<text text-anchor="middle" x="147.6" y="-86.8" font-family="Times,serif" font-size="14.00" style="">Communs</text>
+<ellipse fill="none" stroke="rgb(255, 0, 0)" cx="113.4" cy="-91" rx="50.99" ry="18"/>
+<text text-anchor="middle" x="113.4" y="-86.8" font-family="Times,serif" font-size="14.00">Communs</text>
 </g>
-<!-- Boss Thermique&#45;&gt;Communs -->
-<g id="edge17" class="edge" data-name="Boss Thermique-&gt;Communs">
+<!-- Thermique&#45;&gt;Communs -->
+<g id="edge19" class="edge" data-name="Thermique-&gt;Communs">
 
-<path fill="none" stroke="black" d="M89.03,-161.65C99.76,-148.89 114.58,-131.27 126.63,-116.94" style=""/>
-<polygon fill="black" stroke="black" points="128.97,-119.59 132.73,-109.68 123.62,-115.08 128.97,-119.59" style=""/>
+<path fill="none" stroke="black" d="M64.97,-162.06C73.55,-149.66 85.41,-132.5 95.24,-118.27"/>
+<polygon fill="black" stroke="black" points="98,-120.44 100.81,-110.23 92.24,-116.46 98,-120.44"/>
 </g>
-<!-- Integrales&#45;&gt;Mecanique Solide -->
-<g id="edge18" class="edge" data-name="Integrales-&gt;Mecanique Solide">
+<!-- Int�grales&#45;&gt;Communs -->
+<g id="edge20" class="edge" data-name="Intégrales-&gt;Mecanique Solide" data-comment="Int�grales-&gt;Communs">
 
-<path fill="none" stroke="black" d="M222.47,-197.83C223.28,-205.48 223.53,-214.72 223.23,-223.38" style=""/>
-<polygon fill="black" stroke="black" points="219.76,-222.89 222.58,-233.1 226.74,-223.36 219.76,-222.89" style=""/>
+<path fill="none" stroke="black" d="M180.27,-197.83C181.08,-205.48 181.33,-214.72 181.03,-223.38"/>
+<polygon fill="black" stroke="black" points="177.56,-222.89 180.38,-233.1 184.54,-223.36 177.56,-222.89"/>
 </g>
 <!-- Communs&#45;&gt;Conseil -->
-<g id="edge20" class="edge" data-name="Communs-&gt;Conseil">
+<g id="edge22" class="edge" data-name="Communs-&gt;Conseil">
 
-<path fill="none" stroke="black" d="M174.63,-75.46C194.82,-64.6 222.58,-49.67 244.49,-37.89" style=""/>
-<polygon fill="black" stroke="black" points="245.92,-41.09 253.06,-33.27 242.6,-34.93 245.92,-41.09" style=""/>
+<path fill="none" stroke="black" d="M139.72,-75.29C158.86,-64.59 184.97,-49.99 205.8,-38.35"/>
+<polygon fill="black" stroke="black" points="207.5,-41.4 214.52,-33.47 204.09,-35.29 207.5,-41.4"/>
 </g>
 <!-- Morpion -->
-<g id="node15" class="node" pointer-events="visible" data-name="Morpion">
+<g id="node16" class="node" pointer-events="visible" data-name="Morpion">
 
-<ellipse fill="none" stroke="black" cx="147.6" cy="-18" rx="44.67" ry="18" style=""/>
-<text text-anchor="middle" x="147.6" y="-13.8" font-family="Times,serif" font-size="14.00" style="">Morpion</text>
+<ellipse fill="none" stroke="rgb(0, 0, 255)" cx="113.4" cy="-18" rx="44.67" ry="18"/>
+<text text-anchor="middle" x="113.4" y="-13.8" font-family="Times,serif" font-size="14.00" fill="rgb(0, 0, 255)">Morpion</text>
 </g>
 <!-- Communs&#45;&gt;Morpion -->
-<g id="edge19" class="edge" data-name="Communs-&gt;Morpion">
+<g id="edge21" class="edge" data-name="Communs-&gt;Morpion">
 
-<path fill="none" stroke="black" d="M147.6,-72.81C147.6,-65.23 147.6,-56.1 147.6,-47.54" style=""/>
-<polygon fill="black" stroke="black" points="151.1,-47.54 147.6,-37.54 144.1,-47.54 151.1,-47.54" style=""/>
+<path fill="none" stroke="black" d="M107.53,-72.81C106.72,-65.14 106.47,-55.89 106.78,-47.24"/>
+<polygon fill="black" stroke="black" points="110.25,-47.75 107.44,-37.54 103.27,-47.28 110.25,-47.75"/>
 </g>
+<!-- Morpion&#45;&gt;Communs -->
+<!-- Morpion&#45;&gt;Communs -->
+<g id="edge23" class="edge" data-name="Morpion-&gt;Communs">
+
+<path fill="none" stroke="black" d="M119.27,-36.03C120.08,-43.68 120.33,-52.92 120.03,-61.58"/>
+<polygon fill="black" stroke="black" points="116.56,-61.09 119.38,-71.3 123.54,-61.56 116.56,-61.09"/>
+</g>
+<!-- Morpion&#45;&gt;Communs -->
+
+
+<!-- S -->
+
 </g>
 </svg>
