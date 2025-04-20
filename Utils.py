@@ -6,7 +6,6 @@ import questionary
 #from prompt_toolkit.styles import Style
 import os
 import keyboard
-import msvcrt
 from time import sleep
 import sys
 import os
@@ -17,6 +16,9 @@ if os.name == 'nt':
     class _CursorInfo(ctypes.Structure):
         _fields_ = [("size", ctypes.c_int),
                     ("visible", ctypes.c_byte)]
+
+if os.name == 'posix':
+    import termios
 
 TIMETOWAITBETWEENATTACKS = .5
 
@@ -93,8 +95,11 @@ def SkipLines(nb):
     print("\n"*nb)
     
 def ViderInputBuffer():
-    while msvcrt.kbhit():
-        msvcrt.getch()
+    if os.name == 'nt':
+        while msvcrt.kbhit():
+            msvcrt.getch()
+    elif os.name == 'posix':        
+        termios.tcflush(sys.stdin, termios.TCIFLUSH)
 
 class ObjectType(Enum):
     Objet = auto()
