@@ -221,7 +221,9 @@ class DefiRoom(Room):
 class CodeName(DefiRoom):
     def __init__(self):
         super().__init__("Code Name")
-        self.liste = [("police",("girophare","enfermer")),("barcelo",("cheveux","mathématiques"))]
+        self.liste = [("police",("girophare","enfermer")),
+                      ("barcelo",("cheveux","mathématiques")), 
+                      ("python", ("language", "reptile"))]
         self.tupleJeu=random.choice(self.liste)
         self.talismanType = TalismanType.CodeName
         self.utilite="Tu peux désormais voir les prochains coups de l'adversaire 👁 !"

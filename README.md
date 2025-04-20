@@ -6,3 +6,13 @@ DS Adventure
 
 Jeux cool Rogue Like.
 Pour lancer, executez main.py
+
+============
+SPOILERS
+============
+Code Name:
+- mathématique et cheveux : 'barcelo'
+- girophare, enfermer : 'police'
+- language, reptile : 'python'
+
+Integrale: 'Par un astucieux changement de variable, on trouve 'ln2'
