@@ -15,7 +15,8 @@ Code Name:
 - girophare, enfermer : 'police'
 - language, reptile : 'python'
 
-Integrale: 'Par un astucieux changement de variable, on trouve 'ln2'
+Integrale: 
+'Par un astucieux changement de variable, on trouve 'ln2'
 ===
 
 Python 3.12 or better.
