@@ -8,7 +8,7 @@ def CreateGraph(depart:Room, file):
     world = set()
     queue.put(item=depart)
 
-    while not queue.empty():
+    while queue.qsize() != 0:
         actualRoom:Room = queue.get()
         if not actualRoom in world:
             world.add(actualRoom)            
