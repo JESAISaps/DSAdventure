@@ -17,8 +17,10 @@ Code Name:
 
 Integrale: 
 'Par un astucieux changement de variable, on trouve 'ln2'
-===
 
+
+Installation:
+===
 Python 3.12 or better.
 Windows:
 
