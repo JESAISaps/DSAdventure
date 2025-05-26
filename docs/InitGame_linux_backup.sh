@@ -2,6 +2,8 @@
 
 VENV_DIR="venv"
 
+sudo apt install python3.12-venv
+
 # Step 1: Create virtual environment
 echo "Creating virtual environment..."
 python3 -m venv $VENV_DIR
@@ -21,11 +23,11 @@ echo "Creating launcher script..."
 cat << EOF > run_main.sh
 #!/bin/bash
 source $VENV_DIR/bin/activate
-python3 main.py
+sudo venv/bin/python3 sources/main.py
 deactivate
 EOF
 chmod +x run_main.sh
 
 # Step 4: Delete this setup script
 echo "Cleaning up setup script..."
-rm -- "\$0"
+rm -- "InitGame_linux.sh"
