@@ -7,6 +7,8 @@ DS Adventure
 **Jeux cool Rogue Like.**
 ============
 
+Repo Github: github.com/JESAISaps/DSAdventure
+
 SPOILERS
 ============
 Code Name:

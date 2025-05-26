@@ -5,7 +5,7 @@ set VENV_DIR=venv
 
 REM Step 1: Create virtual environment
 echo Creating virtual environment...
-python -m venv %VENV_DIR%
+python3 -m venv %VENV_DIR%
 if errorlevel 1 (
     echo Failed to create virtual environment.
     exit /b 1
